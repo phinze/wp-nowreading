@@ -16,9 +16,9 @@ define('NOW_READING_REWRITE', 3);
 define('NRTD', 'now-reading');
 
 $nr_statuses = array(
-	'unread' => __('Yet to read', NRTD),
-	'reading' => __('Currently reading', NRTD),
-	'read' => __('Finished', NRTD)
+	'unread'	=> __('Yet to read', NRTD),
+	'reading'	=> __('Currently reading', NRTD),
+	'read'		=> __('Finished', NRTD)
 );
 
 $nr_domains = array(

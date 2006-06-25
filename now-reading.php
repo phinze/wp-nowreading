@@ -15,6 +15,21 @@ define('NOW_READING_REWRITE', 3);
 
 define('NRTD', 'now-reading');
 
+$nr_statuses = array(
+	'unread' => __('Yet to read', NRTD),
+	'reading' => __('Currently reading', NRTD),
+	'read' => __('Finished', NRTD)
+);
+
+$nr_domains = array(
+	'.com'		=> __('International', NRTD),
+	'.co.uk'	=> __('United Kingdom', NRTD),
+	'.fr'		=> __('France', NRTD),
+	'.de'		=> __('Germany', NRTD),
+	'.co.jp'	=> __('Japan', NRTD),
+	'.ca'		=> __('Canada', NRTD)
+);
+
 /**
  * Load our l18n domain.
  */
@@ -845,21 +860,6 @@ function nr_header_stats() {
 	';
 }
 add_action('wp_head', 'nr_header_stats');
-
-$nr_statuses = array(
-	'unread' => __('Yet to read', NRTD),
-	'reading' => __('Currently reading', NRTD),
-	'read' => __('Finished', NRTD)
-);
-
-$nr_domains = array(
-	'.com'		=> __('International', NRTD),
-	'.co.uk'	=> __('United Kingdom', NRTD),
-	'.fr'		=> __('France', NRTD),
-	'.de'		=> __('Germany', NRTD),
-	'.co.jp'	=> __('Japan', NRTD),
-	'.ca'		=> __('Canada', NRTD)
-);
 
 if( !function_exists('robm_dump') ) {
 	/**

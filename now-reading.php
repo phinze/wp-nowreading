@@ -508,7 +508,7 @@ function nr_load_template( $filename ) {
  * Provides a simple API for themes to load the sidebar template.
  */
 function nr_display() {
-	require_once dirname(__FILE__).'/templates/sidebar.php';
+	nr_load_template('sidebar.php');
 }
 
 /**

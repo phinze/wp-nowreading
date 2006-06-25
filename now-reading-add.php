@@ -96,7 +96,7 @@ function now_reading_add() {
 					extract($result);
 					$data = serialize($result);
 					echo '
-					<form method="post" action="post-new.php?page=now-reading-add.php" style="border:1px solid #ccc; padding:5px; margin:5px;">
+					<form method="post" action="'.get_settings('home').'/wp-content/plugins/now-reading/add.php" style="border:1px solid #ccc; padding:5px; margin:5px;">
 					';
 					
 					if ( function_exists('wp_nonce_field') )
@@ -158,64 +158,6 @@ function now_reading_add() {
 		
 		<h3>Search again</h3>
 		';
-	} 
-	
-	elseif( !empty($_POST['amazon_data']) ) {
-		
-		$data = unserialize(stripslashes($_POST['amazon_data']));
-		
-		$b_author = $wpdb->escape($data['author']);
-		$b_title = $wpdb->escape($data['title']);
-		$b_image = $wpdb->escape($data['image']);
-		$b_asin = $wpdb->escape($data['asin']);
-		$b_added = date('Y-m-d h:i:s');
-		$b_status = 'unread';
-		
-		check_admin_referer('now-reading-add-' . $b_title);
-		
-		foreach( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
-			$query .= "$field=$value&";
-		
-		if( add_book($query) ) {
-			wp_redirect(get_settings('home').'/wp-admin/post-new.php?page=now-reading-add.php&added=true');
-			die;
-		} else {
-			wp_redirect(get_settings('home').'/wp-admin/post-new.php?page=now-reading-add.php&error=true');
-			die;
-		}
-	}
-	
-	elseif( !empty($_POST['custom_title']) ) {
-		
-		check_admin_referer('now-reading-manual-add');
-		
-		$b_author = $wpdb->escape($_POST['custom_author']);
-		$b_title = $wpdb->escape($_POST['custom_title']);
-		$b_image = $wpdb->escape($_POST['custom_image']);
-		$b_asin = '';
-		$b_added = date('Y-m-d h:i:s');
-		$b_status = 'unread';
-		
-		foreach( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
-			$query .= "$field=$value&";
-		
-		if( add_book($query) ) {
-			echo '
-			<div id="message" class="updated fade">
-				<p><strong>'.__("Book added", NRTD).'.</strong></p>
-				<ul>
-					<li><a href="edit.php?page=now-reading-manage.php">'.__("Manage books", NRTD).' &raquo;</a></li>
-					<li><a href="'.get_settings('home').'">'.__("View Site", NRTD).' &raquo;</a></li>
-				</ul>
-			</div>
-			';
-		} else {
-			echo '
-			<div id="message" class="error fade">
-				<p><strong>'.__("Error adding book!", NRTD).'</strong></p>
-			</div>
-			';
-		}
 	}
 	
 	if( empty($_POST) )

@@ -5,52 +5,9 @@
  */
 function nr_options() {
 	
-	$_POST = stripslashes_deep($_POST);
-	
-	global $wpdb;
+	global $wpdb, $nr_domains;
 	
 	$options = get_option('nowReadingOptions');
-	
-	if( !empty($_POST['update']) ) {
-		
-		check_admin_referer('now-reading-update-options');
-		
-		$append = '';
-		
-		$options['formatDate']		= $_POST['format_date'];
-		$options['associate']		= $_POST['associate'];
-		$options['domain']			= $_POST['domain'];
-		$options['debugMode']		= $_POST['debug_mode'];
-		$options['useModRewrite']	= $_POST['use_mod_rewrite'];
-		
-		switch( $_POST['image_size'] ) {
-			case 'Small':
-			case 'Medium':
-			case 'Large':
-				$options['imageSize'] = $_POST['image_size'];
-				break;
-			default:
-				$append .= '&imagesize=1';
-				$options['imageSize'] = 'Medium';
-				break;
-		}
-		
-		if( $_POST['http_lib'] == 'curl' ) {
-			if( !function_exists('curl_init') ) {
-				$options['httpLib'] = 'snoopy';
-				$append .= '&curl=1';
-			} else {
-				$options['httpLib'] = 'curl';
-			}
-		} else {
-			$_POST['http_lib'] == 'snoopy';
-		}
-		
-		update_option('nowReadingOptions', $options);
-		
-		wp_redirect(get_settings('home')."/wp-admin/options-general.php?page=now-reading-options.php&updated=1$append");
-		die;
-	}
 	
 	if( !empty($_GET['curl']) ) {
 		echo '
@@ -79,7 +36,7 @@ function nr_options() {
 	';
 	
 	echo '
-		<form method="post" action="options-general.php?page=now-reading-options.php">
+		<form method="post" action="'.get_settings('home').'/wp-content/plugins/now-reading/options.php">
 	';
 	
 	if ( function_exists('wp_nonce_field') )

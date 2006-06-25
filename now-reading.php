@@ -8,7 +8,7 @@ Author: Rob Miller
 Author URI: http://robm.me.uk/
 */
 
-define('NOW_READING_VERSION', '4.0');
+define('NOW_READING_VERSION', '4.1');
 define('NOW_READING_DB', 14);
 define('NOW_READING_OPTIONS', 2);
 define('NOW_READING_REWRITE', 3);

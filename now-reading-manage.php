@@ -142,15 +142,21 @@ function nr_manage() {
 										<tr>
 											<th scope="col">Key:</th>
 											<th scope="col">Value:</th>
+											<th scope="col"></th>
 										</tr>
 									</thead>
 									<tbody id="book-meta-table-0" class="book-meta-table">
 			';
 			foreach( $meta as $key => $val ) {
+				$url = get_settings('home')."/wp-content/plugins/now-reading/edit.php?action=deletemeta&id={$existing->id}&key=" . urlencode($key);
+				if( function_exists('wp_nonce_url') )
+					$url = wp_nonce_url($url, 'now-reading-delete-meta_' . $existing->id . $key);
+				
 				echo '
 					<tr>
 						<td><textarea name="keys-0[]" class="key">'.wp_specialchars($key).'</textarea></td>
 						<td><textarea name="values-0[]" class="value">'.wp_specialchars($val).'</textarea></td>
+						<td><a href="'.$url.'">Delete</a></td>
 					</tr>
 				';
 			}

@@ -147,6 +147,19 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			header("Location: $forward");
 			die;
 		break;
+		
+		case 'deletemeta':
+			$id = intval($_GET['id']);
+			$key = $_GET['key'];
+			
+			check_admin_referer('now-reading-delete-meta_' . $id . $key);
+			
+			delete_book_meta($id, $key);
+			
+			$forward = get_settings('home') . "/wp-admin/edit.php?page=now-reading-manage.php&action=editsingle&id=$id&updated=1";
+			header("Location: $forward");
+			die;
+		break;
 	}
 	
 	die;

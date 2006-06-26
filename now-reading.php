@@ -805,6 +805,64 @@ function add_book_meta( $id, $key, $value ) {
 }
 
 /**
+ * Updates the meta key-value pairing for the given book. If the key does not exist, it will be created.
+ */
+function update_book_meta( $id, $key, $value ) {
+	global $wpdb;
+	
+	$key = $wpdb->escape($key);
+	$value = $wpdb->escape($value);
+	
+	$existing = $wpdb->get_var("
+	SELECT
+		m_id AS id
+	FROM
+		{$wpdb->prefix}now_reading_meta
+	WHERE
+		m_book = '$id'
+		AND
+		m_key = '$key'
+	");
+	
+	if( $existing != null ) {
+		$result = $wpdb->query("
+		UPDATE {$wpdb->prefix}now_reading_meta
+		SET
+			m_key = '$key',
+			m_value = '$value'
+		WHERE
+			m_id = '$existing'
+		");
+	} else {
+		$result = $wpdb->query("
+		INSERT INTO {$wpdb->prefix}now_reading_meta
+			(m_book, m_key, m_value)
+			VALUES('$id', '$key', '$value')
+		");
+	}
+	return $result;
+}
+
+/**
+ * Deletes the meta key-value pairing for the given book with the given key.
+ */
+function delete_book_meta( $id, $key ) {
+	global $wpdb;
+	
+	$id = intval($id);
+	$key = $wpdb->escape($key);
+	
+	return $wpdb->query("
+	DELETE FROM
+		{$wpdb->prefix}now_reading_meta
+	WHERE
+		m_book = '$id'
+		AND
+		m_key = '$key'
+	");
+}
+
+/**
  * Returns true if we're on a Now Reading page.
  */
 function is_now_reading_page() {
@@ -850,45 +908,6 @@ function nr_page_title( $title ) {
 		return $separator.$title;
 	}
 	return '';
-}
-
-/**
- * Updates the meta key-value pairing for the given book. If the key does not exist, it will be created.
- */
-function update_book_meta( $id, $key, $value ) {
-	global $wpdb;
-	
-	$key = $wpdb->escape($key);
-	$value = $wpdb->escape($value);
-	
-	$existing = $wpdb->get_var("
-	SELECT
-		m_id AS id
-	FROM
-		{$wpdb->prefix}now_reading_meta
-	WHERE
-		m_book = '$id'
-		AND
-		m_key = '$key'
-	");
-	
-	if( $existing != null ) {
-		$result = $wpdb->query("
-		UPDATE {$wpdb->prefix}now_reading_meta
-		SET
-			m_key = '$key',
-			m_value = '$value'
-		WHERE
-			m_id = '$existing'
-		");
-	} else {
-		$result = $wpdb->query("
-		INSERT INTO {$wpdb->prefix}now_reading_meta
-			(m_book, m_key, m_value)
-			VALUES('$id', '$key', '$value')
-		");
-	}
-	return $result;
 }
 
 /**

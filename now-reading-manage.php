@@ -82,7 +82,7 @@ function nr_manage() {
 			<div class="wrap">
 				<h2>Edit Book</h2>
 				
-				<form method="post" action="'.get_settings('home').'/wp-content/plugins/now-reading/now-reading-manage.php">
+				<form method="post" action="'.get_settings('home').'/wp-content/plugins/now-reading/edit.php">
 			';
 			
 			if( function_exists('wp_nonce_field') )

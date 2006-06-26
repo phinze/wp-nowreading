@@ -11,7 +11,7 @@ Author URI: http://robm.me.uk/
 define('NOW_READING_VERSION', '4.1');
 define('NOW_READING_DB', 14);
 define('NOW_READING_OPTIONS', 2);
-define('NOW_READING_REWRITE', 5);
+define('NOW_READING_REWRITE', 6);
 
 define('NRTD', 'now-reading');
 
@@ -72,12 +72,12 @@ add_filter('query_vars', 'nr_query_vars');
  */
 function nr_mod_rewrite( $rules ) {
 	global $wp_rewrite;
-	$rules['library/([0-9]+)/?$']			= 'index.php?now_reading_id='.$wp_rewrite->preg_index(1);
-	$rules['library/tag/([^/]+)/?$']		= 'index.php?now_reading_tag='.$wp_rewrite->preg_index(1);
-	$rules['library/search/?$']				= 'index.php?now_reading_search=true';
-	$rules['library/([^/]+)/([^/]+)/?']		= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1).'&now_reading_title='.$wp_rewrite->preg_index(2);
-	$rules['library/([^/]+)/?']				= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1);
-	$rules['library/?$']					= 'index.php?now_reading_library=true';
+	$rules['^library/([0-9]+)/?$']			= 'index.php?now_reading_id='.$wp_rewrite->preg_index(1);
+	$rules['^library/tag/([^/]+)/?$']		= 'index.php?now_reading_tag='.$wp_rewrite->preg_index(1);
+	$rules['^library/search/?$']				= 'index.php?now_reading_search=true';
+	$rules['^library/([^/]+)/([^/]+)/?$']		= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1).'&now_reading_title='.$wp_rewrite->preg_index(2);
+	$rules['^library/([^/]+)/?$']				= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1);
+	$rules['^library/?$']					= 'index.php?now_reading_library=true';
 	return $rules;
 }
 add_filter('rewrite_rules_array', 'nr_mod_rewrite');
@@ -480,6 +480,8 @@ function library_init() {
 	
 	if( is_now_reading_page() )
 		add_filter('wp_title', 'nr_page_title');
+	else
+		return;
 	
 	if( $wp->query_vars['now_reading_library'] ) {
 		// Library page:
@@ -813,7 +815,9 @@ function is_now_reading_page() {
 		!empty($wp->query_vars['now_reading_library'])	||
 		!empty($wp->query_vars['now_reading_search'])	||
 		!empty($wp->query_vars['now_reading_id'])		||
-		!empty($wp->query_vars['now_reading_tag'])
+		!empty($wp->query_vars['now_reading_tag'])		||
+		!empty($wp->query_vars['now_reading_title'])	||
+		!empty($wp->query_vars['now_reading_author'])
 	);
 }
 

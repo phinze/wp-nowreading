@@ -52,6 +52,10 @@ function now_reading_add() {
 		echo '<p style="color:red;"><strong>'.sprintf(__("CAUTION: A newer version of Now Reading exists! Please download it <a href='%s'>here</a>.", NRTD), 'http://robm.me.uk/projects/plugins/wordpress/now-reading/').'</strong></p>';
 	}
 	
+	$thispage = 'post-new.php?page=now-reading-add.php';
+	if( !file_exists(dirname(__FILE__).'/../../../wp-admin/post-new.php') )
+		$thispage = 'post.php?page=now-reading-add.php';
+	
 	if( !empty($_POST['u_isbn']) || !empty($_POST['u_title']) ) {
 		
 		echo '<h3>'.__("Search Results", NRTD).'</h3>';
@@ -127,7 +131,7 @@ function now_reading_add() {
 		
 		<h3>'.__("Add a book manually", NRTD).'</h3>
 		
-		<form method="post" action="post-new.php?page=now-reading-add.php">
+		<form method="post" action="'.$thispage.'">
 		
 		';
 		
@@ -171,7 +175,7 @@ function now_reading_add() {
 	
 	<p>'.sprintf(__("Now Reading is currently set to search the <strong>amazon%s</strong> domain; you can change this setting and others in the <a href='%s'>options page</a>.", NRTD), $options['domain'], "options-general.php?page=now-reading-options.php").'</p>
 	
-	<form method="post" action="post-new.php?page=now-reading-add.php">
+	<form method="post" action="'.$thispage.'">
 	';
 	
 	if ( function_exists('wp_nonce_field') )

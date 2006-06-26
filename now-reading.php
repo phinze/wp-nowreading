@@ -160,7 +160,7 @@ require_once dirname(__FILE__) . '/template-functions.php';
  * <code>
  * $books = get_books('status=reading&orderby=started&order=asc&num=-1');
  * </code>
- * @param string $query Query string containing restrictions on what to fetch. Valid variables: $num, $status, $orderby, $order
+ * @param string $query Query string containing restrictions on what to fetch. Valid variables: $num, $status, $orderby, $order, $search, $author, $title
  * @return array Returns a numerically indexed array in which each element corresponds to a book.
  */
 function get_books( $query ) {
@@ -192,7 +192,7 @@ function get_books( $query ) {
 	} else
 		$search = '';
 	
-	$order	= ( strcasecmp($order, 'desc') == 0 ) ? 'DESC' : 'ASC';
+	$order	= ( strtolower($order) == 'desc' ) ? 'DESC' : 'ASC';
 	
 	switch( $orderby ) {
 		case 'added':
@@ -231,6 +231,16 @@ function get_books( $query ) {
 	} else
 		$limit = '';
 	
+	if( !empty($author) ) {
+		$author = $wpdb->escape($author);
+		$author = "AND b_author = '$author'";
+	}
+	
+	if( !empty($title) ) {
+		$title = $wpdb->escape($title);
+		$title = "AND b_title = '$title'";
+	}
+	
 	$books = $wpdb->get_results("
 	SELECT 
 		COUNT(*) AS count,
@@ -248,6 +258,8 @@ function get_books( $query ) {
 		$status
 		$id
 		$search
+		$author
+		$title
         GROUP BY
 		b_id
 	ORDER BY

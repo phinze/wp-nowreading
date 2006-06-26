@@ -11,7 +11,7 @@ Author URI: http://robm.me.uk/
 define('NOW_READING_VERSION', '4.1');
 define('NOW_READING_DB', 14);
 define('NOW_READING_OPTIONS', 2);
-define('NOW_READING_REWRITE', 3);
+define('NOW_READING_REWRITE', 5);
 
 define('NRTD', 'now-reading');
 
@@ -59,6 +59,8 @@ function nr_query_vars( $vars ) {
 	$vars[] = 'now_reading_id';
 	$vars[] = 'now_reading_tag';
 	$vars[] = 'now_reading_search';
+	$vars[] = 'now_reading_title';
+	$vars[] = 'now_reading_author';
 	return $vars;
 }
 add_filter('query_vars', 'nr_query_vars');
@@ -70,10 +72,12 @@ add_filter('query_vars', 'nr_query_vars');
  */
 function nr_mod_rewrite( $rules ) {
 	global $wp_rewrite;
-	$rules['library/([0-9]+)/?$'] = 'index.php?now_reading_id='.$wp_rewrite->preg_index(1);
-	$rules['library/tag/([^/]+)/?$'] = 'index.php?now_reading_tag='.$wp_rewrite->preg_index(1);
-	$rules['library/search/?$'] = 'index.php?now_reading_search=true';
-	$rules['library/?$'] = 'index.php?now_reading_library=true';
+	$rules['library/([0-9]+)/?$']			= 'index.php?now_reading_id='.$wp_rewrite->preg_index(1);
+	$rules['library/tag/([^/]+)/?$']		= 'index.php?now_reading_tag='.$wp_rewrite->preg_index(1);
+	$rules['library/search/?$']				= 'index.php?now_reading_search=true';
+	$rules['library/([^/]+)/([^/]+)/?']		= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1).'&now_reading_title='.$wp_rewrite->preg_index(2);
+	$rules['library/([^/]+)/?']				= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1);
+	$rules['library/?$']					= 'index.php?now_reading_library=true';
 	return $rules;
 }
 add_filter('rewrite_rules_array', 'nr_mod_rewrite');
@@ -505,6 +509,26 @@ function library_init() {
 		unset($_GET['q']); // Just in case
 		
 		$load = nr_load_template('search.php');
+		if( is_wp_error($load) )
+			echo $load->get_error_message();
+		
+		die;
+	} elseif( $wp->query_vars['now_reading_author'] && $wp->query_vars['now_reading_title'] ) {
+		// Book permalink with title and author.
+		$author				= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
+		$title				= $wpdb->escape(urldecode($wp->query_vars['now_reading_title']));
+		$GLOBALS['nr_id']	= $wpdb->get_var("SELECT b_id FROM {$wpdb->prefix}now_reading WHERE b_title = '$title' AND b_author = '$author'");
+		
+		$load = nr_load_template('single.php');
+		if( is_wp_error($load) )
+			echo $load->get_error_message();
+		
+		die;
+	} elseif( $wp->query_vars['now_reading_author'] ) {
+		// Author permalink.
+		$GLOBALS['nr_author']	= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
+		
+		$load = nr_load_template('author.php');
 		if( is_wp_error($load) )
 			echo $load->get_error_message();
 		

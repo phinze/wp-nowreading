@@ -19,7 +19,7 @@
 			<p><a href="<?php library_url() ?>">&larr; Back to library</a></p>
 			
 			<h2><?php book_title() ?></h2>
-			<p>By <?php book_author() ?></p>
+			<p>By <a href="<?php book_author_permalink() ?>"><?php book_author() ?></a></p>
 			
 			<p>
 				<a href="<?php book_url() ?>"><img src="<?php book_image() ?>" alt="<?php book_title() ?>" /></a>

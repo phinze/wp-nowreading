@@ -16,4 +16,6 @@ add_filter('book_meta_key', 'wptexturize');
 add_filter('book_meta_val', 'wptexturize');
 add_filter('book_meta_val', 'wpautop');
 
+add_filter('the_book_author', 'ucwords');
+
 ?>

@@ -24,7 +24,7 @@
 			
 			<?php while( have_books('status=unread&num=-1') ) : the_book(); ?>
 				
-				<li><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <?php book_author() ?></li>
+				<li><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <a href="<?php book_author_permalink() ?>"><?php book_author() ?></a></li>
 				
 			<?php endwhile; ?>
 			
@@ -46,7 +46,7 @@
 				
 				<li>
 					<p><a href="<?php book_permalink() ?>"><img src="<?php book_image() ?>" alt="<?php book_title() ?>" /></a></p>
-					<p><?php book_title() ?> by <?php book_author() ?></p>
+					<p><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <a href="<?php book_author_permalink() ?>"><?php book_author() ?></a></p>
 				</li>
 				
 			<?php endwhile; ?>
@@ -67,7 +67,7 @@
 			
 			<?php while( have_books('status=read&orderby=finished&order=desc&num=-1') ) : the_book(); ?>
 				
-				<li><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <?php book_author() ?></li>
+				<li><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <a href="<?php book_author_permalink() ?>"><?php book_author() ?></a></li>
 				
 			<?php endwhile; ?>
 			

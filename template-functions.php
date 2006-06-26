@@ -122,18 +122,49 @@ function total_books( $echo = true ) {
  * Prints the URL to an internal page displaying data about the book.
  */
 function book_permalink( $echo = true, $id = 0 ) {
-	global $book;
+	global $book, $wpdb;;
 	$options = get_option('nowReadingOptions');
 	
 	if( $id == 0 )
 		$id = $book->id;
 	
+	$existing = $wpdb->get_row("SELECT b_title AS title, b_author AS author FROM {$wpdb->prefix}now_reading WHERE b_id = '$id'");
+	
+	if( !$existing )
+		return;
+	
+	$author = urlencode(strtolower($existing->author));
+	$title = urlencode(strtolower($existing->title));
+	
 	if( $options['useModRewrite'] )
-		$url = get_settings('home')."/library/{$id}/";
+		$url = get_settings('home')."/library/$author/$title/";
 	else
-		$url = get_settings('home')."/index.php?now_reading_single=true&now_reading_id=$id";
+		$url = get_settings('home')."/index.php?now_reading_author=$author&now_reading_title=$title";
 	
 	$url = apply_filters('book_permalink', $url);
+	if( $echo )
+		echo $url;
+	return $url;
+}
+
+function book_author_permalink( $echo = true, $author = null ) {
+	global $book;
+	$options = get_option('nowReadingOptions');
+	
+	if( !$author )
+		$author = $book->author;
+	
+	if( !$author )
+		return;
+	
+	$author = urlencode(strtolower($author));
+	
+	if( $options['useModRewrite'] )
+		$url = get_settings('home')."/library/$author/";
+	else
+		$url = get_settings('home')."/index.php?now_reading_author=$author";
+	
+	$url = apply_filters('book_author_permalink', $url);
 	if( $echo )
 		echo $url;
 	return $url;
@@ -425,6 +456,17 @@ function the_tag( $echo = true ) {
 	if( $echo )
 		echo $tag;
 	return $tag;
+}
+
+/**
+ * Returns or prints the currently viewed author.
+ */
+function the_book_author( $echo = true ) {
+	$author = htmlentities(stripslashes($GLOBALS['nr_author']));
+	$author = apply_filters('the_book_author', $author);
+	if( $echo )
+		echo $author;
+	return $author;
 }
 
 /**

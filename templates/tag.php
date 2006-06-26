@@ -24,7 +24,7 @@
 		
 		<?php while( have_books("tag={$GLOBALS['nr_tag']}") ) : the_book(); ?>
 			
-			<li><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <?php book_author() ?></li>
+			<li><a href="<?php book_permalink() ?>"><?php book_title() ?></a> by <a href="<?php book_author_permalink() ?>"><?php book_author() ?></a></li>
 			
 		<?php endwhile; ?>
 		

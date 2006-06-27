@@ -437,19 +437,21 @@ function query_amazon( $query ) {
 		
 		foreach( $items as $item ) {
 			$author	= $item->getElementByPath('ItemAttributes/Author');
-			$author	= $author->getValue();
+			if( $author )
+				$author	= $author->getValue();
 			
 			$title	= $item->getElementByPath('ItemAttributes/Title');
+			if( !$title )
+				break;
 			$title	= $title->getValue();
 			
 			$asin	= $item->getElement('ASIN');
+			if( !$asin )
+				break;
 			$asin	= $asin->getValue();
 			
 			if( $options['debugMode'] )
 				robm_dump("book:", $author, $title, $asin);
-			
-			if( empty($title) && empty($asin) )
-				break;
 			
 			$image	= $item->getElementByPath("{$options['imageSize']}Image/URL");
 			if( $image )

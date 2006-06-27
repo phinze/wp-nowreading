@@ -452,8 +452,9 @@ function query_amazon( $query ) {
 				break;
 			
 			$image	= $item->getElementByPath("{$options['imageSize']}Image/URL");
-			$image	= $image->getValue();
-			if( empty($image) )
+			if( $image )
+				$image	= $image->getValue();
+			else
 				$image = get_settings('home').'/wp-content/plugins/now-reading/no-image.png';
 			
 			$results[] = compact('author', 'title', 'image', 'asin');

@@ -85,7 +85,7 @@ function now_reading_add() {
 				}
 			}
 		} else {
-			if( count($results) < 1 ) {
+			if( !$results ) {
 				if( $using_isbn )
 					echo '<p>'.sprintf(__("Sorry, but amazon%s did not return any results for the ISBN number <code>%s</code>.", NRTD), $options['domain'], $isbn).'</p>';
 				else

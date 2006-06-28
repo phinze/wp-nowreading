@@ -22,9 +22,9 @@ if( !empty($_POST['amazon_data']) ) {
 	foreach( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
 		$query .= "$field=$value&";
 	
-	$redirect = wp_redirect(get_settings('home').'/wp-admin/post-new.php?page=now-reading-add.php';
+	$redirect = get_settings('home').'/wp-admin/post-new.php?page=now-reading-add.php';
 	if( !file_exists(dirname(__FILE__).'/../../../wp-admin/post-new.php') )
-		$redirect = wp_redirect(get_settings('home').'/wp-admin/post.php?page=now-reading-add.php';
+		$redirect = get_settings('home').'/wp-admin/post.php?page=now-reading-add.php';
 	
 	if( add_book($query) ) {
 		wp_redirect("$redirect&added=true");

@@ -1,12 +1,12 @@
 <?php
 
-if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
+if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 	define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
 	require_once ABSPATH . '/wp-admin/admin.php';
 	
 	$_POST = stripslashes_deep($_POST);
 	
-	if( !current_user_can('level_9') )
+	if ( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );
 	
 	$wpvarstoreset = array('action');
@@ -25,7 +25,7 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 		}
 	}
 	
-	switch( $action ) {
+	switch ( $action ) {
 		case 'delete':
 			$id = intval($_GET['id']);
 			
@@ -45,15 +45,15 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			
 			$count = intval($_POST['count']);
 			
-			if( $count > total_books(0) )
+			if ( $count > total_books(0) )
 				die;
 			
 			$updated = 0;
 			
-			for( $i = 0; $i < $count; $i++ ) {
+			for ( $i = 0; $i < $count; $i++ ) {
 				
 				$id = intval($_POST['id'][$i]);
-				if( $id == 0 )
+				if ( $id == 0 )
 					continue;
 				
 				$author		= $wpdb->escape($_POST['author'][$i]);
@@ -64,7 +64,7 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				$finished	= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
 				$post		= intval($_POST['posts'][$i]);
 				
-				if( !empty($_POST['tags'][$i]) ) {
+				if ( !empty($_POST['tags'][$i]) ) {
 					// Delete current relationships and add them fresh.
 					$wpdb->query("
 					DELETE FROM
@@ -76,13 +76,13 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					$tags = stripslashes($_POST['tags'][$i]);
 					$tags = explode(',', $tags);
 					
-					foreach( $tags as $tag ) {
+					foreach ( $tags as $tag ) {
 						$tag = trim($tag);
 						tag_book($id, $tag);
 					}
 				}
 				
-				if( !empty($_POST["review"][$i]) ) {
+				if ( !empty($_POST["review"][$i]) ) {
 					$rating = intval($_POST["rating"][$i]);
 					$review = $wpdb->escape($_POST["review"][$i]);
 					$review = ", b_rating = '$rating', b_review = '$review'";
@@ -95,13 +95,13 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				");
 				
 				// If the book is currently "unread"/"reading" but is being changed to "read", we need to add a b_finished value.
-				if( $current_status != 'read' && $status == 'read' )
+				if ( $current_status != 'read' && $status == 'read' )
 					$finished = 'b_finished = "' . date('Y-m-d h:i:s') . '",';
 				else
 					$finished = "b_finished = '$finished',";
 				
 				// Likewise, if the book is currently "unread" but is being changed to "reading", we need to add a b_started value.
-				if( $current_status != 'reading' && $status == 'reading' )
+				if ( $current_status != 'reading' && $status == 'reading' )
 					$started = 'b_started = "' . date('Y-m-d h:i:s') . '",';
 				else
 					$started = "b_started = '$started',";
@@ -120,19 +120,19 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				WHERE
 					b_id = $id
 				");
-				if( $wpdb->rows_affected > 0 )
+				if ( $wpdb->rows_affected > 0 )
 					$updated++;
 				
 				// Meta stuff
 				$keys = $_POST["keys-$i"];
 				$vals = $_POST["values-$i"];
 				
-				if( count($keys) > 0 && count($vals) > 0 ) {
-					for( $j = 0; $j < count($keys); $j++ ) {
+				if ( count($keys) > 0 && count($vals) > 0 ) {
+					for ( $j = 0; $j < count($keys); $j++ ) {
 						$key = $keys[$j];
 						$val = $vals[$j];
 						
-						if( empty($key) || empty($val) )
+						if ( empty($key) || empty($val) )
 							continue;
 						
 						update_book_meta($id, $key, $val);
@@ -141,7 +141,7 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			}
 			
 			$referer = wp_get_referer();
-			if( empty($referer) )
+			if ( empty($referer) )
 				$forward = get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php&updated=' . $updated;
 			else
 				$forward = wp_get_referer() . '&updated=' . $updated;

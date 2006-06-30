@@ -11,7 +11,7 @@ function now_reading_add() {
 	
 	$options = get_option('nowReadingOptions');
 	
-	if( !empty($_GET['error']) ) {
+	if ( !empty($_GET['error']) ) {
 		echo '
 		<div id="message" class="error fade">
 			<p><strong>' . __("Error adding book!", NRTD) . '</strong></p>
@@ -19,7 +19,7 @@ function now_reading_add() {
 		';
 	}
 	
-	if( !empty($_GET['added']) ) {
+	if ( !empty($_GET['added']) ) {
 		echo '
 		<div id="message" class="updated fade">
 			<p><strong>' . __("Book added.", NRTD) . '</strong></p>
@@ -39,7 +39,7 @@ function now_reading_add() {
 	';
 	
 	$newer = nr_check_for_updates();
-	if( is_wp_error($newer) ) {
+	if ( is_wp_error($newer) ) {
 		echo '
 		<div id="message" class="error fade">
 			<p><strong>' . __("Oops!", NRTD) . '</strong></p>
@@ -48,28 +48,28 @@ function now_reading_add() {
 			<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), 'options-general.php?page=now-reading-manage.php') . '</p>
 		</div>
 		';
-	} elseif( $newer ) {
+	} elseif ( $newer ) {
 		echo '<p style="color:red;"><strong>' . sprintf(__("CAUTION: A newer version of Now Reading exists! Please download it <a href='%s'>here</a>.", NRTD), 'http://robm.me.uk/projects/plugins/wordpress/now-reading/') . '</strong></p>';
 	}
 	
-	if( !empty($_POST['u_isbn']) || !empty($_POST['u_title']) ) {
+	if ( !empty($_POST['u_isbn']) || !empty($_POST['u_title']) ) {
 		
 		echo '<h3>' . __("Search Results", NRTD) . '</h3>';
 		
 		$isbn	= $_POST['u_isbn'];
 		$author	= $_POST['u_author'];
 		$title	= $_POST['u_title'];
-		if( !empty($_POST['u_isbn']) )
+		if ( !empty($_POST['u_isbn']) )
 			$using_isbn = true;
 			
-		if( $using_isbn )
+		if ( $using_isbn )
 			$results = query_amazon("isbn=$isbn");
 		else
 			$results = query_amazon("title=$title&author=$author");
 		
-		if( is_wp_error($results) ) {
-			foreach( $results->get_error_codes() as $code ) {
-				if( $code == 'curl-not-installed' ) {
+		if ( is_wp_error($results) ) {
+			foreach ( $results->get_error_codes() as $code ) {
+				if ( $code == 'curl-not-installed' ) {
 					echo '
 						<div id="message" class="error fade">
 							<p><strong>' . __("Oops!", NRTD) . '</strong></p>
@@ -81,18 +81,18 @@ function now_reading_add() {
 				}
 			}
 		} else {
-			if( !$results ) {
-				if( $using_isbn )
+			if ( !$results ) {
+				if ( $using_isbn )
 					echo '<p>' . sprintf(__("Sorry, but amazon%s did not return any results for the ISBN number <code>%s</code>.", NRTD), $options['domain'], $isbn) . '</p>';
 				else
 					echo '<p>' . sprintf(__("Sorry, but amazon%s did not return any results for the book &ldquo;%s&rdquo;", NRTD), $options['domain'], $title) . '</p>';
 			} else {
-				if( $using_isbn )
+				if ( $using_isbn )
 					echo '<p>' . sprintf(__("You searched for the ISBN <code>%s<code>. amazon%s returned these results:", NRTD), $isbn, $options['domain']) . '</p>';
 				else
 					echo '<p>' . sprintf(__("You searched for the book &ldquo;%s&rdquo;. amazon%s returned these results:", NRTD), $title, $options['domain']) . '</p>';
 				
-				foreach( $results as $result ) {
+				foreach ( $results as $result ) {
 					extract($result);
 					$data = serialize($result);
 					echo '
@@ -119,7 +119,7 @@ function now_reading_add() {
 		}
 		
 		$thispage = 'post-new.php?page=now-reading-add.php';
-		if( !file_exists(dirname(__FILE__) . '/../../../wp-admin/post-new.php') )
+		if ( !file_exists(dirname(__FILE__) . '/../../../wp-admin/post-new.php') )
 			$thispage = 'post.php?page=now-reading-add.php';
 		
 		echo '
@@ -164,7 +164,7 @@ function now_reading_add() {
 		';
 	}
 	
-	if( empty($_POST) )
+	if ( empty($_POST) )
 		echo '
 		<div class="nr-add-grouping">
 		<h3>Add a new book</h3>';

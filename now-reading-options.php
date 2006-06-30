@@ -9,7 +9,7 @@ function nr_options() {
 	
 	$options = get_option('nowReadingOptions');
 	
-	if( !empty($_GET['curl']) ) {
+	if ( !empty($_GET['curl']) ) {
 		echo '
 			<div class="error fade">
 				<p><strong>Oops!</strong></p>
@@ -19,7 +19,7 @@ function nr_options() {
 		';
 	}
 	
-	if( !empty($_GET['imagesize']) ) {
+	if ( !empty($_GET['imagesize']) ) {
 		echo '
 			<div class="error fade">
 				<p><strong>Oops!</strong></p>
@@ -71,8 +71,8 @@ function nr_options() {
 					<select name="domain">
 	';
 	
-	foreach( $nr_domains as $domain => $country ) {
-		if( $domain == $options['domain'] )
+	foreach ( $nr_domains as $domain => $country ) {
+		if ( $domain == $options['domain'] )
 			$selected = ' selected="selected"';
 		else
 			$selected = '';

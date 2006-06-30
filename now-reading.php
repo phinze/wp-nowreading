@@ -40,10 +40,10 @@ load_plugin_textdomain(NRTD);
  */
 function nr_check_versions() {
 	$versions = get_option('nowReadingVersions');
-	if( empty($versions) )
+	if ( empty($versions) )
 		nr_install();
 	else {
-		if( $versions['db'] < NOW_READING_DB || $versions['options'] < NOW_READING_OPTIONS || $versions['rewrite'] < NOW_READING_REWRITE )
+		if ( $versions['db'] < NOW_READING_DB || $versions['options'] < NOW_READING_OPTIONS || $versions['rewrite'] < NOW_READING_REWRITE )
 			nr_install();
 	}
 }
@@ -176,7 +176,7 @@ function get_books( $query ) {
 	parse_str($query);
 
 	// We're fetching a collection of books, not just one.
-	switch( $status ) {
+	switch ( $status ) {
 		case 'unread':
 		case 'reading':
 		case 'read':
@@ -185,12 +185,12 @@ function get_books( $query ) {
 			$status = 'all';
 			break;
 	}
-	if( $status != 'all' )
+	if ( $status != 'all' )
 		$status = "AND b_status = '$status'";
 	else
 		$status = '';
 	
-	if( !empty($search) ) {
+	if ( !empty($search) ) {
 		$search = $wpdb->escape($search);
 		$search = "AND ( b_author LIKE '%$search%' OR b_title LIKE '%$search%' OR m_value LIKE '%$search%')";
 	} else
@@ -198,7 +198,7 @@ function get_books( $query ) {
 	
 	$order	= ( strtolower($order) == 'desc' ) ? 'DESC' : 'ASC';
 	
-	switch( $orderby ) {
+	switch ( $orderby ) {
 		case 'added':
 			$orderby = 'b_added';
 			break;
@@ -225,22 +225,22 @@ function get_books( $query ) {
 			break;
 	}
 	
-	if( empty($num) )
+	if ( empty($num) )
 		$num = 5;
 	
-	if( $num > -1 && $offset >= 0 ) {
+	if ( $num > -1 && $offset >= 0 ) {
 		$offset	= intval($offset);
 		$num 	= intval($num);
 		$limit = "LIMIT $offset, $num";
 	} else
 		$limit = '';
 	
-	if( !empty($author) ) {
+	if ( !empty($author) ) {
 		$author = $wpdb->escape($author);
 		$author = "AND b_author = '$author'";
 	}
 	
-	if( !empty($title) ) {
+	if ( !empty($title) ) {
 		$title = $wpdb->escape($title);
 		$title = "AND b_title = '$title'";
 	}
@@ -315,8 +315,8 @@ function add_book( $query ) {
 	
 	$fields = apply_filters('add_book_fields', $fields);
 	
-	foreach( $fields as $field => $value ) {
-		if( empty($field) || empty($value) )
+	foreach ( $fields as $field => $value ) {
+		if ( empty($field) || empty($value) )
 			continue;
 		$columns .= ", $field";
 		$values .= ", '$value'";
@@ -328,7 +328,7 @@ function add_book( $query ) {
 	VALUES(''$values)
 	";
 	
-	if( $wpdb->query($query) ) {
+	if ( $wpdb->query($query) ) {
 		do_action('book_added', $wpdb->insert_id);
 		return true;
 	} else
@@ -347,19 +347,19 @@ function query_amazon( $query ) {
 	
 	parse_str($query);
 	
-	if( empty($isbn) && empty($title) && empty($author) )
+	if ( empty($isbn) && empty($title) && empty($author) )
 		return false;
 	
-	if( !empty($isbn) )
+	if ( !empty($isbn) )
 		$using_isbn = true;
 	
 	// Our query needs different vars depending on whether or not we're searching by ISBN, so build it here.
-	if( $using_isbn ) {
+	if ( $using_isbn ) {
 		$isbn = preg_replace('#([^0-9]+)#', '', $isbn);
 		$query = "&Power=asin%3A+$isbn";
 	} else {
 		$query = '&Title=' . urlencode($title);
-		if( !empty($author) )
+		if ( !empty($author) )
 			$query .= '&Author=' . urlencode($author);
 	}
 	
@@ -368,8 +368,8 @@ function query_amazon( $query ) {
 			 . '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
-	if( $options['httpLib'] == 'curl' ) {
-		if( !function_exists('curl_init') ) {
+	if ( $options['httpLib'] == 'curl' ) {
+		if ( !function_exists('curl_init') ) {
 			return new WP_Error('curl-not-installed', __('cURL is not installed correctly.', NRTD));
 		} else {
 			$ch = curl_init();
@@ -393,7 +393,7 @@ function query_amazon( $query ) {
 		$xmlString = $snoopy->results;
 	}
 	
-	if( empty($xmlString) ) {
+	if ( empty($xmlString) ) {
 		do_action('nr_search_error', $query);
 		echo '
 		<div id="message" class="error fade">
@@ -402,7 +402,7 @@ function query_amazon( $query ) {
 			<p>' . __("Amazon's Web Services may be down, or there may be a problem with your server configuration.") . '</p>
                         
                 ';
-                if( $options['httpLib'] )
+                if ( $options['httpLib'] )
 		    echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
                 echo '
 		</div>
@@ -410,17 +410,17 @@ function query_amazon( $query ) {
 		return false;
 	}
 	
-	if( $options['debugMode'] )
+	if ( $options['debugMode'] )
 		robm_dump("raw XML:", htmlentities(str_replace(">", ">\n", str_replace("<", "\n<", $xmlString))));
 	
-	if( !class_exists('MiniXMLDoc') )
+	if ( !class_exists('MiniXMLDoc') )
 		require_once dirname(__FILE__) . '/xml/minixml.inc.php';
 	
 	$xmlString = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $xmlString);
 	$doc = new MiniXMLDoc();
 	$doc->fromString($xmlString);
 	
-	if( $options['debugMode'] ) {
+	if ( $options['debugMode'] ) {
 		robm_dump("doc:", $doc);
 		robm_dump("doc xml:", htmlentities($doc->toString()));
 	}
@@ -428,33 +428,33 @@ function query_amazon( $query ) {
 	$items = $doc->getElementByPath('ItemSearchResponse/Items');
 	$items = $items->getAllChildren('Item');
 	
-	if( count($items) > 0 ) {
+	if ( count($items) > 0 ) {
 		
 		$results = array();
 		
-		if( $options['debugMode'] )
+		if ( $options['debugMode'] )
 			robm_dump("items:", $items);
 		
-		foreach( $items as $item ) {
+		foreach ( $items as $item ) {
 			$author	= $item->getElementByPath('ItemAttributes/Author');
-			if( $author )
+			if ( $author )
 				$author	= $author->getValue();
 			
 			$title	= $item->getElementByPath('ItemAttributes/Title');
-			if( !$title )
+			if ( !$title )
 				break;
 			$title	= $title->getValue();
 			
 			$asin	= $item->getElement('ASIN');
-			if( !$asin )
+			if ( !$asin )
 				break;
 			$asin	= $asin->getValue();
 			
-			if( $options['debugMode'] )
+			if ( $options['debugMode'] )
 				robm_dump("book:", $author, $title, $asin);
 			
 			$image	= $item->getElementByPath("{$options['imageSize']}Image/URL");
-			if( $image )
+			if ( $image )
 				$image	= $image->getValue();
 			else
 				$image = get_settings('home') . '/wp-content/plugins/now-reading/no-image.png';
@@ -481,60 +481,60 @@ function library_init() {
 	
 	$wp->parse_request();
 	
-	if( is_now_reading_page() )
+	if ( is_now_reading_page() )
 		add_filter('wp_title', 'nr_page_title');
 	else
 		return;
 	
-	if( $wp->query_vars['now_reading_library'] ) {
+	if ( $wp->query_vars['now_reading_library'] ) {
 		// Library page:
 		nr_load_template('library.php');
 		die;
-	} elseif( $wp->query_vars['now_reading_id'] ) {
+	} elseif ( $wp->query_vars['now_reading_id'] ) {
 		// Book permalink:
 		$GLOBALS['nr_id'] = intval($wp->query_vars['now_reading_id']);
 		
 		$load = nr_load_template('single.php');
-		if( is_wp_error($load) )
+		if ( is_wp_error($load) )
 			echo $load->get_error_message();
 		
 		die;
-	} elseif( $wp->query_vars['now_reading_tag'] ) {
+	} elseif ( $wp->query_vars['now_reading_tag'] ) {
 		// Tag permalink:
 		$GLOBALS['nr_tag'] = $wp->query_vars['now_reading_tag'];
 		
 		$load = nr_load_template('tag.php');
-		if( is_wp_error($load) )
+		if ( is_wp_error($load) )
 			echo $load->get_error_message();
 		
 		die;
-	} elseif( $wp->query_vars['now_reading_search'] ) {
+	} elseif ( $wp->query_vars['now_reading_search'] ) {
 		// Search page:
 		$GLOBALS['query'] = $_GET['q'];
 		unset($_GET['q']); // Just in case
 		
 		$load = nr_load_template('search.php');
-		if( is_wp_error($load) )
+		if ( is_wp_error($load) )
 			echo $load->get_error_message();
 		
 		die;
-	} elseif( $wp->query_vars['now_reading_author'] && $wp->query_vars['now_reading_title'] ) {
+	} elseif ( $wp->query_vars['now_reading_author'] && $wp->query_vars['now_reading_title'] ) {
 		// Book permalink with title and author.
 		$author				= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		$title				= $wpdb->escape(urldecode($wp->query_vars['now_reading_title']));
 		$GLOBALS['nr_id']	= $wpdb->get_var("SELECT b_id FROM {$wpdb->prefix}now_reading WHERE b_title = '$title' AND b_author = '$author'");
 		
 		$load = nr_load_template('single.php');
-		if( is_wp_error($load) )
+		if ( is_wp_error($load) )
 			echo $load->get_error_message();
 		
 		die;
-	} elseif( $wp->query_vars['now_reading_author'] ) {
+	} elseif ( $wp->query_vars['now_reading_author'] ) {
 		// Author permalink.
 		$GLOBALS['nr_author']	= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		
 		$load = nr_load_template('author.php');
-		if( is_wp_error($load) )
+		if ( is_wp_error($load) )
 			echo $load->get_error_message();
 		
 		die;
@@ -551,10 +551,10 @@ function nr_load_template( $filename ) {
 	$filename = basename($filename);
 	$template = TEMPLATEPATH ."/now-reading/$filename";
 	
-	if( !file_exists($template) )
+	if ( !file_exists($template) )
 		$template = dirname(__FILE__)."/templates/$filename";
 	
-	if( !file_exists($template) )
+	if ( !file_exists($template) )
 		return new WP_Error('template-missing', sprintf(__("Oops! The template file %s could not be found in either the Now Reading template directory or your theme's Now Reading directory.", NRTD), "<code>$filename</code>"));
 	
 	load_template($template);
@@ -579,22 +579,22 @@ function nr_check_for_updates() {
 	$check_url	= 'http://robm.me.uk/wp-content/plugins/downloads.php?name=now-reading&action=getlatest';
 	
 	// Some people don't have their plugins directory writable.
-	if( !is_writable($cache) )
+	if ( !is_writable($cache) )
 		return;
 	
 	// If the cache file doesn't exist and we can't create it, return.
-	if( !file_exists($cache) ) {
-		if( !@touch($cache) )
+	if ( !file_exists($cache) ) {
+		if ( !@touch($cache) )
 			return;
 	}
 	
 	// Only check for updates once a day.
-	if( ( filemtime($cache) + 86400 ) <= time() )
+	if ( ( filemtime($cache) + 86400 ) <= time() )
 		return;	
 	
 	
-	if( $options['httpLib'] == 'curl' ) {
-		if( !function_exists('curl_init') ) {
+	if ( $options['httpLib'] == 'curl' ) {
+		if ( !function_exists('curl_init') ) {
 			return new WP_Error('curl-not-installed', __('cURL is not installed correctly.', NRTD));
 		} else {
 			$ch = curl_init();
@@ -638,7 +638,7 @@ function nr_check_for_updates() {
 function get_book_tags( $id ) {
 	global $wpdb;
 	
-	if( !$id )
+	if ( !$id )
 		return array();
 	
 	$tags = $wpdb->get_results("
@@ -653,8 +653,8 @@ function get_book_tags( $id ) {
 	");
 	
 	$array = array();
-	if( count($tags) > 0 ) {
-		foreach($tags as $tag) {
+	if ( count($tags) > 0 ) {
+		foreach ($tags as $tag) {
 			$array[] = $tag->name;
 		}
 	}
@@ -668,7 +668,7 @@ function get_book_tags( $id ) {
 function tag_book( $id, $tag ) {
 	global $wpdb;
 	
-	if( !is_numeric($tag) )
+	if ( !is_numeric($tag) )
 		$tid = add_library_tag($tag);
 	else
 		$tid = $tag;
@@ -684,7 +684,7 @@ function tag_book( $id, $tag ) {
 		tag_id = '$tid'
 	");
 	
-	if( !$exists ) {
+	if ( !$exists ) {
 		$wpdb->query("
 		INSERT INTO {$wpdb->prefix}now_reading_books2tags
 		(book_id, tag_id)
@@ -740,7 +740,7 @@ function add_library_tag( $tag ) {
 		t_name = '$t'
 	");
 	
-	if( $count > 0 ) {
+	if ( $count > 0 ) {
 		$tid = $wpdb->get_var("
 		SELECT
 			t_id
@@ -767,12 +767,12 @@ function add_library_tag( $tag ) {
 function get_book_meta( $id, $key = '' ) {
 	global $wpdb;
 	
-	if( !$id )
+	if ( !$id )
 		return array();
 	
 	$id = intval($id);
 	
-	if( !empty($key) )
+	if ( !empty($key) )
 		$key = 'AND m_key = "' . $wpdb->escape($key) . '"';
 	else
 		$key = '';
@@ -787,11 +787,11 @@ function get_book_meta( $id, $key = '' ) {
 		$key
 	");
 	
-	if( !count($raws) )
+	if ( !count($raws) )
 		return array();
 	
 	$meta = array();
-	foreach($raws as $raw) {
+	foreach ($raws as $raw) {
 		$meta[$raw->m_key] = $raw->m_value;
 	}
 	
@@ -827,7 +827,7 @@ function update_book_meta( $id, $key, $value ) {
 		m_key = '$key'
 	");
 	
-	if( $existing != null ) {
+	if ( $existing != null ) {
 		$result = $wpdb->query("
 		UPDATE {$wpdb->prefix}now_reading_meta
 		SET
@@ -891,21 +891,21 @@ function nr_page_title( $title ) {
 	
 	$title = '';
 	
-	if( !empty($wp->query_vars['now_reading_library']) )
+	if ( !empty($wp->query_vars['now_reading_library']) )
 		$title = 'Library';
 	
-	if( !empty($wp->query_vars['now_reading_id']) ) {
+	if ( !empty($wp->query_vars['now_reading_id']) ) {
 		$book = get_book(intval($wp->query_vars['now_reading_id']));
 		$title = $book->title . ' by ' . $book->author;
 	}
 	
-	if( !empty($wp->query_vars['now_reading_tag']) )
+	if ( !empty($wp->query_vars['now_reading_tag']) )
 		$title = 'Books tagged with &ldquo;' . htmlentities($wp->query_vars['now_reading_tag']) . '&rdquo;';
 	
-	if( !empty($wp->query_vars['now_reading_search']) )
+	if ( !empty($wp->query_vars['now_reading_search']) )
 		$title = 'Library Search';
 	
-	if( !empty($title) ) {
+	if ( !empty($title) ) {
 		$title = apply_filters('now_reading_page_title', $title);
 		$separator = apply_filters('now_reading_page_title_separator', ' - ');
 		return $separator.$title;
@@ -923,15 +923,15 @@ function nr_header_stats() {
 }
 add_action('wp_head', 'nr_header_stats');
 
-if( !function_exists('robm_dump') ) {
+if ( !function_exists('robm_dump') ) {
 	/**
 	 * Dumps a variable in a pretty way.
 	 */
 	function robm_dump() {
 		echo '<pre style="border:1px solid #000; padding:5px; margin:5px; max-height:150px; overflow:auto;" id="' . md5(serialize($object)) . '">';
 		$i = 0; $args = func_get_args();
-		foreach( $args as $object ) {
-			if( $i == 0 && count($args) > 1 && is_string($object) )
+		foreach ( $args as $object ) {
+			if ( $i == 0 && count($args) > 1 && is_string($object) )
 				echo "<h3>$object</h3>";
 			var_dump($object);
 			$i++;

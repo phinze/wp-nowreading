@@ -10,7 +10,7 @@ $book = null;
 function book_title( $echo = true ) {
 	global $book;
 	$title = apply_filters('book_title', $book->title);
-	if( $echo )
+	if ( $echo )
 		echo $title;
 	return $title;
 }
@@ -21,7 +21,7 @@ function book_title( $echo = true ) {
 function book_author( $echo = true ) {
 	global $book;
 	$author = apply_filters('book_author', $book->author);
-	if( $echo )
+	if ( $echo )
 		echo $author;
 	return $author;
 }
@@ -32,7 +32,7 @@ function book_author( $echo = true ) {
 function book_image( $echo = true ) {
 	global $book;
 	$image = apply_filters('book_image', $book->image);
-	if( $echo )
+	if ( $echo )
 		echo $image;
 	return $image;
 }
@@ -43,7 +43,7 @@ function book_image( $echo = true ) {
 function book_added( $echo = true ) {
 	global $book;
 	$added = apply_filters('book_added', $book->added);
-	if( $echo )
+	if ( $echo )
 		echo $added;
 	return $added;
 }
@@ -53,12 +53,12 @@ function book_added( $echo = true ) {
  */
 function book_started( $echo = true ) {
 	global $book;
-	if( empty($book->started) )
+	if ( empty($book->started) )
 		$started = __('Not yet started.', NRTD);
 	else
 		$started = $book->started;
 	$started = apply_filters('book_started', $started);
-	if( $echo )
+	if ( $echo )
 		echo $started;
 	return $started;
 	
@@ -69,12 +69,12 @@ function book_started( $echo = true ) {
  */
 function book_finished( $echo = true ) {
 	global $book;
-	if( empty($book->finished) )
+	if ( empty($book->finished) )
 		$finished = __('Not yet finished.', NRTD);
 	else
 		$finished = $book->finished;
 	$finished = apply_filters('book_finished', $finished);
-	if( $echo )
+	if ( $echo )
 		echo $finished;
 	return $finished;
 }
@@ -95,7 +95,7 @@ function books_read_since( $interval, $echo = true ) {
 		DATE_SUB(CURDATE(), INTERVAL $interval) <= b_finished
 	");
 	
-	if( $echo )
+	if ( $echo )
 		echo "$num book".($num != 1 ? 's' : '');
 	return $num;
 }
@@ -113,7 +113,7 @@ function total_books( $echo = true ) {
 		{$wpdb->prefix}now_reading
 	");
 	
-	if( $echo )
+	if ( $echo )
 		echo "$num book".($num != 1 ? 's' : '');
 	return $num;
 }
@@ -125,24 +125,24 @@ function book_permalink( $echo = true, $id = 0 ) {
 	global $book, $wpdb;;
 	$options = get_option('nowReadingOptions');
 	
-	if( $id == 0 )
+	if ( $id == 0 )
 		$id = $book->id;
 	
 	$existing = $wpdb->get_row("SELECT b_title AS title, b_author AS author FROM {$wpdb->prefix}now_reading WHERE b_id = '$id'");
 	
-	if( !$existing )
+	if ( !$existing )
 		return;
 	
 	$author = urlencode(strtolower($existing->author));
 	$title = urlencode(strtolower($existing->title));
 	
-	if( $options['useModRewrite'] )
+	if ( $options['useModRewrite'] )
 		$url = get_settings('home')."/library/$author/$title/";
 	else
 		$url = get_settings('home')."/index.php?now_reading_author=$author&now_reading_title=$title";
 	
 	$url = apply_filters('book_permalink', $url);
-	if( $echo )
+	if ( $echo )
 		echo $url;
 	return $url;
 }
@@ -151,21 +151,21 @@ function book_author_permalink( $echo = true, $author = null ) {
 	global $book;
 	$options = get_option('nowReadingOptions');
 	
-	if( !$author )
+	if ( !$author )
 		$author = $book->author;
 	
-	if( !$author )
+	if ( !$author )
 		return;
 	
 	$author = urlencode(strtolower($author));
 	
-	if( $options['useModRewrite'] )
+	if ( $options['useModRewrite'] )
 		$url = get_settings('home')."/library/$author/";
 	else
 		$url = get_settings('home')."/index.php?now_reading_author=$author";
 	
 	$url = apply_filters('book_author_permalink', $url);
-	if( $echo )
+	if ( $echo )
 		echo $url;
 	return $url;
 }
@@ -179,11 +179,11 @@ function book_url( $echo = true ) {
 	global $book;
 	$options = get_option('nowReadingOptions');
 	
-	if( is_custom_book() )
+	if ( is_custom_book() )
 		book_permalink($echo);
 	else {
 		$url = apply_filters('book_url', "http://www.amazon{$options['domain']}/exec/obidos/ASIN/{$book->asin}/{$options['associate']}?tag={$options['associate']}");
-		if( $echo )
+		if ( $echo )
 			echo $url;
 		return $url;
 	}
@@ -204,12 +204,12 @@ function book_has_post() {
 function book_post_url( $echo = true ) {
 	global $book;
 	
-	if( !book_has_post() )
+	if ( !book_has_post() )
 		return;
 	
 	$permalink = get_permalink($book->post);
 	
-	if( $echo )
+	if ( $echo )
 		echo $permalink;
 	return $permalink;
 }
@@ -220,12 +220,12 @@ function book_post_url( $echo = true ) {
 function book_post_title( $echo = true ) {
 	global $book;
 	
-	if( !book_has_post() )
+	if ( !book_has_post() )
 		return;
 	
 	$post = get_post($book->post);
 	
-	if( $echo )
+	if ( $echo )
 		echo $post->post_title;
 	return $post->post_title;
 }
@@ -236,12 +236,12 @@ function book_post_title( $echo = true ) {
 function book_post_link( $echo = true ) {
 	global $book;
 	
-	if( !book_has_post() )
+	if ( !book_has_post() )
 		return;
 	
 	$link = '<a href="' . book_post_url(0) . '">' . book_post_title(0) . '</a>';
 	
-	if( $echo )
+	if ( $echo )
 		echo $link;
 	return $link;
 }
@@ -250,7 +250,7 @@ function book_post_link( $echo = true ) {
  * If the user has the correct permissions, prints a URL to the Manage -> Now Reading page of the WP admin.
  */
 function manage_library_url( $echo = true ) {
-	if( can_now_reading_admin() )
+	if ( can_now_reading_admin() )
 		echo apply_filters('book_manage_url', get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php');
 }
 
@@ -259,7 +259,7 @@ function manage_library_url( $echo = true ) {
  */
 function book_edit_url( $echo = true ) {
 	global $book;
-	if( can_now_reading_admin() )
+	if ( can_now_reading_admin() )
 		echo apply_filters('book_edit_url', get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php&action=editsingle&id=' . $book->id);
 }
 
@@ -284,14 +284,14 @@ function can_now_reading_admin() {
 function library_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
-	if( $options['useModRewrite'] )
+	if ( $options['useModRewrite'] )
 		$url = get_settings('home') . '/library/';
 	else
 		$url = get_settings('home') . '/index.php?now_reading_library=true';
 	
 	$url = apply_filters('book_library_url', $url);
 	
-	if( $echo )
+	if ( $echo )
 		echo $url;
 	return $url;
 }
@@ -301,7 +301,7 @@ function library_url( $echo = true ) {
  */
 function book_rating( $echo = true ) {
 	global $book;
-	if( $book->rating )
+	if ( $book->rating )
 		echo apply_filters('book_rating', $book->rating);
 	else
 		echo apply_filters('book_rating', __('Unrated', NRTD));
@@ -312,7 +312,7 @@ function book_rating( $echo = true ) {
  */
 function book_review( $echo = true ) {
 	global $book;
-	if( $book->review )
+	if ( $book->review )
 		echo apply_filters('book_review', $book->review);
 	else
 		echo apply_filters('book_review', '<p>' . __('This book has not yet been reviewed.', NRTD) . '</p>');
@@ -324,14 +324,14 @@ function book_review( $echo = true ) {
 function search_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
-	if( $options['useModRewrite'] )
+	if ( $options['useModRewrite'] )
 		$url = get_settings('home') . '/library/search?q=';
 	else
 		$url = get_settings('home') . '/index.php?now_reading_search=true&q=';
 	
 	$url = apply_filters('library_search_url', $url);
 	
-	if( $echo )
+	if ( $echo )
 		echo $url;
 	return $url;
 }
@@ -341,7 +341,7 @@ function search_url( $echo = true ) {
  */
 function search_query( $echo = true ) {
 	global $query;
-	if( !empty($query) )
+	if ( !empty($query) )
 		echo htmlentities(stripslashes($query));
 }
 
@@ -366,18 +366,18 @@ function print_book_meta( $new_list = true ) {
 	
 	$meta = get_book_meta($book->id);
 	
-	if( count($meta) < 1 )
+	if ( count($meta) < 1 )
 		return;
 	
-	if( $new_list )
+	if ( $new_list )
 		echo '<dl>';
 	
-	foreach( $meta as $key => $value ) {
+	foreach ( $meta as $key => $value ) {
 		$key = apply_filters('book_meta_key', $key);
 		$value = apply_filters('book_meta_val', $value);
 		
 		echo '<dt>';
-		if( strtolower($key) == $key )
+		if ( strtolower($key) == $key )
 			echo ucwords($key);
 		else
 			echo $key;
@@ -386,7 +386,7 @@ function print_book_meta( $new_list = true ) {
 		echo "<dd>$value</dd>";
 	}
 	
-	if( $new_list )
+	if ( $new_list )
 		echo '</dl>';
 }
 
@@ -395,12 +395,12 @@ function book_meta( $key, $echo = true ) {
 	
 	$meta = get_book_meta($book->id, $key);
 	
-	if( count($meta) < 1 )
+	if ( count($meta) < 1 )
 		return;
 	
 	$meta = apply_filters('book_meta_val', $meta[0]);
 	
-	if( $echo )
+	if ( $echo )
 		echo $meta;
 	return $meta;
 }
@@ -413,19 +413,19 @@ function print_book_tags( $echo = true ) {
 	
 	$tags = get_book_tags($book->id);
 	
-	if( count($tags) < 1 )
+	if ( count($tags) < 1 )
 		return;
 	
 	$i = 0;
 	$string = '';
-	foreach( $tags as $tag ) {
-		if( $i++ != 0 )
+	foreach ( $tags as $tag ) {
+		if ( $i++ != 0 )
 			$string .= ', ';
 		$link = book_tag_url($tag, 0);
 		$string .= "<a href='$link'>$tag</a>";
 	}
 	
-	if( $echo )
+	if ( $echo )
 		echo $string;
 	return $string;
 }
@@ -436,14 +436,14 @@ function print_book_tags( $echo = true ) {
 function book_tag_url( $tag, $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
-	if( $options['useModRewrite'] )
+	if ( $options['useModRewrite'] )
 		$url = get_settings('home') . '/library/tag/' . urlencode($tag);
 	else
 		$url = get_settings('home') . '/index.php?now_reading_tag=true&nr_tag=' . urlencode($tag);
 	
 	$url = apply_filters('library_tag_url', $url);
 	
-	if( $echo )
+	if ( $echo )
 		echo $url;
 	return $url;
 }
@@ -453,7 +453,7 @@ function book_tag_url( $tag, $echo = true ) {
  */
 function the_tag( $echo = true ) {
 	$tag = htmlentities(stripslashes($GLOBALS['nr_tag']));
-	if( $echo )
+	if ( $echo )
 		echo $tag;
 	return $tag;
 }
@@ -464,7 +464,7 @@ function the_tag( $echo = true ) {
 function the_book_author( $echo = true ) {
 	$author = htmlentities(stripslashes($GLOBALS['nr_author']));
 	$author = apply_filters('the_book_author', $author);
-	if( $echo )
+	if ( $echo )
 		echo $author;
 	return $author;
 }
@@ -476,19 +476,19 @@ function the_book_author( $echo = true ) {
  */
 function have_books( $query ) {
 	global $books, $current_book;
-	if( !$books ) {
-		if( strstr($query, 'tag=') ) {
+	if ( !$books ) {
+		if ( strstr($query, 'tag=') ) {
 			parse_str($query, $q);
 			$GLOBALS['books'] = get_books_by_tag($q['tag']);
-		} elseif( is_numeric($query) )
+		} elseif ( is_numeric($query) )
 			$GLOBALS['books'] = get_book($query);
 		else
 			$GLOBALS['books'] = get_books($query);
 	}
-	if(is_a($books, 'stdClass'))
+	if (is_a($books, 'stdClass'))
 		$books = array($books);
 	$have_books = ( !empty($books[$current_book]) );
-	if( !$have_books ) {
+	if ( !$have_books ) {
 		$GLOBALS['books']			= null;
 		$GLOBALS['current_book']	= 0;
 	}

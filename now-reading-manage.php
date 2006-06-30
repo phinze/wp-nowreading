@@ -11,10 +11,10 @@ function nr_manage() {
 	
 	$_POST = stripslashes_deep($_POST);
 	
-	if( !empty($_GET['updated']) ) {
+	if ( !empty($_GET['updated']) ) {
 		$updated = intval($_GET['updated']);
 		
-		if( $updated == 1 )
+		if ( $updated == 1 )
 			$updated .= ' book';
 		else
 			$updated .= ' books';
@@ -26,10 +26,10 @@ function nr_manage() {
 		';
 	}
 	
-	if( !empty($_GET['deleted']) ) {
+	if ( !empty($_GET['deleted']) ) {
 		$deleted = intval($_GET['deleted']);
 		
-		if( $deleted == 1 )
+		if ( $deleted == 1 )
 			$deleted .= ' book';
 		else
 			$deleted .= ' books';
@@ -42,7 +42,7 @@ function nr_manage() {
 	}
 	
 	$wpvarstoreset = array('action');
-	for( $i = 0; $i < count($wpvarstoreset); $i++ ) {
+	for ( $i = 0; $i < count($wpvarstoreset); $i++ ) {
 		$wpvar = $wpvarstoreset[$i];
 		if (!isset($$wpvar)) {
 			if (empty($_POST["$wpvar"])) {
@@ -57,7 +57,7 @@ function nr_manage() {
 		}
 	}
 	
-	switch( $action ) {
+	switch ( $action ) {
 		case 'editsingle':
 			$id = intval($_GET['id']);
 			$existing = get_book($id);
@@ -65,7 +65,7 @@ function nr_manage() {
 			$tags = join(get_book_tags($existing->id), ',');
 			
 			$newer = nr_check_for_updates();
-			if( is_wp_error($newer) ) {
+			if ( is_wp_error($newer) ) {
 				echo '
 				<div id="message" class="error fade">
 					<p><strong>' . __("Oops!", NRTD) . '</strong></p>
@@ -74,7 +74,7 @@ function nr_manage() {
 					<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), 'options-general.php?page=now-reading-manage.php') . '</p>
 				</div>
 				';
-			} elseif( $newer ) {
+			} elseif ( $newer ) {
 				echo '<div id="message" class="error"><p><strong>' . sprintf(__("CAUTION: A newer version of Now Reading exists! Please download it <a href='%s'>here</a>.", NRTD), 'http://robm.me.uk/projects/plugins/wordpress/now-reading/') . '</strong></p></div>';
 			}
 			
@@ -85,9 +85,9 @@ function nr_manage() {
 				<form method="post" action="' . get_settings('home') . '/wp-content/plugins/now-reading/edit.php">
 			';
 			
-			if( function_exists('wp_nonce_field') )
+			if ( function_exists('wp_nonce_field') )
 				wp_nonce_field('now-reading-edit');
-			if( function_exists('wp_referer_field') )
+			if ( function_exists('wp_referer_field') )
 				wp_referer_field();
 			
 			echo '
@@ -113,9 +113,9 @@ function nr_manage() {
 							<p><label class="left" for="status[]">Status:</label>
 								<select name="status[]">
 				';
-				foreach( $nr_statuses as $status => $name ) {
+				foreach ( $nr_statuses as $status => $name ) {
 					$selected = '';
-					if( $existing->status == $status )
+					if ( $existing->status == $status )
 						$selected = ' selected="selected"';
 					
 					echo '
@@ -147,9 +147,9 @@ function nr_manage() {
 									</thead>
 									<tbody id="book-meta-table-0" class="book-meta-table">
 			';
-			foreach( $meta as $key => $val ) {
+			foreach ( $meta as $key => $val ) {
 				$url = get_settings('home')."/wp-content/plugins/now-reading/edit.php?action=deletemeta&id={$existing->id}&key=" . urlencode($key);
-				if( function_exists('wp_nonce_url') )
+				if ( function_exists('wp_nonce_url') )
 					$url = wp_nonce_url($url, 'now-reading-delete-meta_' . $existing->id . $key);
 				
 				echo '
@@ -185,7 +185,7 @@ function nr_manage() {
 			';
 
 			$delete = get_settings('home') . '/wp-content/plugins/now-reading/edit.php?action=delete&id=' . $existing->id;
-			if( function_exists('wp_nonce_url') )
+			if ( function_exists('wp_nonce_url') )
 			    $delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
 
 			echo '
@@ -198,7 +198,7 @@ function nr_manage() {
 						<p><label for="rating">' . __("Rating", NRTD) . ':</label><br />
 						<select name="rating[]" id="rating-' . $i . '" style="width:100px;">
 				';
-				for($i = 10; $i >=1; $i--) {
+				for ($i = 10; $i >=1; $i--) {
 					$selected = ($i == $existing->rating) ? ' selected="selected"' : '';
 					echo "
 							<option value='$i'$selected>$i</option>";
@@ -232,16 +232,16 @@ function nr_manage() {
 		break;
 	}
 	
-	if( $list ) {
+	if ( $list ) {
 		$count = total_books(0);
 		
-		if( $count ) {
-			if( !empty($_GET['q']) )
+		if ( $count ) {
+			if ( !empty($_GET['q']) )
 				$search = '&search=' . urlencode($_GET['q']);
 			else
 				$search = '';
 			
-			if( empty($_GET['p']) )
+			if ( empty($_GET['p']) )
 				$page = 1;
 			else
 				$page = intval($_GET['p']);
@@ -257,7 +257,7 @@ function nr_manage() {
 			
 			$numpages = ceil(total_books(0) / $perpage);
 			$pages = '<p>' . __("Pages", NRTD) . ':';
-			for( $i = 1; $i <= $numpages; $i++)
+			for ( $i = 1; $i <= $numpages; $i++)
 				$pages .= " <a href='edit.php?page=now-reading-manage.php&p=$i'>$i</a>";
 			$pages .= '</p>';
 			
@@ -275,7 +275,7 @@ function nr_manage() {
 					<div>
 						<ul>
 			';
-			if( !empty($_GET['q']) ) {
+			if ( !empty($_GET['q']) ) {
 				echo '
 							<li><a href="edit.php?page=now-reading-manage.php">' . __('Show all books', NRTD) . '</a></li>
 				';
@@ -295,9 +295,9 @@ function nr_manage() {
 				<form method="post" action="' . get_settings('home') . '/wp-content/plugins/now-reading/edit.php">
 			';
 				
-			if( function_exists('wp_nonce_field') )
+			if ( function_exists('wp_nonce_field') )
 				wp_nonce_field('now-reading-edit');
-			if( function_exists('wp_referer_field') )
+			if ( function_exists('wp_referer_field') )
 				wp_referer_field();
 				
 			echo '
@@ -307,14 +307,14 @@ function nr_manage() {
 			
 			$i = 0;
 			
-			foreach( $books as $book ) {
+			foreach ( $books as $book ) {
 				
 				$meta = get_book_meta($book->id);
 				
 				$alt = ( $i % 2 == 0 ) ? ' alternate' : '';
 				
 				$delete = get_settings('home') . '/wp-content/plugins/now-reading/edit.php?action=delete&id=' . $book->id;
-				if( function_exists('wp_nonce_url') )
+				if ( function_exists('wp_nonce_url') )
 					$delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
 				
 				echo '
@@ -338,9 +338,9 @@ function nr_manage() {
 								<p><label class="left" for="status[]">' . __("Status", NRTD) . ':</label>
 									<select name="status[]">
 				';
-				foreach( $nr_statuses as $status => $name ) {
+				foreach ( $nr_statuses as $status => $name ) {
 					$selected = '';
-					if( $book->status == $status )
+					if ( $book->status == $status )
 						$selected = ' selected="selected"';
 					
 					echo '

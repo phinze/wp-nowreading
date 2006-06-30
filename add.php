@@ -5,9 +5,9 @@ require_once ABSPATH . '/wp-admin/admin.php';
 
 $_POST = stripslashes_deep($_POST);
 
-if( !empty($_POST['amazon_data']) ) {
+if ( !empty($_POST['amazon_data']) ) {
 	
-	if( !current_user_can('level_9') )
+	if ( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );
 	
 	$data = unserialize(stripslashes($_POST['amazon_data']));
@@ -21,21 +21,21 @@ if( !empty($_POST['amazon_data']) ) {
 	
 	check_admin_referer('now-reading-add-' . $b_title);
 	
-	foreach( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
+	foreach ( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
 		$query .= "$field=$value&";
 	
 	$redirect = get_settings('home') . '/wp-admin/post-new.php?page=now-reading-add.php';
-	if( !file_exists(dirname(__FILE__) . '/../../../wp-admin/post-new.php') )
+	if ( !file_exists(dirname(__FILE__) . '/../../../wp-admin/post-new.php') )
 		$redirect = get_settings('home') . '/wp-admin/post.php?page=now-reading-add.php';
 	
-	if( add_book($query) ) {
+	if ( add_book($query) ) {
 		wp_redirect("$redirect&added=true");
 		die;
 	} else {
 		wp_redirect("$redirect&error=true");
 		die;
 	}
-} elseif( !empty($_POST['custom_title']) ) {
+} elseif ( !empty($_POST['custom_title']) ) {
 		
 		check_admin_referer('now-reading-manual-add');
 		
@@ -46,10 +46,10 @@ if( !empty($_POST['amazon_data']) ) {
 		$b_added = date('Y-m-d h:i:s');
 		$b_status = 'unread';
 		
-		foreach( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
+		foreach ( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
 			$query .= "$field=$value&";
 		
-		if( add_book($query) ) {
+		if ( add_book($query) ) {
 			wp_redirect(get_settings('home') . '/wp-admin/post-new.php?page=now-reading-add.php&added=true');
 			die;
 		} else {

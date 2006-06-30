@@ -1,6 +1,6 @@
 <?php
 
-if( !class_exists('WP_Error') ) {
+if ( !class_exists('WP_Error') ) {
 	class WP_Error {
 		var $errors = array();
 
@@ -60,7 +60,7 @@ if( !class_exists('WP_Error') ) {
 	}
 }
 
-if( !function_exists('wp_get_referer') ) {
+if ( !function_exists('wp_get_referer') ) {
 	function wp_get_referer() { 
 		return '';
 	}

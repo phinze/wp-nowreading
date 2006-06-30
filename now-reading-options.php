@@ -36,7 +36,7 @@ function nr_options() {
 	';
 	
 	echo '
-		<form method="post" action="'.get_settings('home').'/wp-content/plugins/now-reading/options.php">
+		<form method="post" action="' . get_settings('home') . '/wp-content/plugins/now-reading/options.php">
 	';
 	
 	if ( function_exists('wp_nonce_field') )
@@ -45,28 +45,28 @@ function nr_options() {
 	echo '
 		<table width="100%" cellspacing="2" cellpadding="5">
 			<tr valign="top">
-				<th width="33%" scope="row">'.__('Date format string').':</th>
+				<th width="33%" scope="row">' . __('Date format string') . ':</th>
 				<td>
-					<input type="text" name="format_date" value="'.htmlentities($options['formatDate'], ENT_COMPAT, "UTF-8").'" />
+					<input type="text" name="format_date" value="' . htmlentities($options['formatDate'], ENT_COMPAT, "UTF-8") . '" />
 					<p>
-					'.sprintf(__("How to format the book's <code>added</code>, <code>started</code> and <code>finished</code> dates. Acceptable variables can be found <a href='%s'>here</a>.", NRTD), "http://dev.mysql.com/doc/mysql/en/date-and-time-functions.html#id3101576").'
+					' . sprintf(__("How to format the book's <code>added</code>, <code>started</code> and <code>finished</code> dates. Acceptable variables can be found <a href='%s'>here</a>.", NRTD), "http://dev.mysql.com/doc/mysql/en/date-and-time-functions.html#id3101576") . '
 					</p>
 				</td>
 			</tr>
 			<tr valign="top"> 
-				<th width="33%" scope="row">'.__('Your Amazon Associates ID').':</th> 
+				<th width="33%" scope="row">' . __('Your Amazon Associates ID') . ':</th> 
 				<td>
-					<input type="text" name="associate" value="'.htmlentities($options['associate'], ENT_COMPAT, "UTF-8").'" />
+					<input type="text" name="associate" value="' . htmlentities($options['associate'], ENT_COMPAT, "UTF-8") . '" />
 					<p>
-					'.__("If you choose to link to your book's product page on Amazon.com using the <code>book_url()</code> template tag - as the default template does - then you can earn commission if your visitors then purchase products.", NRTD).'
+					' . __("If you choose to link to your book's product page on Amazon.com using the <code>book_url()</code> template tag - as the default template does - then you can earn commission if your visitors then purchase products.", NRTD) . '
 					</p>
 					<p>
-					'.sprintf(__("If you don't have an Amazon Associates ID, you can either <a href='%s'>get one</a>, or consider entering mine - <strong>%s</strong> - if you're feeling generous.", NRTD), "http://associates.amazon.com", "roblog-21").'
+					' . sprintf(__("If you don't have an Amazon Associates ID, you can either <a href='%s'>get one</a>, or consider entering mine - <strong>%s</strong> - if you're feeling generous.", NRTD), "http://associates.amazon.com", "roblog-21") . '
 					</p>
 				</td> 
 			</tr>
 			<tr valign="top"> 
-				<th width="33%" scope="row">'.__('Amazon domain to use', NRTD).':</th> 
+				<th width="33%" scope="row">' . __('Amazon domain to use', NRTD) . ':</th> 
 				<td>
 					<select name="domain">
 	';
@@ -84,32 +84,32 @@ function nr_options() {
 				
 					</select>
 					<p>
-					'.__("If you choose to link to your book's product page on Amazon.com using the <code>book_url()</code> template tag, you can specify which country-specific Amazon site to link to. Now Reading will also use this domain when searching.", NRTD).'
+					' . __("If you choose to link to your book's product page on Amazon.com using the <code>book_url()</code> template tag, you can specify which country-specific Amazon site to link to. Now Reading will also use this domain when searching.", NRTD) . '
 					</p>
 					<p>
-					'.__("NB: If you have country-specific books in your catalogue and then change your domain setting, some old links might stop working.", NRTD).'
+					' . __("NB: If you have country-specific books in your catalogue and then change your domain setting, some old links might stop working.", NRTD) . '
 					</p>
 				</td> 
 			</tr>
 			<tr valign="top">
-				<th width="33%" scope="row">'.__('Image size to use', NRTD).':</th>
+				<th width="33%" scope="row">' . __('Image size to use', NRTD) . ':</th>
 				<td>
 					<select name="image_size">
-						<option'.( ($options['imageSize'] == 'Small') ? ' selected="selected"' : '' ).' value="Small">'.__("Small", NRTD).'</option>
-						<option'.( ($options['imageSize'] == 'Medium') ? ' selected="selected"' : '' ).' value="Medium">'.__("Medium", NRTD).'</option>
-						<option'.( ($options['imageSize'] == 'Large') ? ' selected="selected"' : '' ).' value="Large">'.__("Large", NRTD).'</option>
+						<option' . ( ($options['imageSize'] == 'Small') ? ' selected="selected"' : '' ) . ' value="Small">' . __("Small", NRTD) . '</option>
+						<option' . ( ($options['imageSize'] == 'Medium') ? ' selected="selected"' : '' ) . ' value="Medium">' . __("Medium", NRTD) . '</option>
+						<option' . ( ($options['imageSize'] == 'Large') ? ' selected="selected"' : '' ) . ' value="Large">' . __("Large", NRTD) . '</option>
 					</select>
 					<p>
-					'.__("NB: This change will only be applied to books you add from this point onwards.", NRTD).'
+					' . __("NB: This change will only be applied to books you add from this point onwards.", NRTD) . '
 					</p>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th width="33%" scope="row">'.__("Use <code>mod_rewrite</code> enhanced library?", NRTD).'</th>
+				<th width="33%" scope="row">' . __("Use <code>mod_rewrite</code> enhanced library?", NRTD) . '</th>
 				<td>
-					<input type="checkbox" name="use_mod_rewrite" id="use_mod_rewrite"'.( ($options['useModRewrite']) ? ' checked="checked"' : '' ).' />
+					<input type="checkbox" name="use_mod_rewrite" id="use_mod_rewrite"' . ( ($options['useModRewrite']) ? ' checked="checked"' : '' ) . ' />
 					<p>
-						'.__("If you have an Apache webserver with <code>mod_rewrite</code>, you can enable this option to have your library use prettier URLs. Compare:").'
+						' . __("If you have an Apache webserver with <code>mod_rewrite</code>, you can enable this option to have your library use prettier URLs. Compare:") . '
 					</p>
 					<p>
 						<code>/index.php?now_reading_single=true&now_reading_id=24</code>
@@ -119,28 +119,28 @@ function nr_options() {
 						<code>/library/24/</code>
 					</p>
 					<p>
-						'.sprintf(__("If you choose this option, be sure you have a custom permalink structure set up at your <a href='%s'>Options &rarr; Permalinks</a> page.", NRTD), 'options-permalink.php').'
+						' . sprintf(__("If you choose this option, be sure you have a custom permalink structure set up at your <a href='%s'>Options &rarr; Permalinks</a> page.", NRTD), 'options-permalink.php') . '
 					</p>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th width="33%" scope="row">'.__("HTTP Library", NRTD).':</th>
+				<th width="33%" scope="row">' . __("HTTP Library", NRTD) . ':</th>
 				<td>
 					<select name="http_lib">
-						<option'.( ($options['httpLib'] == 'snoopy') ? ' selected="selected"' : '' ).' value="snoopy">Snoopy</option>
-						<option'.( ($options['httpLib'] == 'curl') ? ' selected="selected"' : '' ).' value="curl">cURL</option>
+						<option' . ( ($options['httpLib'] == 'snoopy') ? ' selected="selected"' : '' ) . ' value="snoopy">Snoopy</option>
+						<option' . ( ($options['httpLib'] == 'curl') ? ' selected="selected"' : '' ) . ' value="curl">cURL</option>
 					</select>
 					<p>
-					'.sprintf(__("Don't worry if you don't understand this; unless you're having problems searching for books, the default setting of %s will be fine.", NRTD), "'Snoopy'").'
+					' . sprintf(__("Don't worry if you don't understand this; unless you're having problems searching for books, the default setting of %s will be fine.", NRTD), "'Snoopy'") . '
 					</p>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th width="33%" scope="row">'.__("Debug mode", NRTD).':</th>
+				<th width="33%" scope="row">' . __("Debug mode", NRTD) . ':</th>
 				<td>
-					<input type="checkbox" name="debug_mode" id="debug_mode"'.( ($options['debugMode']) ? ' checked="checked"' : '' ).' />
+					<input type="checkbox" name="debug_mode" id="debug_mode"' . ( ($options['debugMode']) ? ' checked="checked"' : '' ) . ' />
 					<p>
-					'.__("With this option set, Now Reading will produce debugging output that might help you solve problems or at least report bugs.", NRTD).'
+					' . __("With this option set, Now Reading will produce debugging output that might help you solve problems or at least report bugs.", NRTD) . '
 					</p>
 				</td>
 			</tr>
@@ -149,7 +149,7 @@ function nr_options() {
 		<input type="hidden" name="update" value="yes" />
 		
 		<p class="submit">
-			<input type="submit" value="'.__("Update Options", NRTD).' &raquo;" />
+			<input type="submit" value="' . __("Update Options", NRTD) . ' &raquo;" />
 		</p>
 		
 		</form>

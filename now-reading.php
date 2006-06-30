@@ -72,11 +72,11 @@ add_filter('query_vars', 'nr_query_vars');
  */
 function nr_mod_rewrite( $rules ) {
 	global $wp_rewrite;
-	$rules['^library/([0-9]+)/?$']			= 'index.php?now_reading_id='.$wp_rewrite->preg_index(1);
-	$rules['^library/tag/([^/]+)/?$']		= 'index.php?now_reading_tag='.$wp_rewrite->preg_index(1);
-	$rules['^library/search/?$']				= 'index.php?now_reading_search=true';
-	$rules['^library/([^/]+)/([^/]+)/?$']		= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1).'&now_reading_title='.$wp_rewrite->preg_index(2);
-	$rules['^library/([^/]+)/?$']				= 'index.php?now_reading_author='.$wp_rewrite->preg_index(1);
+	$rules['^library/([0-9]+)/?$']			= 'index.php?now_reading_id=' . $wp_rewrite->preg_index(1);
+	$rules['^library/tag/([^/]+)/?$']		= 'index.php?now_reading_tag=' . $wp_rewrite->preg_index(1);
+	$rules['^library/search/?$']			= 'index.php?now_reading_search=true';
+	$rules['^library/([^/]+)/([^/]+)/?$']	= 'index.php?now_reading_author=' . $wp_rewrite->preg_index(1) . '&now_reading_title=' . $wp_rewrite->preg_index(2);
+	$rules['^library/([^/]+)/?$']			= 'index.php?now_reading_author=' . $wp_rewrite->preg_index(1);
 	$rules['^library/?$']					= 'index.php?now_reading_library=true';
 	return $rules;
 }
@@ -89,7 +89,7 @@ function nr_install() {
 	global $wpdb, $wp_rewrite;
 	
 	// WP's dbDelta function takes care of installing/upgrading our DB table.
-	require_once(ABSPATH.'wp-admin/upgrade-functions.php');
+	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
 	dbDelta("
 	CREATE TABLE {$wpdb->prefix}now_reading (
 	b_id bigint(20) NOT NULL auto_increment,
@@ -129,7 +129,7 @@ function nr_install() {
 	$defaultOptions = array(
 		'formatDate'	=> '%D %b %Y',
 		'associate'		=> 'roblog-21',
-		'domain'		=> '.com',
+		'domain'		=> ' . com',
 		'imageSize'		=> 'Medium',
 		'httpLib'		=> 'snoopy',
 		'useModRewrite'	=> false,
@@ -358,14 +358,14 @@ function query_amazon( $query ) {
 		$isbn = preg_replace('#([^0-9]+)#', '', $isbn);
 		$query = "&Power=asin%3A+$isbn";
 	} else {
-		$query = '&Title='.urlencode($title);
+		$query = '&Title=' . urlencode($title);
 		if( !empty($author) )
-			$query .= '&Author='.urlencode($author);
+			$query .= '&Author=' . urlencode($author);
 	}
 	
-	$url =	'http://webservices.amazon'.$options['domain'].'/onca/xml?Service=AWSECommerceService'
-			.'&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Small,Images'
-			.'&Version=2005-03-23&AssociateTag='.urlencode($options['associate']).$query;
+	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
+			 . '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Small,Images'
+			 . '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
 	if( $options['httpLib'] == 'curl' ) {
@@ -376,7 +376,7 @@ function query_amazon( $query ) {
 			
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Now Reading '.NOW_READING_VERSION);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Now Reading ' . NOW_READING_VERSION);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
 			
 			$xmlString = curl_exec($ch);
@@ -387,7 +387,7 @@ function query_amazon( $query ) {
 		require_once ABSPATH . WPINC . '/class-snoopy.php';
 		
 		$snoopy = new snoopy;
-		$snoopy->agent = 'Now Reading '.NOW_READING_VERSION;
+		$snoopy->agent = 'Now Reading ' . NOW_READING_VERSION;
 		$snoopy->fetch($url);
 		
 		$xmlString = $snoopy->results;
@@ -397,13 +397,13 @@ function query_amazon( $query ) {
 		do_action('nr_search_error', $query);
 		echo '
 		<div id="message" class="error fade">
-			<p><strong>'.__("Oops!").'</strong></p>
-			<p>'.sprintf(__("For some reason, I couldn't search for your book on amazon%s.", NRTD), $options['domain']).'</p>
-			<p>'.__("Amazon's Web Services may be down, or there may be a problem with your server configuration.").'</p>
+			<p><strong>' . __("Oops!") . '</strong></p>
+			<p>' . sprintf(__("For some reason, I couldn't search for your book on amazon%s.", NRTD), $options['domain']) . '</p>
+			<p>' . __("Amazon's Web Services may be down, or there may be a problem with your server configuration.") . '</p>
                         
                 ';
                 if( $options['httpLib'] )
-		    echo '<p>'.__("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD).'</p>';
+		    echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
                 echo '
 		</div>
 		';
@@ -457,7 +457,7 @@ function query_amazon( $query ) {
 			if( $image )
 				$image	= $image->getValue();
 			else
-				$image = get_settings('home').'/wp-content/plugins/now-reading/no-image.png';
+				$image = get_settings('home') . '/wp-content/plugins/now-reading/no-image.png';
 			
 			$results[] = compact('author', 'title', 'image', 'asin');
 		}
@@ -575,7 +575,7 @@ function nr_display() {
  */
 function nr_check_for_updates() {
 	
-	$cache		= dirname(__FILE__).'/latest-version.txt';
+	$cache		= dirname(__FILE__) . '/latest-version.txt';
 	$check_url	= 'http://robm.me.uk/wp-content/plugins/downloads.php?name=now-reading&action=getlatest';
 	
 	// Some people don't have their plugins directory writable.
@@ -615,7 +615,7 @@ function nr_check_for_updates() {
 		$latest	= $snoopy->results;
 	}
 		
-	$download_url	= 'http://robm.me.uk/wp-content/plugins/downloads.php?file=now-reading%2Ffiles%2F'.$latest.'%2Fnow-reading.zip&name=now-reading';
+	$download_url	= 'http://robm.me.uk/wp-content/plugins/downloads.php?file=now-reading%2Ffiles%2F' . $latest . '%2Fnow-reading.zip&name=now-reading';
 	$plugin_page	= 'http://robm.me.uk/projects/plugins/wordpress/now-reading/';
 	
 	// Cache the changes
@@ -773,7 +773,7 @@ function get_book_meta( $id, $key = '' ) {
 	$id = intval($id);
 	
 	if( !empty($key) )
-		$key = 'AND m_key = "'.$wpdb->escape($key).'"';
+		$key = 'AND m_key = "' . $wpdb->escape($key) . '"';
 	else
 		$key = '';
 	
@@ -896,11 +896,11 @@ function nr_page_title( $title ) {
 	
 	if( !empty($wp->query_vars['now_reading_id']) ) {
 		$book = get_book(intval($wp->query_vars['now_reading_id']));
-		$title = $book->title.' by '.$book->author;
+		$title = $book->title . ' by ' . $book->author;
 	}
 	
 	if( !empty($wp->query_vars['now_reading_tag']) )
-		$title = 'Books tagged with &ldquo;'.htmlentities($wp->query_vars['now_reading_tag']).'&rdquo;';
+		$title = 'Books tagged with &ldquo;' . htmlentities($wp->query_vars['now_reading_tag']) . '&rdquo;';
 	
 	if( !empty($wp->query_vars['now_reading_search']) )
 		$title = 'Library Search';
@@ -918,7 +918,7 @@ function nr_page_title( $title ) {
  */
 function nr_header_stats() {
 	echo '
-	<meta name="now-reading-version" content="'.NOW_READING_VERSION.'" />
+	<meta name="now-reading-version" content="' . NOW_READING_VERSION . '" />
 	';
 }
 add_action('wp_head', 'nr_header_stats');
@@ -928,7 +928,7 @@ if( !function_exists('robm_dump') ) {
 	 * Dumps a variable in a pretty way.
 	 */
 	function robm_dump() {
-		echo '<pre style="border:1px solid #000; padding:5px; margin:5px; max-height:150px; overflow:auto;" id="'.md5(serialize($object)).'">';
+		echo '<pre style="border:1px solid #000; padding:5px; margin:5px; max-height:150px; overflow:auto;" id="' . md5(serialize($object)) . '">';
 		$i = 0; $args = func_get_args();
 		foreach( $args as $object ) {
 			if( $i == 0 && count($args) > 1 && is_string($object) )

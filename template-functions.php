@@ -239,7 +239,7 @@ function book_post_link( $echo = true ) {
 	if( !book_has_post() )
 		return;
 	
-	$link = '<a href="'.book_post_url(0).'">'.book_post_title(0).'</a>';
+	$link = '<a href="' . book_post_url(0) . '">' . book_post_title(0) . '</a>';
 	
 	if( $echo )
 		echo $link;
@@ -251,7 +251,7 @@ function book_post_link( $echo = true ) {
  */
 function manage_library_url( $echo = true ) {
 	if( can_now_reading_admin() )
-		echo apply_filters('book_manage_url', get_settings('home').'/wp-admin/edit.php?page=now-reading-manage.php');
+		echo apply_filters('book_manage_url', get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php');
 }
 
 /**
@@ -260,7 +260,7 @@ function manage_library_url( $echo = true ) {
 function book_edit_url( $echo = true ) {
 	global $book;
 	if( can_now_reading_admin() )
-		echo apply_filters('book_edit_url', get_settings('home').'/wp-admin/edit.php?page=now-reading-manage.php&action=editsingle&id='.$book->id);
+		echo apply_filters('book_edit_url', get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php&action=editsingle&id=' . $book->id);
 }
 
 /**
@@ -285,9 +285,9 @@ function library_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if( $options['useModRewrite'] )
-		$url = get_settings('home').'/library/';
+		$url = get_settings('home') . '/library/';
 	else
-		$url = get_settings('home').'/index.php?now_reading_library=true';
+		$url = get_settings('home') . '/index.php?now_reading_library=true';
 	
 	$url = apply_filters('book_library_url', $url);
 	
@@ -315,7 +315,7 @@ function book_review( $echo = true ) {
 	if( $book->review )
 		echo apply_filters('book_review', $book->review);
 	else
-		echo apply_filters('book_review', '<p>'.__('This book has not yet been reviewed.', NRTD).'</p>');
+		echo apply_filters('book_review', '<p>' . __('This book has not yet been reviewed.', NRTD) . '</p>');
 }
 
 /**
@@ -325,9 +325,9 @@ function search_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if( $options['useModRewrite'] )
-		$url = get_settings('home').'/library/search?q=';
+		$url = get_settings('home') . '/library/search?q=';
 	else
-		$url = get_settings('home').'/index.php?now_reading_search=true&q=';
+		$url = get_settings('home') . '/index.php?now_reading_search=true&q=';
 	
 	$url = apply_filters('library_search_url', $url);
 	
@@ -350,8 +350,8 @@ function search_query( $echo = true ) {
  */
 function library_search_form( $echo = true ) {
 	echo '
-	<form method="get" action="'.search_url(0).'">
-		<input type="text" name="q" /> <input type="submit" value="'.__("Search Library", NRTD).'" />
+	<form method="get" action="' . search_url(0) . '">
+		<input type="text" name="q" /> <input type="submit" value="' . __("Search Library", NRTD) . '" />
 	</form>
 	';
 }
@@ -437,9 +437,9 @@ function book_tag_url( $tag, $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if( $options['useModRewrite'] )
-		$url = get_settings('home').'/library/tag/'.urlencode($tag);
+		$url = get_settings('home') . '/library/tag/' . urlencode($tag);
 	else
-		$url = get_settings('home').'/index.php?now_reading_tag=true&nr_tag='.urlencode($tag);
+		$url = get_settings('home') . '/index.php?now_reading_tag=true&nr_tag=' . urlencode($tag);
 	
 	$url = apply_filters('library_tag_url', $url);
 	

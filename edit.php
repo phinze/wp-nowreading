@@ -96,13 +96,13 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				
 				// If the book is currently "unread"/"reading" but is being changed to "read", we need to add a b_finished value.
 				if( $current_status != 'read' && $status == 'read' )
-					$finished = 'b_finished = "'.date('Y-m-d h:i:s').'",';
+					$finished = 'b_finished = "' . date('Y-m-d h:i:s') . '",';
 				else
 					$finished = "b_finished = '$finished',";
 				
 				// Likewise, if the book is currently "unread" but is being changed to "reading", we need to add a b_started value.
 				if( $current_status != 'reading' && $status == 'reading' )
-					$started = 'b_started = "'.date('Y-m-d h:i:s').'",';
+					$started = 'b_started = "' . date('Y-m-d h:i:s') . '",';
 				else
 					$started = "b_started = '$started',";
 				

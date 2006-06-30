@@ -3,6 +3,8 @@
 define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
 require_once ABSPATH . '/wp-admin/admin.php';
 
+$_POST = stripslashes_deep($_POST);
+
 if( !empty($_POST['amazon_data']) ) {
 	
 	if( !current_user_can('level_9') )

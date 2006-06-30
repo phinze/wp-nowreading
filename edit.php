@@ -4,6 +4,8 @@ if( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 	define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
 	require_once ABSPATH . '/wp-admin/admin.php';
 	
+	$_POST = stripslashes_deep($_POST);
+	
 	if( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );
 	

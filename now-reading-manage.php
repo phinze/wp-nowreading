@@ -11,6 +11,13 @@ function nr_manage() {
 	
 	$_POST = stripslashes_deep($_POST);
 	
+	$options = get_option('nowReadingOptions');
+	
+	if( !$nr_url ) {
+		$nr_url = new nr_url();
+		$nr_url->load_scheme($options['menuLayout']);
+	}
+	
 	if ( !empty($_GET['updated']) ) {
 		$updated = intval($_GET['updated']);
 		
@@ -35,7 +42,7 @@ function nr_manage() {
 			$deleted .= ' books';
 		
 		echo '
-		<div id="message" class="deleted fade">
+		<div id="message" class="updated fade">
 			<p><strong>' . $deleted . ' deleted.</strong></p>
 		</div>
 		';
@@ -71,7 +78,7 @@ function nr_manage() {
 					<p><strong>' . __("Oops!", NRTD) . '</strong></p>
 					<p>' . __("I couldn't fetch the latest version of Now Reading, because you don't have cURL installed!", NRTD) . '</p>
 					<p>' . __("To solve this problem, please switch your <strong>HTTP Library</strong> setting to <strong>Snoopy</strong>, which works on virtually all server setups.", NRTD) . '</p>
-					<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), 'options-general.php?page=now-reading-manage.php') . '</p>
+					<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), get_settings('home') . $nr_url->urls['options']) . '</p>
 				</div>
 				';
 			} elseif ( $newer ) {
@@ -258,7 +265,7 @@ function nr_manage() {
 			$numpages = ceil(total_books(0) / $perpage);
 			$pages = '<p>' . __("Pages", NRTD) . ':';
 			for ( $i = 1; $i <= $numpages; $i++)
-				$pages .= " <a href='edit.php?page=now-reading-manage.php&p=$i'>$i</a>";
+				$pages .= " <a href='" . get_settings('home') . $nr_url->urls['manage'] . "&p=$i'>$i</a>";
 			$pages .= '</p>';
 			
 			echo '
@@ -267,7 +274,7 @@ function nr_manage() {
 				<h2>Now Reading</h2>
 				
 				<div class="nr-actions">
-					<form method="get" action="edit.php">
+					<form method="get" action="">
 						<input type="hidden" name="page" value="now-reading-manage.php" />
 						<p><label for="q">' . __("Search books", NRTD) . ':</label> <input type="text" name="q" id="q" value="' . htmlentities($_GET['q']) . '" /> <input type="submit" value="' . __('Search', NRTD) . '" /></p>
 					</form>
@@ -277,7 +284,7 @@ function nr_manage() {
 			';
 			if ( !empty($_GET['q']) ) {
 				echo '
-							<li><a href="edit.php?page=now-reading-manage.php">' . __('Show all books', NRTD) . '</a></li>
+							<li><a href="' . get_settings('home') . $nr_url->urls['manage'] . '">' . __('Show all books', NRTD) . '</a></li>
 				';
 			}
 			echo '
@@ -362,7 +369,7 @@ function nr_manage() {
 								<h4>' . __('Actions', NRTD) . ':</h4>
 								<ul>
 									<li><a href="' . book_permalink(0, $book->id) . '">' . __('View library entry', NRTD) . '</a></li>
-									<li><a href="?page=now-reading-manage.php&amp;action=editsingle&amp;id=' . $book->id . '">' . __('Edit details/write review', NRTD) . '</a> (' . (($book->rating == 0) ? __('Not yet rated', NRTD) : __('Current rating', NRTD) . ': ' . $book->rating . '/10') . ')</li>
+									<li><a href="' . get_settings('home') . $nr_url->urls['manage'] . '&amp;action=editsingle&amp;id=' . $book->id . '">' . __('Edit details/write review', NRTD) . '</a> (' . (($book->rating == 0) ? __('Not yet rated', NRTD) : __('Current rating', NRTD) . ': ' . $book->rating . '/10') . ')</li>
 									<li><a href="' . $delete . '" onclick="return confirm(\'' . __("Are you sure you wish to delete this book permanently?", NRTD) . '\')">' . __("Delete", NRTD) . '</a></li>
 								</ul>
 							</div>
@@ -388,7 +395,7 @@ function nr_manage() {
 			
 		}
 		else
-			echo '<p>' . sprintf(__("No books to display. To add some books, head over <a href='%s'>here</a>", NRTD), 'post-new.php?page=now-reading-add.php') . '</p>';
+			echo '<p>' . sprintf(__("No books to display. To add some books, head over <a href='%s'>here</a>", NRTD), get_settings('home') . $nr_url->urls['add']) . '</p>';
 			
 		echo '
 		</div>

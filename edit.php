@@ -36,7 +36,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			WHERE b_id = $id
 			");
 			
-			wp_redirect('edit.php?page=now-reading-manage.php&delete=1');
+			wp_redirect(get_settings('home') . $nr_url->urls['manage'] . '&deleted=1');
 			die;
 		break;
 		
@@ -142,7 +142,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			
 			$referer = wp_get_referer();
 			if ( empty($referer) )
-				$forward = get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php&updated=' . $updated;
+				$forward = get_settings('home') . $nr_url->urls['manage'] . '&updated=' . $updated;
 			else
 				$forward = wp_get_referer() . '&updated=' . $updated;
 				
@@ -158,7 +158,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			
 			delete_book_meta($id, $key);
 			
-			$forward = get_settings('home') . "/wp-admin/edit.php?page=now-reading-manage.php&action=editsingle&id=$id&updated=1";
+			$forward = get_settings('home') . $nr_url->urls['manage'] . "&action=editsingle&id=$id&updated=1";
 			header("Location: $forward");
 			die;
 		break;

@@ -11,7 +11,7 @@ function nr_options() {
 	
 	if ( !empty($_GET['curl']) ) {
 		echo '
-			<div class="error fade">
+			<div id="message" class="error fade">
 				<p><strong>Oops!</strong></p>
 				<p>You don\'t appear to have cURL installed!</p>
 				<p>Since you can\'t use cURL, I\'ve switched your HTTP Library setting to <strong>Snoopy</strong> instead, which should work.</p>
@@ -21,10 +21,18 @@ function nr_options() {
 	
 	if ( !empty($_GET['imagesize']) ) {
 		echo '
-			<div class="error fade">
+			<div id="message" class="error fade">
 				<p><strong>Oops!</strong></p>
 				<p>Naughty naughty! That wasn\'t a valid value for the image size setting!</p>
 				<p>Don\'t worry, I\'ve set it to medium for you.</p>
+			</div>
+		';
+	}
+	
+	if( !strstr($_SERVER['REQUEST_URI'], 'wp-admin/options') && $_GET['updated'] ) {
+		echo '
+			<div id="message" class="updated fade">
+				<p><strong>Options saved.</strong></p>
 			</div>
 		';
 	}
@@ -101,6 +109,22 @@ function nr_options() {
 					</select>
 					<p>
 					' . __("NB: This change will only be applied to books you add from this point onwards.", NRTD) . '
+					</p>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th width="33%" scope="row">' . __('Admin menu layout', NRTD) . ':</th>
+				<td>
+					<label for="menu_layout_single">' . __('Single', NRTD) . ':</label>
+					 <input type="radio" name="menu_layout" id="menu_layout_single" value="single"' . ( ( $options['menuLayout'] == NR_MENU_SINGLE ) ? ' checked="checked"' : '' ) . ' />
+					<br />
+					<label for="menu_layout_single">' . __('Multiple', NRTD) . ':</label>
+					 <input type="radio" name="menu_layout" id="menu_layout_single" value="multiple"' . ( ( $options['menuLayout'] == NR_MENU_MULTIPLE ) ? ' checked="checked"' : '' ) . ' />
+					<p>
+					' . __("When set to 'Single', Now Reading will add a top-level menu with submenus containing the 'Add a Book', 'Manage Books' and 'Options' screens.", NRTD) . '
+					</p>
+					<p>
+					' . __("When set to 'Multiple', Now Reading will insert those menus under 'Write', 'Manage' and 'Options' respectively.", NRTD) . '
 					</p>
 				</td>
 			</tr>

@@ -11,6 +11,11 @@ function now_reading_add() {
 	
 	$options = get_option('nowReadingOptions');
 	
+	if( !$nr_url ) {
+		$nr_url = new nr_url();
+		$nr_url->load_scheme($options['menuLayout']);
+	}
+	
 	if ( !empty($_GET['error']) ) {
 		echo '
 		<div id="message" class="error fade">
@@ -24,7 +29,7 @@ function now_reading_add() {
 		<div id="message" class="updated fade">
 			<p><strong>' . __("Book added.", NRTD) . '</strong></p>
 			<ul>
-				<li><a href="edit.php?page=now-reading-manage.php">' . __("Manage books", NRTD) . ' &raquo;</a></li>
+				<li><a href="' . get_settings('home') . $nr_url->urls['manage'] . '">' . __("Manage books", NRTD) . ' &raquo;</a></li>
                 <li><a href="' . library_url(0) . '">' . __("View Library", NRTD) . ' &raquo;</a></li>
 				<li><a href="' . get_settings('home') . '">' . __("View Site") . ' &raquo;</a></li>
 			</ul>
@@ -45,7 +50,7 @@ function now_reading_add() {
 			<p><strong>' . __("Oops!", NRTD) . '</strong></p>
 			<p>' . __("I couldn't fetch the latest version of Now Reading, because you don't have cURL installed!", NRTD) . '</p>
 			<p>' . __("To solve this problem, please switch your <strong>HTTP Library</strong> setting to <strong>Snoopy</strong>, which works on virtually all server setups.", NRTD) . '</p>
-			<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), 'options-general.php?page=now-reading-manage.php') . '</p>
+			<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), get_settings('home') . $nr_url->urls['options']) . '</p>
 		</div>
 		';
 	} elseif ( $newer ) {
@@ -75,7 +80,7 @@ function now_reading_add() {
 							<p><strong>' . __("Oops!", NRTD) . '</strong></p>
 							<p>' . __("I couldn't fetch the results for your search, because you don't have cURL installed!", NRTD) . '</p>
 							<p>' . __("To solve this problem, please switch your <strong>HTTP Library</strong> setting to <strong>Snoopy</strong>, which works on virtually all server setups.", NRTD) . '</p>
-							<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), 'options-general.php?page=now-reading-options.php') . '</p>
+							<p>' . sprintf(__("You can change your options <a href='%s'>here</a>.", NRTD), get_settings('home') . $nr_url->urls['options']) . '</p>
 						</div>
 					';
 				}
@@ -118,9 +123,7 @@ function now_reading_add() {
 			}
 		}
 		
-		$thispage = 'post-new.php?page=now-reading-add.php';
-		if ( !file_exists(dirname(__FILE__) . '/../../../wp-admin/post-new.php') )
-			$thispage = 'post.php?page=now-reading-add.php';
+		$thispage = get_settings('home') . $nr_url->urls['add'];
 		
 		echo '
 		<p>' . __("Not found what you like? You have a couple of options.", NRTD) . '</p>
@@ -173,7 +176,7 @@ function now_reading_add() {
 	
 	<p>' . __("Enter some information about the book that you'd like to add, and I'll try to fetch the information directly from Amazon.", NRTD) . '</p>
 	
-	<p>' . sprintf(__("Now Reading is currently set to search the <strong>amazon%s</strong> domain; you can change this setting and others in the <a href='%s'>options page</a>.", NRTD), $options['domain'], "options-general.php?page=now-reading-options.php") . '</p>
+	<p>' . sprintf(__("Now Reading is currently set to search the <strong>amazon%s</strong> domain; you can change this setting and others in the <a href='%s'>options page</a>.", NRTD), $options['domain'], get_settings('home') . $nr_url->urls['options']) . '</p>
 	
 	<form method="post" action="' . $thispage . '">
 	';

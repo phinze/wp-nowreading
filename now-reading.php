@@ -33,6 +33,35 @@ $nr_domains = array(
 	'.ca'		=> __('Canada', NRTD)
 );
 
+class nr_url {
+	var $single = array(
+		'add'		=> '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
+		'manage'	=> '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
+		'options'	=> '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
+	);
+	var $multiple = array(
+		'add'		=> '',
+		'manage'	=> '/wp-admin/edit.php?page=now-reading-manage.php',
+		'options'	=> '/wp-admin/options-general.php?page=now-reading-options.php'
+	);
+	
+	var $urls;
+	
+	function load_scheme( $option ) {
+		if ( $option == NR_MENU_SINGLE )
+			$this->urls = $this->single;
+		else {
+			$this->multiple['add'] = ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) ) ? 
+										'/wp-admin/post-new.php?page=now-reading/now-reading-add.php' :
+										'/wp-admin/post.php?page=now-reading/now-reading-add.php';
+			$this->urls = $this->multiple;
+		}
+	}
+}
+$nr_url = new nr_url();
+$options = get_option('nowReadingOptions');
+$nr_url->load_scheme($options['menuLayout']);
+
 /**
  * Load our l18n domain.
  */

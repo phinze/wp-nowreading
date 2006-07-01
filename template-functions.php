@@ -251,7 +251,7 @@ function book_post_link( $echo = true ) {
  */
 function manage_library_url( $echo = true ) {
 	if ( can_now_reading_admin() )
-		echo apply_filters('book_manage_url', get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php');
+		echo apply_filters('book_manage_url', get_settings('home') . $nr_url->urls['manage']);
 }
 
 /**
@@ -260,7 +260,7 @@ function manage_library_url( $echo = true ) {
 function book_edit_url( $echo = true ) {
 	global $book;
 	if ( can_now_reading_admin() )
-		echo apply_filters('book_edit_url', get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php&action=editsingle&id=' . $book->id);
+		echo apply_filters('book_edit_url', get_settings('home') . $nr_url->urls['manage'] . '&action=editsingle&id=' . $book->id);
 }
 
 /**

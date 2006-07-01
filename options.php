@@ -1,7 +1,8 @@
 <?php
 
 if ( !empty($_POST['update']) ) {
-	define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
+	if( !defined('ABSPATH') )
+		define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
 	require_once ABSPATH . '/wp-admin/admin.php';
 	
 	if ( !current_user_can('level_9') )
@@ -18,6 +19,9 @@ if ( !empty($_POST['update']) ) {
 	$options['domain']			= $_POST['domain'];
 	$options['debugMode']		= $_POST['debug_mode'];
 	$options['useModRewrite']	= $_POST['use_mod_rewrite'];
+	$options['menuLayout']		= ( $_POST['menu_layout'] == 'single' ) ? NR_MENU_SINGLE : NR_MENU_MULTIPLE;
+	
+	$nr_url->load_scheme($options['menuLayout']);
 	
 	switch ( $_POST['image_size'] ) {
 		case 'Small':
@@ -44,7 +48,7 @@ if ( !empty($_POST['update']) ) {
 	
 	update_option('nowReadingOptions', $options);
 	
-	wp_redirect(get_settings('home')."/wp-admin/options-general.php?page=now-reading-options.php&updated=1$append");
+	wp_redirect(get_settings('home') . $nr_url->urls['options'] . "&updated=1$append");
 	die;
 }
 

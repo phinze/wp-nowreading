@@ -48,14 +48,15 @@ class nr_url {
 	var $urls;
 	
 	function load_scheme( $option ) {
+		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
+			$this->multiple['add'] = '/wp-admin/post-new.php?page=now-reading/now-reading-add.php';
+		else
+			$this->multiple['add'] = '/wp-admin/post.php?page=now-reading/now-reading-add.php';
+		
 		if ( $option == NR_MENU_SINGLE )
 			$this->urls = $this->single;
-		else {
-			$this->multiple['add'] = ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) ) ? 
-										'/wp-admin/post-new.php?page=now-reading/now-reading-add.php' :
-										'/wp-admin/post.php?page=now-reading/now-reading-add.php';
+		else
 			$this->urls = $this->multiple;
-		}
 	}
 }
 $nr_url = new nr_url();

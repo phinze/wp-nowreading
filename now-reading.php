@@ -166,7 +166,7 @@ function nr_install() {
 		'httpLib'		=> 'snoopy',
 		'useModRewrite'	=> false,
 		'debugMode'		=> false,
-		'menuLayout'	=> NR_MENU_SINGLE
+		'menuLayout'	=> NR_MENU_MULTIPLE
 	);
 	add_option('nowReadingOptions', $defaultOptions);
 	

@@ -10,10 +10,13 @@ Author URI: http://robm.me.uk/
 
 define('NOW_READING_VERSION', '4.1');
 define('NOW_READING_DB', 14);
-define('NOW_READING_OPTIONS', 2);
+define('NOW_READING_OPTIONS', 3);
 define('NOW_READING_REWRITE', 6);
 
 define('NRTD', 'now-reading');
+
+define('NR_MENU_SINGLE', 2);
+define('NR_MENU_MULTIPLE', 4);
 
 $nr_statuses = array(
 	'unread'	=> __('Yet to read', NRTD),
@@ -129,11 +132,12 @@ function nr_install() {
 	$defaultOptions = array(
 		'formatDate'	=> '%D %b %Y',
 		'associate'		=> 'roblog-21',
-		'domain'		=> ' . com',
+		'domain'		=> '.com',
 		'imageSize'		=> 'Medium',
 		'httpLib'		=> 'snoopy',
 		'useModRewrite'	=> false,
-		'debugMode'		=> false
+		'debugMode'		=> false,
+		'menuLayout'	=> NR_MENU_SINGLE
 	);
 	add_option('nowReadingOptions', $defaultOptions);
 	

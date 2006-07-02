@@ -59,8 +59,8 @@ class nr_url {
 			$this->urls = $this->multiple;
 	}
 }
-$nr_url = new nr_url();
-$options = get_option('nowReadingOptions');
+$nr_url		= new nr_url();
+$options	= get_option('nowReadingOptions');
 $nr_url->load_scheme($options['menuLayout']);
 
 /**
@@ -265,18 +265,18 @@ function get_books( $query ) {
 	if ( $num > -1 && $offset >= 0 ) {
 		$offset	= intval($offset);
 		$num 	= intval($num);
-		$limit = "LIMIT $offset, $num";
+		$limit	= "LIMIT $offset, $num";
 	} else
-		$limit = '';
+		$limit	= '';
 	
 	if ( !empty($author) ) {
-		$author = $wpdb->escape($author);
-		$author = "AND b_author = '$author'";
+		$author	= $wpdb->escape($author);
+		$author	= "AND b_author = '$author'";
 	}
 	
 	if ( !empty($title) ) {
-		$title = $wpdb->escape($title);
-		$title = "AND b_title = '$title'";
+		$title	= $wpdb->escape($title);
+		$title	= "AND b_title = '$title'";
 	}
 	
 	$books = $wpdb->get_results("
@@ -298,7 +298,7 @@ function get_books( $query ) {
 		$search
 		$author
 		$title
-        GROUP BY
+	GROUP BY
 		b_id
 	ORDER BY
 		$orderby $order
@@ -318,7 +318,7 @@ function get_book( $id ) {
 	
 	$options = get_option('nowReadingOptions');
 	
-	$id = intval($id);     
+	$id = intval($id);
 	
 	$book = $wpdb->get_row("
 	SELECT
@@ -434,11 +434,11 @@ function query_amazon( $query ) {
 			<p><strong>' . __("Oops!") . '</strong></p>
 			<p>' . sprintf(__("For some reason, I couldn't search for your book on amazon%s.", NRTD), $options['domain']) . '</p>
 			<p>' . __("Amazon's Web Services may be down, or there may be a problem with your server configuration.") . '</p>
-                        
-                ';
-                if ( $options['httpLib'] )
-		    echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
-                echo '
+								
+					 ';
+					 if ( $options['httpLib'] )
+			 echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
+					 echo '
 		</div>
 		';
 		return false;
@@ -479,10 +479,10 @@ function query_amazon( $query ) {
 				break;
 			$title	= $title->getValue();
 			
-			$asin	= $item->getElement('ASIN');
+			$asin = $item->getElement('ASIN');
 			if ( !$asin )
 				break;
-			$asin	= $asin->getValue();
+			$asin = $asin->getValue();
 			
 			if ( $options['debugMode'] )
 				robm_dump("book:", $author, $title, $asin);
@@ -565,7 +565,7 @@ function library_init() {
 		die;
 	} elseif ( $wp->query_vars['now_reading_author'] ) {
 		// Author permalink.
-		$GLOBALS['nr_author']	= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
+		$GLOBALS['nr_author'] = $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		
 		$load = nr_load_template('author.php');
 		if ( is_wp_error($load) )
@@ -624,7 +624,7 @@ function nr_check_for_updates() {
 	
 	// Only check for updates once a day.
 	if ( ( filemtime($cache) + 86400 ) <= time() )
-		return;	
+		return;
 	
 	
 	if ( $options['httpLib'] == 'curl' ) {
@@ -644,7 +644,7 @@ function nr_check_for_updates() {
 	} else {
 		require_once ABSPATH . WPINC . '/class-snoopy.php';
 			
-		$snoopy = new snoopy;
+		$snoopy	= new snoopy;
 		$snoopy->fetch($check_url);
 		$latest	= $snoopy->results;
 	}
@@ -663,7 +663,7 @@ function nr_check_for_updates() {
 	
 	$newer_version_exists = apply_filters('nr_newer_version_exists', ( $latest > $current ));
 		
-	return  $newer_version_exists;
+	return $newer_version_exists;
 }
 
 /**

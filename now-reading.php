@@ -34,18 +34,20 @@ $nr_domains = array(
 );
 
 class nr_url {
-	var $single = array(
-		'add'		=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
-		'manage'	=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
-		'options'	=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
-	);
-	var $multiple = array(
-		'add'		=> get_settings('home'),
-		'manage'	=> get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php',
-		'options'	=> get_settings('home') . '/wp-admin/options-general.php?page=now-reading-options.php'
-	);
-	
 	var $urls;
+    
+    function nr_url() {
+        $this->multiple = array(
+            'add'		=> get_settings('home'),
+            'manage'	=> get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php',
+            'options'	=> get_settings('home') . '/wp-admin/options-general.php?page=now-reading-options.php'
+        );
+        $this->single = array(
+            'add'		=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
+            'manage'	=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
+            'options'	=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
+        );
+    }
 	
 	function load_scheme( $option ) {
 		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )

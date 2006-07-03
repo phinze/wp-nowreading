@@ -48,7 +48,7 @@ if ( !empty($_POST['update']) ) {
 	
 	update_option('nowReadingOptions', $options);
 	
-	wp_redirect(get_settings('home') . $nr_url->urls['options'] . "&updated=1$append");
+	wp_redirect($nr_url->urls['options'] . "&updated=1$append");
 	die;
 }
 

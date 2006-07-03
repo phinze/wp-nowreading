@@ -35,23 +35,23 @@ $nr_domains = array(
 
 class nr_url {
 	var $single = array(
-		'add'		=> '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
-		'manage'	=> '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
-		'options'	=> '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
+		'add'		=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
+		'manage'	=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
+		'options'	=> get_settings('home') . '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
 	);
 	var $multiple = array(
-		'add'		=> '',
-		'manage'	=> '/wp-admin/edit.php?page=now-reading-manage.php',
-		'options'	=> '/wp-admin/options-general.php?page=now-reading-options.php'
+		'add'		=> get_settings('home'),
+		'manage'	=> get_settings('home') . '/wp-admin/edit.php?page=now-reading-manage.php',
+		'options'	=> get_settings('home') . '/wp-admin/options-general.php?page=now-reading-options.php'
 	);
 	
 	var $urls;
 	
 	function load_scheme( $option ) {
 		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
-			$this->multiple['add'] = '/wp-admin/post-new.php?page=now-reading/now-reading-add.php';
+			$this->multiple['add'] .= '/wp-admin/post-new.php?page=now-reading/now-reading-add.php';
 		else
-			$this->multiple['add'] = '/wp-admin/post.php?page=now-reading/now-reading-add.php';
+			$this->multiple['add'] .= '/wp-admin/post.php?page=now-reading/now-reading-add.php';
 		
 		if ( $option == NR_MENU_SINGLE )
 			$this->urls = $this->single;

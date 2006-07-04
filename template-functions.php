@@ -103,11 +103,23 @@ function books_read_since( $interval, $echo = true ) {
 /**
  * Prints the total number of books in the library.
  */
-function total_books( $status = 0, $echo = true ) {
+function total_books( $status = '', $echo = true ) {
 	global $wpdb;
 	
-	if ( $status )
-		$status = 'WHERE b_status = "' . $wpdb->escape($status) . '"';
+	if ( $status ) {
+		if ( strpos($status, ',') === false ) {
+			$status = 'WHERE b_status = "' . $wpdb->escape($status) . '"';
+		} else {
+			$statuses = explode(',', $status);
+			
+			$status = 'WHERE 1=0';
+			foreach ( $statuses as $st ) {
+				$status .= ' OR b_status = "' . $wpdb->escape(trim($st)) . '" ';
+			}
+		}
+	} else {
+		$status = '';
+	}
 	
 	$num = $wpdb->get_var("
 	SELECT

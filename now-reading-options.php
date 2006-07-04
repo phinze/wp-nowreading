@@ -44,7 +44,7 @@ function nr_options() {
 	';
 	
 	echo '
-		<form method="post" action="' . get_settings('wpurl') . '/wp-content/plugins/now-reading/options.php">
+		<form method="post" action="' . bloginfo('wpurl') . '/wp-content/plugins/now-reading/options.php">
 	';
 	
 	if ( function_exists('wp_nonce_field') )

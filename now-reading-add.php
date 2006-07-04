@@ -101,7 +101,7 @@ function now_reading_add() {
 					extract($result);
 					$data = serialize($result);
 					echo '
-					<form method="post" action="' . get_settings('wpurl') . '/wp-content/plugins/now-reading/add.php" style="border:1px solid #ccc; padding:5px; margin:5px;">
+					<form method="post" action="' . bloginfo('wpurl') . '/wp-content/plugins/now-reading/add.php" style="border:1px solid #ccc; padding:5px; margin:5px;">
 					';
 					
 					if ( function_exists('wp_nonce_field') )

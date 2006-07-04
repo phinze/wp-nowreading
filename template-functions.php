@@ -113,7 +113,7 @@ function total_books( $status = '', $echo = true ) {
 			$statuses = explode(',', $status);
 			
 			$status = 'WHERE 1=0';
-			foreach ( $statuses as $st ) {
+			foreach ( (array) $statuses as $st ) {
 				$status .= ' OR b_status = "' . $wpdb->escape(trim($st)) . '" ';
 			}
 		}
@@ -425,7 +425,7 @@ function print_book_meta( $new_list = true ) {
 	if ( $new_list )
 		echo '<dl>';
 	
-	foreach ( $meta as $key => $value ) {
+	foreach ( (array) $meta as $key => $value ) {
 		$key = apply_filters('book_meta_key', $key);
 		$value = apply_filters('book_meta_val', $value);
 		
@@ -471,7 +471,7 @@ function print_book_tags( $echo = true ) {
 	
 	$i = 0;
 	$string = '';
-	foreach ( $tags as $tag ) {
+	foreach ( (array) $tags as $tag ) {
 		if ( $i++ != 0 )
 			$string .= ', ';
 		$link = book_tag_url($tag, 0);

@@ -120,7 +120,7 @@ function nr_manage() {
 							<p><label class="left" for="status[]">Status:</label>
 								<select name="status[]">
 				';
-				foreach ( $nr_statuses as $status => $name ) {
+				foreach ( (array) $nr_statuses as $status => $name ) {
 					$selected = '';
 					if ( $existing->status == $status )
 						$selected = ' selected="selected"';
@@ -154,7 +154,7 @@ function nr_manage() {
 									</thead>
 									<tbody id="book-meta-table-0" class="book-meta-table">
 			';
-			foreach ( $meta as $key => $val ) {
+			foreach ( (array) $meta as $key => $val ) {
 				$url = get_settings('home')."/wp-content/plugins/now-reading/edit.php?action=deletemeta&id={$existing->id}&key=" . urlencode($key);
 				if ( function_exists('wp_nonce_url') )
 					$url = wp_nonce_url($url, 'now-reading-delete-meta_' . $existing->id . $key);
@@ -314,7 +314,7 @@ function nr_manage() {
 			
 			$i = 0;
 			
-			foreach ( $books as $book ) {
+			foreach ( (array) $books as $book ) {
 				
 				$meta = get_book_meta($book->id);
 				
@@ -345,7 +345,7 @@ function nr_manage() {
 								<p><label class="left" for="status[]">' . __("Status", NRTD) . ':</label>
 									<select name="status[]">
 				';
-				foreach ( $nr_statuses as $status => $name ) {
+				foreach ( (array) $nr_statuses as $status => $name ) {
 					$selected = '';
 					if ( $book->status == $status )
 						$selected = ' selected="selected"';

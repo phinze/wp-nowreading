@@ -76,7 +76,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					$tags = stripslashes($_POST['tags'][$i]);
 					$tags = explode(',', $tags);
 					
-					foreach ( $tags as $tag ) {
+					foreach ( (array) $tags as $tag ) {
 						$tag = trim($tag);
 						tag_book($id, $tag);
 					}

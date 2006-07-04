@@ -79,7 +79,7 @@ function nr_options() {
 					<select name="domain">
 	';
 	
-	foreach ( $nr_domains as $domain => $country ) {
+	foreach ( (array) $nr_domains as $domain => $country ) {
 		if ( $domain == $options['domain'] )
 			$selected = ' selected="selected"';
 		else

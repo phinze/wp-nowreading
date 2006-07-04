@@ -73,7 +73,7 @@ function now_reading_add() {
 			$results = query_amazon("title=$title&author=$author");
 		
 		if ( is_wp_error($results) ) {
-			foreach ( $results->get_error_codes() as $code ) {
+			foreach ( (array) $results->get_error_codes() as $code ) {
 				if ( $code == 'curl-not-installed' ) {
 					echo '
 						<div id="message" class="error fade">
@@ -97,7 +97,7 @@ function now_reading_add() {
 				else
 					echo '<p>' . sprintf(__("You searched for the book &ldquo;%s&rdquo;. amazon%s returned these results:", NRTD), $title, $options['domain']) . '</p>';
 				
-				foreach ( $results as $result ) {
+				foreach ( (array) $results as $result ) {
 					extract($result);
 					$data = serialize($result);
 					echo '

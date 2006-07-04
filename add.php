@@ -21,7 +21,7 @@ if ( !empty($_POST['amazon_data']) ) {
 	
 	check_admin_referer('now-reading-add-' . $b_title);
 	
-	foreach ( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
+	foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
 		$query .= "$field=$value&";
 	
 	$redirect = $nr_url->urls['add'];
@@ -44,7 +44,7 @@ if ( !empty($_POST['amazon_data']) ) {
 		$b_added = date('Y-m-d h:i:s');
 		$b_status = 'unread';
 		
-		foreach ( compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
+		foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
 			$query .= "$field=$value&";
 		
 		if ( add_book($query) ) {

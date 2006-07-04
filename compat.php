@@ -29,7 +29,7 @@ if ( !class_exists('WP_Error') ) {
 			// Return all messages if no code specified.
 			if ( empty($code) ) {
 				$all_messages = array();
-				foreach ( $this->errors as $code => $messages )
+				foreach ( (array) $this->errors as $code => $messages )
 					$all_messages = array_merge($all_messages, $messages);
 
 				return $all_messages;

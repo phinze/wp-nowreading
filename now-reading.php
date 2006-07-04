@@ -351,7 +351,7 @@ function add_book( $query ) {
 	
 	$fields = apply_filters('add_book_fields', $fields);
 	
-	foreach ( $fields as $field => $value ) {
+	foreach ( (array) $fields as $field => $value ) {
 		if ( empty($field) || empty($value) )
 			continue;
 		$columns .= ", $field";
@@ -471,7 +471,7 @@ function query_amazon( $query ) {
 		if ( $options['debugMode'] )
 			robm_dump("items:", $items);
 		
-		foreach ( $items as $item ) {
+		foreach ( (array) $items as $item ) {
 			$author	= $item->getElementByPath('ItemAttributes/Author');
 			if ( $author )
 				$author	= $author->getValue();
@@ -690,7 +690,7 @@ function get_book_tags( $id ) {
 	
 	$array = array();
 	if ( count($tags) > 0 ) {
-		foreach ($tags as $tag) {
+		foreach ( (array) $tags as $tag ) {
 			$array[] = $tag->name;
 		}
 	}
@@ -827,7 +827,7 @@ function get_book_meta( $id, $key = '' ) {
 		return array();
 	
 	$meta = array();
-	foreach ($raws as $raw) {
+	foreach ( (array) $raws as $raw ) {
 		$meta[$raw->m_key] = $raw->m_value;
 	}
 	
@@ -966,7 +966,7 @@ if ( !function_exists('robm_dump') ) {
 	function robm_dump() {
 		echo '<pre style="border:1px solid #000; padding:5px; margin:5px; max-height:150px; overflow:auto;" id="' . md5(serialize($object)) . '">';
 		$i = 0; $args = func_get_args();
-		foreach ( $args as $object ) {
+		foreach ( (array) $args as $object ) {
 			if ( $i == 0 && count($args) > 1 && is_string($object) )
 				echo "<h3>$object</h3>";
 			var_dump($object);

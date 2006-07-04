@@ -302,6 +302,7 @@ function book_post_link( $echo = true ) {
  * If the user has the correct permissions, prints a URL to the Manage -> Now Reading page of the WP admin.
  */
 function manage_library_url( $echo = true ) {
+	global $nr_url;
 	if ( can_now_reading_admin() )
 		echo apply_filters('book_manage_url', $nr_url->urls['manage']);
 }
@@ -310,7 +311,7 @@ function manage_library_url( $echo = true ) {
  * If the user has the correct permissions, prints a URL to the review-writing screen for the current book.
  */
 function book_edit_url( $echo = true ) {
-	global $book;
+	global $book, $nr_url;
 	if ( can_now_reading_admin() )
 		echo apply_filters('book_edit_url', $nr_url->urls['manage'] . '&action=editsingle&id=' . $book->id);
 }

@@ -16,7 +16,7 @@
 		
 		<?php library_search_form() ?>
 		
-		<h2>Planned books:</h2>
+		<h2>Planned books (<?php echo total_books('unread', 0) ?>):</h2>
 		
 		<?php if( have_books('status=unread&num=-1') ) : ?>
 			
@@ -36,7 +36,7 @@
 			
 		<?php endif; ?>
 		
-		<h2>Current books:</h2>
+		<h2>Current books (<?php echo total_books('reading', 0) ?>):</h2>
 		
 		<?php if( have_books('status=reading&num=-1') ) : ?>
 			
@@ -59,7 +59,7 @@
 			
 		<?php endif; ?>
 		
-		<h2>Recent books:</h2>
+		<h2>Recent books (<?php echo total_books('read', 0) ?>):</h2>
 		
 		<?php if( have_books('status=read&orderby=finished&order=desc&num=-1') ) : ?>
 			

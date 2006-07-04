@@ -103,14 +103,18 @@ function books_read_since( $interval, $echo = true ) {
 /**
  * Prints the total number of books in the library.
  */
-function total_books( $echo = true ) {
+function total_books( $status = 0, $echo = true ) {
 	global $wpdb;
+	
+	if ( $status )
+		$status = 'WHERE b_status = "' . $wpdb->escape($status) . '"';
 	
 	$num = $wpdb->get_var("
 	SELECT
 		COUNT(*) AS count
 	FROM 
 		{$wpdb->prefix}now_reading
+	$status
 	");
 	
 	if ( $echo )

@@ -12,7 +12,7 @@
 			
 		<?php endif; ?>
 		
-		<p><?php total_books() ?> overall; <?php books_read_since('1 year') ?> read in the last year; <?php books_read_since('1 month') ?> read in the last month.</p>
+		<p><?php total_books() ?> overall; <?php books_read_since('1 year') ?> read in the last year; <?php books_read_since('1 month') ?> read in the last month. That's <?php average_books('month'); ?>.</p>
 		
 		<?php library_search_form() ?>
 		

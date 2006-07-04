@@ -119,6 +119,40 @@ function total_books( $echo = true ) {
 }
 
 /**
+ * Prints the average number of books read in the given time limit.
+ */
+function average_books( $time_period = 'week', $echo = true ) {
+	global $wpdb;
+	
+	$books_per_day = $wpdb->get_var("
+	SELECT
+		ROUND( ( TO_DAYS(CURDATE()) - TO_DAYS(b_added) ) / COUNT(*) ) AS books_per_day
+	FROM
+		{$wpdb->prefix}now_reading
+	");
+	
+	$average = 0;
+	switch ( $time_period ) {
+		case 'year':
+			$average = round($books_per_day / 365);
+			break;
+		case 'month':
+			$average = round($books_per_day / 31);
+			break;
+		case 'week':
+			$average = round($books_per_day / 7);
+		case 'day':
+			break;
+		default:
+			return 0;
+	}
+	
+	if( $echo )
+		echo "an average of $average book".($average != 1 ? 's' : '')." per $time_period";
+	return $average;
+}
+
+/**
  * Prints the URL to an internal page displaying data about the book.
  */
 function book_permalink( $echo = true, $id = 0 ) {

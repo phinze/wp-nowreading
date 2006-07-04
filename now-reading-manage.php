@@ -240,7 +240,7 @@ function nr_manage() {
 	}
 	
 	if ( $list ) {
-		$count = total_books(0);
+		$count = total_books(0, 0);
 		
 		if ( $count ) {
 			if ( !empty($_GET['q']) )
@@ -262,7 +262,7 @@ function nr_manage() {
 			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$page}");
 			$count = count($books);
 			
-			$numpages = ceil(total_books(0) / $perpage);
+			$numpages = ceil(total_books(0, 0) / $perpage);
 			$pages = '<p>' . __("Pages", NRTD) . ':';
 			for ( $i = 1; $i <= $numpages; $i++)
 				$pages .= " <a href='" . $nr_url->urls['manage'] . "&p=$i'>$i</a>";

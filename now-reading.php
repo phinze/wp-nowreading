@@ -38,14 +38,14 @@ class nr_url {
     
     function nr_url() {
         $this->multiple = array(
-            'add'		=> bloginfo('wpurl'),
-            'manage'	=> bloginfo('wpurl') . '/wp-admin/edit.php?page=now-reading-manage.php',
-            'options'	=> bloginfo('wpurl') . '/wp-admin/options-general.php?page=now-reading-options.php'
+            'add'		=> get_settings('siteurl'),
+            'manage'	=> get_settings('siteurl') . '/wp-admin/edit.php?page=now-reading-manage.php',
+            'options'	=> get_settings('siteurl') . '/wp-admin/options-general.php?page=now-reading-options.php'
         );
         $this->single = array(
-            'add'		=> bloginfo('wpurl') . '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
-            'manage'	=> bloginfo('wpurl') . '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
-            'options'	=> bloginfo('wpurl') . '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
+            'add'		=> get_settings('siteurl') . '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
+            'manage'	=> get_settings('siteurl') . '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
+            'options'	=> get_settings('siteurl') . '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
         );
     }
 	
@@ -493,7 +493,7 @@ function query_amazon( $query ) {
 			if ( $image )
 				$image	= $image->getValue();
 			else
-				$image = bloginfo('wpurl') . '/wp-content/plugins/now-reading/no-image.png';
+				$image = get_settings('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 			
 			$results[] = compact('author', 'title', 'image', 'asin');
 		}

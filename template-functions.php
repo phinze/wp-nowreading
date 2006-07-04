@@ -227,14 +227,17 @@ function book_author_permalink( $echo = true, $author = null ) {
  * @see book_permalink()
  * @see is_custom_book()
  */
-function book_url( $echo = true ) {
+function book_url( $domain = null, $echo = true ) {
 	global $book;
 	$options = get_option('nowReadingOptions');
+	
+	if ( !$domain )
+		$domain = $options['domain'];
 	
 	if ( is_custom_book() )
 		book_permalink($echo);
 	else {
-		$url = apply_filters('book_url', "http://www.amazon{$options['domain']}/exec/obidos/ASIN/{$book->asin}/{$options['associate']}?tag={$options['associate']}");
+		$url = apply_filters('book_url', "http://www.amazon{$domain}/exec/obidos/ASIN/{$book->asin}/{$options['associate']}?tag={$options['associate']}");
 		if ( $echo )
 			echo $url;
 		return $url;

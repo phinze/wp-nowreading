@@ -34,7 +34,7 @@ $nr_domains = array(
 );
 
 class nr_url {
-	var $urls;
+	var $urls, $multiple, $single;
     
     function nr_url() {
         $this->multiple = array(

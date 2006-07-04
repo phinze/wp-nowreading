@@ -126,21 +126,23 @@ function average_books( $time_period = 'week', $echo = true ) {
 	
 	$books_per_day = $wpdb->get_var("
 	SELECT
-		ROUND( ( TO_DAYS(CURDATE()) - TO_DAYS(b_added) ) / COUNT(*) ) AS books_per_day
+		( COUNT(*) / ( TO_DAYS(CURDATE()) - TO_DAYS(b_added) ) ) AS books_per_day
 	FROM
 		{$wpdb->prefix}now_reading
+	WHERE
+		b_status = 'read'
 	");
 	
 	$average = 0;
 	switch ( $time_period ) {
 		case 'year':
-			$average = round($books_per_day / 365);
+			$average = round($books_per_day * 365);
 			break;
 		case 'month':
-			$average = round($books_per_day / 31);
+			$average = round($books_per_day * 31);
 			break;
 		case 'week':
-			$average = round($books_per_day / 7);
+			$average = round($books_per_day * 7);
 		case 'day':
 			break;
 		default:
@@ -148,7 +150,7 @@ function average_books( $time_period = 'week', $echo = true ) {
 	}
 	
 	if( $echo )
-		echo "an average of $average book".($average != 1 ? 's' : '')." per $time_period";
+		echo "an average of $average book".($average != 1 ? 's' : '')." each $time_period";
 	return $average;
 }
 

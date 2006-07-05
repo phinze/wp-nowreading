@@ -606,6 +606,9 @@ function library_init() {
 		$author = $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		$GLOBALS['nr_author'] = $wpdb->get_var("SELECT b_author FROM {$wpdb->prefix}now_reading WHERE b_nice_author = '$author'");
 		
+		if ( empty($GLOBALS['nr_author']) )
+			die("Invalid author");
+		
 		$load = nr_load_template('author.php');
 		if ( is_wp_error($load) )
 			echo $load->get_error_message();

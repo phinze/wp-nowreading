@@ -591,9 +591,9 @@ function library_init() {
 		FROM
 			{$wpdb->prefix}now_reading
 		WHERE
-			b_title REGEXP '$title'
+			b_nice_title = '$title'
 			AND
-			b_author REGEXP '$author'
+			b_nice_author = '$author'
 		");
 		
 		$load = nr_load_template('single.php');

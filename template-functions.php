@@ -180,7 +180,7 @@ function book_permalink( $echo = true, $id = 0 ) {
 	if ( $id == 0 )
 		$id = $book->id;
 	
-	$existing = $wpdb->get_row("SELECT b_title AS title, b_author AS author FROM {$wpdb->prefix}now_reading WHERE b_id = '$id'");
+	$existing = $wpdb->get_row("SELECT b_nice_title AS title, b_nice_author AS author FROM {$wpdb->prefix}now_reading WHERE b_id = '$id'");
 	
 	if ( !$existing )
 		return;

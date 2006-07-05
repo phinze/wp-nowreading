@@ -1,9 +1,9 @@
 <?php
 
 if ( !empty($_POST['update']) ) {
-	if( !defined('ABSPATH') )
-		define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
-	require_once ABSPATH . '/wp-admin/admin.php';
+	$base = realpath(dirname(__FILE__) . '/../../../');
+	chdir($base . '/wp-admin');
+	require_once 'admin.php';
 	
 	if ( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );

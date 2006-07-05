@@ -1,8 +1,9 @@
 <?php
 
 if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
-	define('ABSPATH', realpath(dirname(__FILE__) . '/../../../') . '/');
-	require_once ABSPATH . '/wp-admin/admin.php';
+	$base = realpath(dirname(__FILE__) . '/../../../');
+	chdir($base . '/wp-admin');
+	require_once 'admin.php';
 	
 	$_POST = stripslashes_deep($_POST);
 	

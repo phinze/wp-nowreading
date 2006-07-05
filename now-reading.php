@@ -9,7 +9,7 @@ Author URI: http://robm.me.uk/
 */
 
 define('NOW_READING_VERSION', '4.2');
-define('NOW_READING_DB', 14);
+define('NOW_READING_DB', 18);
 define('NOW_READING_OPTIONS', 3);
 define('NOW_READING_REWRITE', 6);
 
@@ -132,7 +132,9 @@ function nr_install() {
 	b_started datetime NOT NULL default '0000-00-00 00:00:00',
 	b_finished datetime NOT NULL default '0000-00-00 00:00:00',
 	b_title text NOT NULL default '',
+	b_nice_title text NOT NULL default '',
 	b_author text NOT NULL default '',
+	b_nice_author text NOT NULL default '',
 	b_image text NOT NULL default '',
 	b_asin varchar(255) NOT NULL default '',
 	b_status enum('read','reading','unread') NOT NULL default 'read',
@@ -180,6 +182,31 @@ function nr_install() {
 	
 	// Update our .htaccess file.
 	$wp_rewrite->flush_rules();
+	
+	// Update our nice titles/authors. This is pretty inefficient but it's due to limitations of mySQL; it only runs on install/upgrade so it's not too bad.
+	$books = $wpdb->get_results("
+	SELECT
+		b_id AS id, b_title AS title, b_author AS author
+	FROM
+		{$wpdb->prefix}now_reading
+	WHERE
+		b_nice_title = '' OR b_nice_author = ''
+	");
+	foreach ( (array) $books as $book ) {
+		// Should probably abstract this into a function but ok
+		$nice_title = $wpdb->escape(strtolower(preg_replace('#[^\w\-]#', '', str_replace(' ', '-', $book->title))));
+		$nice_author = $wpdb->escape(strtolower(preg_replace('#[^\w\-]#', '', str_replace(' ', '-', $book->author))));
+		$id = intval($book->id);
+		$wpdb->query("
+		UPDATE
+			{$wpdb->prefix}now_reading
+		SET
+			b_nice_title = '$nice_title',
+			b_nice_author = '$nice_author'
+		WHERE
+			b_id = '$id'
+		");
+	}
 	
 	// Set an option that stores the current installed versions of the database, options and rewrite.
 	$versions = array('db' => NOW_READING_DB, 'options' => NOW_READING_OPTIONS, 'rewrite' => NOW_READING_REWRITE);
@@ -558,7 +585,16 @@ function library_init() {
 		// Book permalink with title and author.
 		$author				= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		$title				= $wpdb->escape(urldecode($wp->query_vars['now_reading_title']));
-		$GLOBALS['nr_id']	= $wpdb->get_var("SELECT b_id FROM {$wpdb->prefix}now_reading WHERE b_title = '$title' AND b_author = '$author'");
+		$GLOBALS['nr_id']	= $wpdb->get_var("
+		SELECT
+			b_id
+		FROM
+			{$wpdb->prefix}now_reading
+		WHERE
+			b_title REGEXP '$title'
+			AND
+			b_author REGEXP '$author'
+		");
 		
 		$load = nr_load_template('single.php');
 		if ( is_wp_error($load) )

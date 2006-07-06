@@ -209,12 +209,17 @@ function book_author_permalink( $echo = true, $author = null ) {
 	if ( !$author )
 		return;
 	
-	$author = urlencode(strtolower($author));
+	$nice_author = $wpdb->get_var("SELECT b_nice_author AS author FROM {$wpdb->prefix}now_reading WHERE b_author = '$author'");
+	
+	if ( !$nice_author )
+		return;
+	
+	$nice_author = urlencode(strtolower($nice_author));
 	
 	if ( $options['useModRewrite'] )
-		$url = get_settings('siteurl')."/library/$author/";
+		$url = get_settings('siteurl')."/library/$nice_author/";
 	else
-		$url = get_settings('siteurl')."/index.php?now_reading_author=$author";
+		$url = get_settings('siteurl')."/index.php?now_reading_author=$nice_author";
 	
 	$url = apply_filters('book_author_permalink', $url);
 	if ( $echo )

@@ -200,7 +200,8 @@ function book_permalink( $echo = true, $id = 0 ) {
 }
 
 function book_author_permalink( $echo = true, $author = null ) {
-	global $book;
+	global $book, $wpdb;
+	
 	$options = get_option('nowReadingOptions');
 	
 	if ( !$author )

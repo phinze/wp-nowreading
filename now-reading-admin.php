@@ -4,8 +4,8 @@
  * Adds our stylesheets and JS to admin pages.
  */
 function nr_add_head() {
-	echo '<link rel="stylesheet" href="' . get_settings('siteurl') . '/wp-content/plugins/now-reading/admin.css" type="text/css" />';
-	echo '<script type="text/javascript" src="' . get_settings('siteurl') . '/wp-content/plugins/now-reading/js/manage.js"></script>';
+	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/admin.css" type="text/css" />';
+	echo '<script type="text/javascript" src="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/js/manage.js"></script>';
 }
 add_action('admin_head', 'nr_add_head');
 

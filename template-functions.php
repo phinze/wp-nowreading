@@ -189,9 +189,9 @@ function book_permalink( $echo = true, $id = 0 ) {
 	$title = urlencode(strtolower($existing->title));
 	
 	if ( $options['useModRewrite'] )
-		$url = get_settings('siteurl')."/library/$author/$title/";
+		$url = get_bloginfo('url') . "/library/$author/$title/";
 	else
-		$url = get_settings('siteurl')."/index.php?now_reading_author=$author&now_reading_title=$title";
+		$url = get_bloginfo('url') . "/index.php?now_reading_author=$author&now_reading_title=$title";
 	
 	$url = apply_filters('book_permalink', $url);
 	if ( $echo )
@@ -218,9 +218,9 @@ function book_author_permalink( $echo = true, $author = null ) {
 	$nice_author = urlencode(strtolower($nice_author));
 	
 	if ( $options['useModRewrite'] )
-		$url = get_settings('siteurl')."/library/$nice_author/";
+		$url = get_bloginfo('url') . "/library/$nice_author/";
 	else
-		$url = get_settings('siteurl')."/index.php?now_reading_author=$nice_author";
+		$url = get_bloginfo('url') . "/index.php?now_reading_author=$nice_author";
 	
 	$url = apply_filters('book_author_permalink', $url);
 	if ( $echo )
@@ -347,9 +347,9 @@ function library_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if ( $options['useModRewrite'] )
-		$url = get_settings('siteurl') . '/library/';
+		$url = get_bloginfo('url') . '/library/';
 	else
-		$url = get_settings('siteurl') . '/index.php?now_reading_library=true';
+		$url = get_bloginfo('url') . '/index.php?now_reading_library=true';
 	
 	$url = apply_filters('book_library_url', $url);
 	
@@ -387,9 +387,9 @@ function search_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if ( $options['useModRewrite'] )
-		$url = get_settings('siteurl') . '/library/search?q=';
+		$url = get_bloginfo('url') . '/library/search?q=';
 	else
-		$url = get_settings('siteurl') . '/index.php?now_reading_search=true&q=';
+		$url = get_bloginfo('url') . '/index.php?now_reading_search=true&q=';
 	
 	$url = apply_filters('library_search_url', $url);
 	
@@ -499,9 +499,9 @@ function book_tag_url( $tag, $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if ( $options['useModRewrite'] )
-		$url = get_settings('siteurl') . '/library/tag/' . urlencode($tag);
+		$url = get_bloginfo('url') . '/library/tag/' . urlencode($tag);
 	else
-		$url = get_settings('siteurl') . '/index.php?now_reading_tag=true&nr_tag=' . urlencode($tag);
+		$url = get_bloginfo('url') . '/index.php?now_reading_tag=true&nr_tag=' . urlencode($tag);
 	
 	$url = apply_filters('library_tag_url', $url);
 	

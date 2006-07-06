@@ -146,7 +146,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				$forward = $nr_url->urls['manage'] . '&updated=' . $updated;
 			else
 				$forward = wp_get_referer() . '&updated=' . $updated;
-				
+			
 			header("Location: $forward");
 			die;
 		break;

@@ -866,12 +866,17 @@ function get_book_meta( $id, $key = '' ) {
 	if ( !count($raws) )
 		return array();
 	
-	$meta = array();
-	foreach ( (array) $raws as $raw ) {
-		$meta[$raw->m_key] = $raw->m_value;
+	$meta = null;
+	if ( empty($key) ) {
+		$meta = array();
+		foreach ( (array) $raws as $raw ) {
+			$meta[$raw->m_key] = $raw->m_value;
+		}
+		$meta = apply_filters('book_meta', $meta);
+	} else {
+		$meta = $raws[0]->m_value;
+		$meta = apply_filters('book_meta_single', $meta);
 	}
-	
-	$meta = apply_filters('book_meta', $meta);
 	
 	return $meta;
 }

@@ -452,15 +452,21 @@ function print_book_meta( $new_list = true ) {
 		echo '</dl>';
 }
 
+/**
+ * Prints a single book meta value.
+ * @param $key The meta key to fetch
+ * @param $echo Whether to echo the result or just return it
+ * @returns string The meta value for the given $key.
+ */
 function book_meta( $key, $echo = true ) {
 	global $book;
 	
 	$meta = get_book_meta($book->id, $key);
 	
-	if ( count($meta) < 1 )
+	if ( empty($meta) )
 		return;
 	
-	$meta = apply_filters('book_meta_val', $meta[0]);
+	$meta = apply_filters('book_meta_val', $meta);
 	
 	if ( $echo )
 		echo $meta;

@@ -3,7 +3,7 @@ function toggleBook( i ) {
 	var a = document.getElementById("book-edit-link-" + i);
 	var img = document.getElementById("book-image-" + i);
 	
-	if( div.style.display == "block" ) {
+	if ( div.style.display == "block" ) {
 		a.innerHTML = "Edit &darr;";
 		div.style.display = "none";
 		img.className = "small";
@@ -47,30 +47,34 @@ function reviewBigger( i ) {
 function reviewSmaller( i ) {
 	var text = document.getElementById("review-" + i);
 	var height = text.style.height.substring(0, text.style.height.indexOf("px"));
-	if( height - 75 > 0 )
+	if ( height - 75 > 0 )
 		text.style.height = ( parseInt(height) - 75 ) + "px";
 }
 
 function setVisible() {
 	// Hide book edit thingies on main Manage page.
 	var divs = getElementsByClassName(document, "div", "book-details-extra");
-	for(var i = 0; i < divs.length; i++) {
-		divs[i].style.display = 'none';
+	if ( divs != null ) {
+		for ( var i = 0; i < divs.length; i++ ) {
+			divs[i].style.display = 'none';
+		}
 	}
 	
 	// Show increase/decrease review size links on editsingle page.
 	var reviewSizeLink = document.getElementById("review-size-link");
-	reviewSizeLink.style.display = "block";
+	if ( reviewSizeLink != null ) {
+		reviewSizeLink.style.display = "block";
+	}
 }
 addLoadEvent(setVisible);
 
 function addLoadEvent(func) {
   var oldonload = window.onload;
-  if (typeof window.onload != 'function') {
+  if ( typeof window.onload != 'function' ) {
     window.onload = func;
   } else {
     window.onload = function() {
-      if (oldonload) {
+      if ( oldonload ) {
         oldonload();
       }
       func();
@@ -84,9 +88,9 @@ function getElementsByClassName(oElm, strTagName, strClassName){
     strClassName = strClassName.replace(/\-/g, "\\-");
     var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
     var oElement;
-    for(var i=0; i<arrElements.length; i++){
+    for ( var i=0; i<arrElements.length; i++){
         oElement = arrElements[i];      
-        if(oRegExp.test(oElement.className)){
+        if ( oRegExp.test(oElement.className)){
             arrReturnElements.push(oElement);
         }   
     }

@@ -42,7 +42,10 @@ if ( !empty($_POST['amazon_data']) ) {
 		
 		$b_author = $wpdb->escape($_POST['custom_author']);
 		$b_title = $wpdb->escape($_POST['custom_title']);
-		$b_image = $wpdb->escape($_POST['custom_image']);
+		if ( !empty($_POST['custom_image']) )
+			$b_image = $wpdb->escape($_POST['custom_image']);
+		else
+			$b_image = get_settings('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 		$b_asin = '';
 		$b_added = date('Y-m-d h:i:s');
 		$b_status = 'unread';

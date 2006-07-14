@@ -123,8 +123,6 @@ function now_reading_add() {
 			}
 		}
 		
-		$thispage = $nr_url->urls['add'];
-		
 		echo '
 		<p>' . __("Not found what you like? You have a couple of options.", NRTD) . '</p>
 		
@@ -134,7 +132,7 @@ function now_reading_add() {
 		
 		<h3>' . __("Add a book manually", NRTD) . '</h3>
 		
-		<form method="post" action="' . $thispage . '">
+		<form method="post" action="' . get_settings('siteurl') . '/wp-content/plugins/now-reading/add.php">
 		
 		';
 		
@@ -171,6 +169,9 @@ function now_reading_add() {
 		echo '
 		<div class="nr-add-grouping">
 		<h3>Add a new book</h3>';
+	
+	if ( !$thispage )
+		$thispage = $nr_urls['add'];
 	
 	echo '
 	

@@ -9,9 +9,9 @@ Author URI: http://robm.me.uk/
 */
 
 define('NOW_READING_VERSION', '4.2.1');
-define('NOW_READING_DB', 19);
-define('NOW_READING_OPTIONS', 3);
-define('NOW_READING_REWRITE', 6);
+define('NOW_READING_DB', 20);
+define('NOW_READING_OPTIONS', 4);
+define('NOW_READING_REWRITE', 7);
 
 define('NRTD', 'now-reading');
 

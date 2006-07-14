@@ -46,7 +46,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 			
 			$count = intval($_POST['count']);
 			
-			if ( $count > total_books(0) )
+			if ( $count > total_books(0, 0) )
 				die;
 			
 			$updated = 0;

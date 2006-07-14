@@ -274,8 +274,7 @@ function nr_manage() {
 				<h2>Now Reading</h2>
 				
 				<div class="nr-actions">
-					<form method="get" action="">
-						<input type="hidden" name="page" value="now-reading-manage.php" />
+					<form method="get" action="" onsubmit="location.href += \'&q=\' + document.getElementById(\'q\').value; return false;">
 						<p><label for="q">' . __("Search books", NRTD) . ':</label> <input type="text" name="q" id="q" value="' . htmlentities($_GET['q']) . '" /> <input type="submit" value="' . __('Search', NRTD) . '" /></p>
 					</form>
 					

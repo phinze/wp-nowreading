@@ -19,10 +19,12 @@ if ( !empty($_POST['amazon_data']) ) {
 	$b_asin = $wpdb->escape($data['asin']);
 	$b_added = date('Y-m-d h:i:s');
 	$b_status = 'unread';
+	$b_nice_title = $wpdb->escape(sanitize_title($data['title']));
+	$b_nice_author = $wpdb->escape(sanitize_title($data['author']));
 	
 	check_admin_referer('now-reading-add-' . $b_title);
 	
-	foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status') as $field => $value )
+	foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status', 'b_nice_title', 'b_nice_author') as $field => $value )
 		$query .= "$field=$value&";
 	
 	$redirect = $nr_url->urls['add'];

@@ -177,16 +177,17 @@ function book_permalink( $echo = true, $id = 0 ) {
 	global $book, $wpdb;;
 	$options = get_option('nowReadingOptions');
 	
-	if ( $id == 0 )
-		$id = $book->id;
-	
-	$existing = $wpdb->get_row("SELECT b_nice_title AS title, b_nice_author AS author FROM {$wpdb->prefix}now_reading WHERE b_id = '$id'");
-	
-	if ( !$existing )
+	if ( !$book && !$id )
 		return;
 	
-	$author = urlencode(strtolower($existing->author));
-	$title = urlencode(strtolower($existing->title));
+	if ( $id && !$book )
+		$book = get_book("id=".intval($id));
+	
+	if ( !$id && $book->id )
+		$id = $book->id;
+	
+	$author = sanitize_title($book->author);
+	$title = sanitize_title($book->title);
 	
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . "/library/$author/$title/";
@@ -210,12 +211,7 @@ function book_author_permalink( $echo = true, $author = null ) {
 	if ( !$author )
 		return;
 	
-	$nice_author = $wpdb->get_var("SELECT b_nice_author AS author FROM {$wpdb->prefix}now_reading WHERE b_author = '$author'");
-	
-	if ( !$nice_author )
-		return;
-	
-	$nice_author = urlencode(strtolower($nice_author));
+	$nice_author = sanitize_title($author);
 	
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . "/library/$nice_author/";

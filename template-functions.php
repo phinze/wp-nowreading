@@ -142,7 +142,7 @@ function average_books( $time_period = 'week', $echo = true ) {
 	
 	$books_per_day = $wpdb->get_var("
 	SELECT
-		( COUNT(*) / ( TO_DAYS(CURDATE()) - TO_DAYS(b_added) ) ) AS books_per_day
+		( COUNT(*) / ( TO_DAYS(CURDATE()) - TO_DAYS(MIN(b_added)) ) ) AS books_per_day
 	FROM
 		{$wpdb->prefix}now_reading
 	WHERE

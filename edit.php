@@ -57,13 +57,15 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				if ( $id == 0 )
 					continue;
 				
-				$author		= $wpdb->escape($_POST['author'][$i]);
-				$title		= $wpdb->escape($_POST['title'][$i]);
-				$status		= $wpdb->escape($_POST['status'][$i]);
-				$added		= ( empty($_POST['added'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['added'][$i])));
-				$started	= ( empty($_POST['started'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
-				$finished	= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
-				$post		= intval($_POST['posts'][$i]);
+				$author			= $wpdb->escape($_POST['author'][$i]);
+				$title			= $wpdb->escape($_POST['title'][$i]);
+				$nice_title		= $wpdb->escape(sanitize_title($_POST['title'][$i]));
+				$nice_author	= $wpdb->escape(sanitize_title($_POST['author'][$i]));
+				$status			= $wpdb->escape($_POST['status'][$i]);
+				$added			= ( empty($_POST['added'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['added'][$i])));
+				$started		= ( empty($_POST['started'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
+				$finished		= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
+				$post			= intval($_POST['posts'][$i]);
 				
 				if ( !empty($_POST['tags'][$i]) ) {
 					// Delete current relationships and add them fresh.
@@ -114,6 +116,8 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					$finished
 					b_author = '$author',
 					b_title = '$title',
+					b_nice_author = '$nice_author',
+					b_nice_title = '$nice_title',
 					b_status = '$status',
 					b_added = '$added',
 					b_post = '$post'

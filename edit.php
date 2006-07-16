@@ -66,6 +66,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				$started		= ( empty($_POST['started'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
 				$finished		= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
 				$post			= intval($_POST['posts'][$i]);
+				$visible		= ( $_POST['visible'] ) ? 1 : 0;
 				
 				if ( !empty($_POST['tags'][$i]) ) {
 					// Delete current relationships and add them fresh.
@@ -120,7 +121,8 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					b_nice_title = '$nice_title',
 					b_status = '$status',
 					b_added = '$added',
-					b_post = '$post'
+					b_post = '$post',
+					b_visible = '$visible'
 					$review
 				WHERE
 					b_id = $id

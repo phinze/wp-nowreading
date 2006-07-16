@@ -97,6 +97,8 @@ function nr_manage() {
 			if ( function_exists('wp_referer_field') )
 				wp_referer_field();
 			
+			$visible = ( $existing->visible ) ? ' checked="checked"' : '';
+			
 			echo '
 				<input type="hidden" name="action" value="update" />
 				<input type="hidden" name="count" value="1" />
@@ -113,12 +115,12 @@ function nr_manage() {
 						<h3>Book ' . $existing->id . ': &ldquo;' . $existing->title . '&rdquo; by ' . $existing->author . '</h3>
 						
 						<div id="book-details-extra-0">
-							<p><label class="left" for="title[]">Title:</label> <input type="text" class="main" id="title-0" name="title[]" value="' . $existing->title . '" /></p>
+							<p><label class="left" for="title-0">Title:</label> <input type="text" class="main" id="title-0" name="title[]" value="' . $existing->title . '" /></p>
 							
-							<p><label class="left" for="author[]">Author:</label> <input type="text" class="main" id="author-0" name="author[]" value="' . $existing->author . '" /></p>
+							<p><label class="left" for="author-0">Author:</label> <input type="text" class="main" id="author-0" name="author[]" value="' . $existing->author . '" /></p>
 						
-							<p><label class="left" for="status[]">Status:</label>
-								<select name="status[]">
+							<p><label class="left" for="status-0">Status:</label>
+								<select name="status[]" id="status-0">
 				';
 				foreach ( (array) $nr_statuses as $status => $name ) {
 					$selected = '';
@@ -132,6 +134,8 @@ function nr_manage() {
 				echo '
 								</select>
 							</p>
+							
+							<p><label class="left" for="visible[]">Visible:</label> <input type="checkbox" name="visible[]" id="visible-0"'.$visible.' /></p>
 							
 							<p>
 								<label for="added[]">Added:</label> <input type="text" id="added-0" name="added[]" value="' . $existing->added . '" />
@@ -259,7 +263,7 @@ function nr_manage() {
 			$num = $perpage;
 			$page = "&num=$num&offset=$offset";
 			
-			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$page}");
+			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$page}&hidden=true");
 			$count = count($books);
 			
 			$numpages = ceil(total_books(0, 0) / $perpage);

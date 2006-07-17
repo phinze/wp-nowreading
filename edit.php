@@ -59,14 +59,21 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				
 				$author			= $wpdb->escape($_POST['author'][$i]);
 				$title			= $wpdb->escape($_POST['title'][$i]);
-				$nice_title		= $wpdb->escape(sanitize_title($_POST['title'][$i]));
+				
 				$nice_author	= $wpdb->escape(sanitize_title($_POST['author'][$i]));
+				$nice_title		= $wpdb->escape(sanitize_title($_POST['title'][$i]));
+				
 				$status			= $wpdb->escape($_POST['status'][$i]);
+				
 				$added			= ( empty($_POST['added'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['added'][$i])));
 				$started		= ( empty($_POST['started'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
 				$finished		= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
+				
 				$post			= intval($_POST['posts'][$i]);
 				$visible		= ( $_POST['visible'] ) ? 1 : 0;
+				
+				$rating			= ( is_numeric($_POST['rating'][$i]) ) ? intval($_POST["rating"][$i]) : 0;
+				$review			= $wpdb->escape($_POST["review"][$i]);
 				
 				if ( !empty($_POST['tags'][$i]) ) {
 					// Delete current relationships and add them fresh.
@@ -84,12 +91,6 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 						$tag = trim($tag);
 						tag_book($id, $tag);
 					}
-				}
-				
-				if ( !empty($_POST["review"][$i]) ) {
-					$rating = intval($_POST["rating"][$i]);
-					$review = $wpdb->escape($_POST["review"][$i]);
-					$review = ", b_rating = '$rating', b_review = '$review'";
 				}
 				
 				$current_status = $wpdb->get_var("
@@ -122,8 +123,9 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					b_status = '$status',
 					b_added = '$added',
 					b_post = '$post',
-					b_visible = '$visible'
-					$review
+					b_visible = '$visible',
+					b_rating = '$rating',
+					b_review = '$review'
 				WHERE
 					b_id = $id
 				");

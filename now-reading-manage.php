@@ -208,6 +208,7 @@ function nr_manage() {
 					
 						<p><label for="rating">' . __("Rating", NRTD) . ':</label><br />
 						<select name="rating[]" id="rating-' . $i . '" style="width:100px;">
+							<option value="unrated">&nbsp;</option>
 				';
 				for ($i = 10; $i >=1; $i--) {
 					$selected = ($i == $existing->rating) ? ' selected="selected"' : '';

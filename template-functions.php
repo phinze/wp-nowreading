@@ -6,6 +6,7 @@ $book = null;
 
 /**
  * Prints the book's title.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_title( $echo = true ) {
 	global $book;
@@ -17,6 +18,7 @@ function book_title( $echo = true ) {
 
 /**
  * Prints the author of the book.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_author( $echo = true ) {
 	global $book;
@@ -28,6 +30,7 @@ function book_author( $echo = true ) {
 
 /**
  * Prints a URL to the book's image, usually used within an HTML img element.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_image( $echo = true ) {
 	global $book;
@@ -39,6 +42,7 @@ function book_image( $echo = true ) {
 
 /**
  * Prints the date when the book was added to the database.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_added( $echo = true ) {
 	global $book;
@@ -50,6 +54,7 @@ function book_added( $echo = true ) {
 
 /**
  * Prints the date when the book's status was changed from unread to reading.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_started( $echo = true ) {
 	global $book;
@@ -66,6 +71,7 @@ function book_started( $echo = true ) {
 
 /**
  * Prints the date when the book's status was changed from reading to read.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_finished( $echo = true ) {
 	global $book;
@@ -80,7 +86,42 @@ function book_finished( $echo = true ) {
 }
 
 /**
+ * Prints the current book's status with optional overrides for messages.
+ * @param bool $echo Whether or not to echo the results.
+ */
+function book_status ( $echo = true, $unread = '', $reading = '', $read = '' ) {
+	global $book, $nr_statuses;
+	
+	if ( empty($unread) )
+		$unread = $nr_statuses['unread'];
+	if ( empty($reading) )
+		$reading = $nr_statuses['reading'];
+	if ( empty($read) )
+		$read = $nr_statuses['read'];
+	
+	switch ( $book->status ) {
+		case 'unread':
+			$text = $unread;
+			break;
+		case 'reading':
+			$text = $reading;
+			break;
+		case 'read':
+			$text = $read;
+			break;
+		default:
+			return;
+	}
+	
+	if ( $echo )
+		echo $text;
+	return $text;
+}
+
+/**
  * Prints the number of books started and finished within a given time period.
+ * @param string $interval The time interval, eg  "1 year", "3 month"
+ * @param bool $echo Whether or not to echo the results.
  */
 function books_read_since( $interval, $echo = true ) {
 	global $wpdb;
@@ -102,6 +143,8 @@ function books_read_since( $interval, $echo = true ) {
 
 /**
  * Prints the total number of books in the library.
+ * @param string $status A comma-separated list of statuses to include in the count. If ommitted, all statuses will be counted.
+ * @param bool $echo Whether or not to echo the results.
  */
 function total_books( $status = '', $echo = true ) {
 	global $wpdb;
@@ -136,6 +179,8 @@ function total_books( $status = '', $echo = true ) {
 
 /**
  * Prints the average number of books read in the given time limit.
+ * @param string $time_period The period to measure, eg "year", "month"
+ * @param bool $echo Whether or not to echo the results.
  */
 function average_books( $time_period = 'week', $echo = true ) {
 	global $wpdb;
@@ -172,6 +217,8 @@ function average_books( $time_period = 'week', $echo = true ) {
 
 /**
  * Prints the URL to an internal page displaying data about the book.
+ * @param bool $echo Whether or not to echo the results.
+ * @param int $id The ID of the book to link to. If ommitted, the current book's ID will be used.
  */
 function book_permalink( $echo = true, $id = 0 ) {
 	global $book, $wpdb;;
@@ -200,6 +247,11 @@ function book_permalink( $echo = true, $id = 0 ) {
 	return $url;
 }
 
+/**
+ * Prints the URL to an internal page displaying books by a certain author.
+ * @param bool $echo Whether or not to echo the results.
+ * @param string $author The author to link to. If ommitted, the global book's author will be used.
+ */
 function book_author_permalink( $echo = true, $author = null ) {
 	global $book, $wpdb;
 	
@@ -226,10 +278,12 @@ function book_author_permalink( $echo = true, $author = null ) {
 
 /**
  * Prints a URL to the book's Amazon detail page. If the book is a custom one, it will print a URL to the book's permalink page.
+ * @param bool $echo Whether or not to echo the results.
+ * @param string $domain The Amazon domain to link to. If ommitted, the default domain will be used.
  * @see book_permalink()
  * @see is_custom_book()
  */
-function book_url( $domain = null, $echo = true ) {
+function book_url( $echo = true, $domain = null ) {
 	global $book;
 	$options = get_option('nowReadingOptions');
 	
@@ -257,6 +311,7 @@ function book_has_post() {
 
 /**
  * Returns or prints the permalink of the post linked to the current book.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_post_url( $echo = true ) {
 	global $book;
@@ -273,6 +328,7 @@ function book_post_url( $echo = true ) {
 
 /**
  * Returns or prints the title of the post linked to the current book.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_post_title( $echo = true ) {
 	global $book;
@@ -289,6 +345,7 @@ function book_post_title( $echo = true ) {
 
 /**
  * If the current book is linked to a post, prints an HTML link to said post.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_post_link( $echo = true ) {
 	global $book;
@@ -305,6 +362,7 @@ function book_post_link( $echo = true ) {
 
 /**
  * If the user has the correct permissions, prints a URL to the Manage -> Now Reading page of the WP admin.
+ * @param bool $echo Whether or not to echo the results.
  */
 function manage_library_url( $echo = true ) {
 	global $nr_url;
@@ -314,6 +372,7 @@ function manage_library_url( $echo = true ) {
 
 /**
  * If the user has the correct permissions, prints a URL to the review-writing screen for the current book.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_edit_url( $echo = true ) {
 	global $book, $nr_url;
@@ -338,6 +397,7 @@ function can_now_reading_admin() {
 
 /**
  * Prints a URL pointing to the main library page that respects the useModRewrite option.
+ * @param bool $echo Whether or not to echo the results.
  */
 function library_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
@@ -356,6 +416,7 @@ function library_url( $echo = true ) {
 
 /**
  * Prints the book's rating or "Unrated" if the book is unrated.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_rating( $echo = true ) {
 	global $book;
@@ -367,6 +428,7 @@ function book_rating( $echo = true ) {
 
 /**
  * Prints the book's review or "This book has not yet been reviewed" if the book is unreviewed.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_review( $echo = true ) {
 	global $book;
@@ -378,6 +440,7 @@ function book_review( $echo = true ) {
 
 /**
  * Prints the URL of the search page, ready to be appended with a query or simply used as the action of a GET form.
+ * @param bool $echo Whether or not to echo the results.
  */
 function search_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
@@ -396,6 +459,7 @@ function search_url( $echo = true ) {
 
 /**
  * Prints the current search query, if it exists.
+ * @param bool $echo Whether or not to echo the results.
  */
 function search_query( $echo = true ) {
 	global $query;
@@ -409,6 +473,7 @@ function search_query( $echo = true ) {
 
 /**
  * Prints a standard search form for users who don't want to create their own.
+ * @param bool $echo Whether or not to echo the results.
  */
 function library_search_form( $echo = true ) {
 	echo '
@@ -475,6 +540,7 @@ function book_meta( $key, $echo = true ) {
 
 /**
  * Prints a comma-separated list of tags for the current book.
+ * @param bool $echo Whether or not to echo the results.
  */
 function print_book_tags( $echo = true ) {
 	global $book;
@@ -500,6 +566,7 @@ function print_book_tags( $echo = true ) {
 
 /**
  * Returns a URL to the permalink for a given tag.
+ * @param bool $echo Whether or not to echo the results.
  */
 function book_tag_url( $tag, $echo = true ) {
 	$options = get_option('nowReadingOptions');
@@ -518,6 +585,7 @@ function book_tag_url( $tag, $echo = true ) {
 
 /**
  * Returns or prints the currently viewed tag.
+ * @param bool $echo Whether or not to echo the results.
  */
 function the_tag( $echo = true ) {
 	$tag = htmlentities(stripslashes($GLOBALS['nr_tag']));
@@ -528,6 +596,7 @@ function the_tag( $echo = true ) {
 
 /**
  * Returns or prints the currently viewed author.
+ * @param bool $echo Whether or not to echo the results.
  */
 function the_book_author( $echo = true ) {
 	$author = htmlentities(stripslashes($GLOBALS['nr_author']));

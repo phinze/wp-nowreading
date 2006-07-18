@@ -399,8 +399,12 @@ function search_url( $echo = true ) {
  */
 function search_query( $echo = true ) {
 	global $query;
-	if ( !empty($query) )
-		echo htmlentities(stripslashes($query));
+	if ( empty($query) )
+		return;
+	$query = htmlentities(stripslashes($query));
+	if ( $echo )
+		echo $query;
+	return $query;
 }
 
 /**

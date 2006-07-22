@@ -70,7 +70,6 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				$finished		= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
 				
 				$post			= intval($_POST['posts'][$i]);
-				$visible		= ( $_POST['visible'] ) ? 1 : 0;
 				
 				$rating			= ( is_numeric($_POST['rating'][$i]) ) ? intval($_POST["rating"][$i]) : 0;
 				$review			= $wpdb->escape($_POST["review"][$i]);
@@ -123,7 +122,6 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					b_status = '$status',
 					b_added = '$added',
 					b_post = '$post',
-					b_visible = '$visible',
 					b_rating = '$rating',
 					b_review = '$review'
 				WHERE

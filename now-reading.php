@@ -141,7 +141,6 @@ function nr_install() {
 	b_rating tinyint(4) NOT NULL default '0',
 	b_review text NOT NULL,
 	b_post bigint(20) NOT NULL default '0',
-	b_visible tinyint(1) NOT NULL default '1',
 	PRIMARY KEY  (b_id)
 	);
 	CREATE TABLE {$wpdb->prefix}now_reading_meta (
@@ -309,8 +308,6 @@ function get_books( $query ) {
 		$title	= "AND b_title = '$title'";
 	}
 	
-	$hidden = ( $hidden ) ? '' : ' AND b_visible = 1';
-	
 	$books = $wpdb->get_results("
 	SELECT 
 		COUNT(*) AS count,
@@ -318,7 +315,7 @@ function get_books( $query ) {
 		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
 		DATE_FORMAT(b_started, '".$wpdb->escape($options['formatDate'])."') AS started,
 		DATE_FORMAT(b_finished, '".$wpdb->escape($options['formatDate'])."') AS finished,
-		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post, b_visible AS visible
+		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post
 	FROM
 		{$wpdb->prefix}now_reading
 	LEFT JOIN {$wpdb->prefix}now_reading_meta
@@ -330,7 +327,6 @@ function get_books( $query ) {
 		$search
 		$author
 		$title
-		$hidden
 	GROUP BY
 		b_id
 	ORDER BY
@@ -360,7 +356,7 @@ function get_book( $id ) {
 		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
 		DATE_FORMAT(b_started, '".$wpdb->escape($options['formatDate'])."') AS started,
 		DATE_FORMAT(b_finished, '".$wpdb->escape($options['formatDate'])."') AS finished,
-		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post, b_visible AS visible
+		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post
 	FROM {$wpdb->prefix}now_reading
 	WHERE b_id = $id
 	GROUP BY b_id

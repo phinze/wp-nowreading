@@ -97,8 +97,6 @@ function nr_manage() {
 			if ( function_exists('wp_referer_field') )
 				wp_referer_field();
 			
-			$visible = ( $existing->visible ) ? ' checked="checked"' : '';
-			
 			echo '
 				<input type="hidden" name="action" value="update" />
 				<input type="hidden" name="count" value="1" />
@@ -134,8 +132,6 @@ function nr_manage() {
 				echo '
 								</select>
 							</p>
-							
-							<p><label class="left" for="visible[]">Visible:</label> <input type="checkbox" name="visible[]" id="visible-0"'.$visible.' /></p>
 							
 							<p>
 								<label for="added[]">Added:</label> <input type="text" id="added-0" name="added[]" value="' . $existing->added . '" />
@@ -264,7 +260,7 @@ function nr_manage() {
 			$num = $perpage;
 			$page = "&num=$num&offset=$offset";
 			
-			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$page}&hidden=true");
+			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$page}");
 			$count = count($books);
 			
 			$numpages = ceil(total_books(0, 0) / $perpage);

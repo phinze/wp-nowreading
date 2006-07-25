@@ -228,7 +228,7 @@ function book_permalink( $echo = true, $id = 0 ) {
 		return;
 	
 	if ( $id && !$book )
-		$book = get_book("id=".intval($id));
+		$book = get_book(intval($id));
 	
 	if ( !$id && $book->id )
 		$id = $book->id;

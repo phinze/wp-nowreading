@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php get_header(); global $nr_id; ?>
 
 <div class="content">
 	
@@ -6,9 +6,9 @@
 	
 	<div class="post">
 		
-		<?php if( have_books(intval($GLOBALS['nr_id'])) ) : ?>
+		<?php if( have_books(intval($nr_id) ) : ?>
 			
-			<?php while ( have_books(intval($GLOBALS['nr_id'])) ) : the_book(); ?>
+			<?php while ( have_books(intval(nr_id)) ) : the_book(); ?>
 			
 			<?php if( can_now_reading_admin() ) : ?>
 			<p>Admin: &raquo; <a href="<?php manage_library_url() ?>">Manage Books</a> &raquo; <a href="<?php book_edit_url() ?>">Edit this book</a></p>

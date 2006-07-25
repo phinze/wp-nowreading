@@ -553,7 +553,9 @@ function library_init() {
 		// Library page:
 		nr_load_template('library.php');
 		die;
-	} elseif ( $wp->query_vars['now_reading_id'] ) {
+	}
+	
+	if ( $wp->query_vars['now_reading_id'] ) {
 		// Book permalink:
 		$GLOBALS['nr_id'] = intval($wp->query_vars['now_reading_id']);
 		
@@ -562,7 +564,9 @@ function library_init() {
 			echo $load->get_error_message();
 		
 		die;
-	} elseif ( $wp->query_vars['now_reading_tag'] ) {
+	}
+	
+	if ( $wp->query_vars['now_reading_tag'] ) {
 		// Tag permalink:
 		$GLOBALS['nr_tag'] = $wp->query_vars['now_reading_tag'];
 		
@@ -571,7 +575,9 @@ function library_init() {
 			echo $load->get_error_message();
 		
 		die;
-	} elseif ( $wp->query_vars['now_reading_search'] ) {
+	}
+	
+	if ( $wp->query_vars['now_reading_search'] ) {
 		// Search page:
 		$GLOBALS['query'] = $_GET['q'];
 		unset($_GET['q']); // Just in case
@@ -581,7 +587,9 @@ function library_init() {
 			echo $load->get_error_message();
 		
 		die;
-	} elseif ( $wp->query_vars['now_reading_author'] && $wp->query_vars['now_reading_title'] ) {
+	}
+	
+	if ( $wp->query_vars['now_reading_author'] && $wp->query_vars['now_reading_title'] ) {
 		// Book permalink with title and author.
 		$author				= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		$title				= $wpdb->escape(urldecode($wp->query_vars['now_reading_title']));
@@ -601,7 +609,9 @@ function library_init() {
 			echo $load->get_error_message();
 		
 		die;
-	} elseif ( $wp->query_vars['now_reading_author'] ) {
+	}
+	
+	if ( $wp->query_vars['now_reading_author'] ) {
 		// Author permalink.
 		$author = $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
 		$GLOBALS['nr_author'] = $wpdb->get_var("SELECT b_author FROM {$wpdb->prefix}now_reading WHERE b_nice_author = '$author'");
@@ -614,8 +624,7 @@ function library_init() {
 			echo $load->get_error_message();
 		
 		die;
-	} else
-		return;
+	}
 }
 add_action('template_redirect', 'library_init');
 

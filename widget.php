@@ -1,7 +1,7 @@
 <?php
 
 $widget_file = ABSPATH . '/wp-content/plugins/widgets/now-reading.php';
-if ( ( function_exists('nrWidgetInit') || file_exists($widget_file) ) && !@unlink($widget_file) )
+if ( file_exists($widget_file) && !@unlink($widget_file) )
 	die("Please delete your <code>wp-content/plugins/widgets/now-reading.php</code> file!");
 
 function nrWidgetInit() {

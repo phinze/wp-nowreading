@@ -33,7 +33,7 @@
 				<p>This book is linked with the post <a href="<?php book_post_url() ?>">&ldquo;<?php book_post_title() ?>&rdquo;</a>.</p>
 			<?php endif; ?>
 			
-			<p>Tags: <?php print_book_tags() ?></p>
+			<p>Tags: <?php print_book_tags(1) ?></p>
 			
 			<dl>
 				<dt>Started reading:</dt>

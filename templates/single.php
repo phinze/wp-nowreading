@@ -6,7 +6,7 @@
 	
 	<div class="post">
 		
-		<?php if( have_books(intval($nr_id) ) : ?>
+		<?php if( have_books(intval($nr_id)) ) : ?>
 			
 			<?php while ( have_books(intval(nr_id)) ) : the_book(); ?>
 			

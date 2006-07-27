@@ -219,6 +219,7 @@ require_once dirname(__FILE__) . '/compat.php';
 require_once dirname(__FILE__) . '/now-reading-admin.php';
 require_once dirname(__FILE__) . '/default-filters.php';
 require_once dirname(__FILE__) . '/template-functions.php';
+require_once dirname(__FILE__) . '/widget.php';
 
 /**
  * Fetches books from the database based on a given query.

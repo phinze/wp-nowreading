@@ -10,7 +10,7 @@ Author URI: http://robm.me.uk/
 
 define('NOW_READING_VERSION', '4.2.2');
 define('NOW_READING_DB', 21);
-define('NOW_READING_OPTIONS', 5);
+define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 
 define('NRTD', 'now-reading');
@@ -206,6 +206,23 @@ function nr_install() {
 		WHERE
 			b_id = '$id'
 		");
+	}
+	
+	// De-activate and attempt to delete the old widget.
+	$active_plugins = get_settings('active_plugins');
+	foreach ( (array) $active_plugins as $key => $plugin ) {
+		if ( $plugin == 'widgets/now-reading.php' ) {
+			unset($active_plugins[$key]);
+			sort($active_plugins);
+			update_option('active_plugins', $active_plugins);
+			break;
+		}
+	}
+	$widget_file = ABSPATH . '/wp-content/plugins/widgets/now-reading.php';
+	if ( file_exists($widget_file) ) {
+		@chmod($widget_file, 0666);
+		if ( !@unlink($widget_file) )
+			die("Please delete your <code>wp-content/plugins/widgets/now-reading.php</code> file!");
 	}
 	
 	// Set an option that stores the current installed versions of the database, options and rewrite.

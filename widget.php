@@ -1,22 +1,5 @@
 <?php
 
-// De-activate and attempt to delete the old widget.
-$active_plugins = get_settings('active_plugins');
-foreach ( (array) $active_plugins as $key => $plugin ) {
-	if ( $plugin == 'widgets/now-reading.php' ) {
-		unset($active_plugins[$key]);
-		sort($active_plugins);
-		update_option('active_plugins', $active_plugins);
-		break;
-	}
-}
-$widget_file = ABSPATH . '/wp-content/plugins/widgets/now-reading.php';
-if ( file_exists($widget_file) ) {
-	@chmod($widget_file, 0666);
-	if ( !@unlink($widget_file) )
-		die("Please delete your <code>wp-content/plugins/widgets/now-reading.php</code> file!");
-}
-
 function nrWidgetInit() {
 	if ( !function_exists('register_sidebar_widget') )
 		return;

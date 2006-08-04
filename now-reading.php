@@ -194,8 +194,8 @@ function nr_install() {
 	");
 	foreach ( (array) $books as $book ) {
 		// Should probably abstract this into a function but ok
-		$nice_title = $wpdb->escape(strtolower(preg_replace('#[^\w\-]#', '', str_replace(' ', '-', $book->title))));
-		$nice_author = $wpdb->escape(strtolower(preg_replace('#[^\w\-]#', '', str_replace(' ', '-', $book->author))));
+		$nice_title = $wpdb->escape(sanitize_title($book->title));
+		$nice_author = $wpdb->escape(sanitize_title($book->author));
 		$id = intval($book->id);
 		$wpdb->query("
 		UPDATE

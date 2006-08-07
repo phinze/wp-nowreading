@@ -9,7 +9,7 @@ Author URI: http://robm.me.uk/
 */
 
 define('NOW_READING_VERSION', '4.2.2');
-define('NOW_READING_DB', 25);
+define('NOW_READING_DB', 27);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 
@@ -144,11 +144,9 @@ function nr_install() {
 	b_review text NOT NULL,
 	b_post bigint(20) NOT NULL default '0',
 	PRIMARY KEY  (b_id),
-	INDEX nice_author (b_nice_author),
-	INDEX nice_title (b_nice_title),
+	INDEX permalink (b_nice_author, b_nice_title),
 	INDEX title (b_title),
-	INDEX b_author (b_author),
-	INDEX permalink (b_nice_title, b_nice_author)
+	INDEX author (b_author)
 	);
 	CREATE TABLE {$wpdb->prefix}now_reading_meta (
 	m_id BIGINT(20) NOT NULL auto_increment,

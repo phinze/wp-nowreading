@@ -9,7 +9,7 @@ Author URI: http://robm.me.uk/
 */
 
 define('NOW_READING_VERSION', '4.2.2');
-define('NOW_READING_DB', 21);
+define('NOW_READING_DB', 24);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 
@@ -131,35 +131,42 @@ function nr_install() {
 	b_added datetime NOT NULL default '0000-00-00 00:00:00',
 	b_started datetime NOT NULL default '0000-00-00 00:00:00',
 	b_finished datetime NOT NULL default '0000-00-00 00:00:00',
-	b_title text NOT NULL default '',
-	b_nice_title text NOT NULL default '',
-	b_author text NOT NULL default '',
-	b_nice_author text NOT NULL default '',
+	b_title VARCHAR(255) NOT NULL default '',
+	b_nice_title VARCHAR(255) NOT NULL default '',
+	b_author VARCHAR(255) NOT NULL default '',
+	b_nice_author VARCHAR(255) NOT NULL default '',
 	b_image text NOT NULL default '',
 	b_asin varchar(255) NOT NULL default '',
 	b_status enum('read','reading','unread') NOT NULL default 'read',
 	b_rating tinyint(4) NOT NULL default '0',
 	b_review text NOT NULL,
 	b_post bigint(20) NOT NULL default '0',
-	PRIMARY KEY  (b_id)
+	PRIMARY KEY  (b_id),
+	INDEX nice_author (b_nice_author),
+	INDEX nice_title (b_nice_title)
+	INDEX title (b_title)
+	INDEX b_author (b_author)
 	);
 	CREATE TABLE {$wpdb->prefix}now_reading_meta (
 	m_id BIGINT(20) NOT NULL auto_increment,
 	m_book BIGINT(20) NOT NULL DEFAULT '0',
 	m_key VARCHAR(255) NOT NULL default '',
 	m_value TEXT NOT NULL default '',
-	PRIMARY KEY  (m_id)
+	PRIMARY KEY  (m_id),
+	INDEX m_key (m_key)
 	);
 	CREATE TABLE {$wpdb->prefix}now_reading_tags (
 	t_id BIGINT(20) NOT NULL auto_increment,
 	t_name VARCHAR(255) NOT NULL DEFAULT '',
-	PRIMARY KEY  (t_id)
+	PRIMARY KEY  (t_id),
+	INDEX t_name (t_name)
 	);
 	CREATE TABLE {$wpdb->prefix}now_reading_books2tags (
 	rel_id BIGINT(20) NOT NULL auto_increment,
 	book_id BIGINT(20) NOT NULL DEFAULT '0',
 	tag_id BIGINT(20) NOT NULL DEFAULT '0',
-	PRIMARY KEY  (rel_id)
+	PRIMARY KEY  (rel_id),
+	INDEX book (book_id)
 	);
 	");
 	

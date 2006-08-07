@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: now-reading\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-06-25 11:15-0000\n"
+"PO-Revision-Date: 2006-08-07 04:01-0000\n"
 "Last-Translator: Rob Miller <r@robm.me.uk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,6 +11,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: C:\\apache\\xampp\\htdocs\\blog\\wp-content\\plugins\\now-reading\n"
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/add.php:12
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/edit.php:11
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/options.php:9
+msgid "Cheatin&#8217; uh?"
+msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:17
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:214
@@ -133,10 +139,6 @@ msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:156
 msgid "Or, you can try searching again with some different search terms"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:204
-msgid "Book added"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:225
@@ -325,6 +327,26 @@ msgstr ""
 msgid "NB: This change will only be applied to books you add from this point onwards."
 msgstr ""
 
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-options.php:116
+msgid "Admin menu layout"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-options.php:118
+msgid "Single"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-options.php:121
+msgid "Multiple"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-options.php:124
+msgid "When set to 'Single', Now Reading will add a top-level menu with submenus containing the 'Add a Book', 'Manage Books' and 'Options' screens."
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-options.php:127
+msgid "When set to 'Multiple', Now Reading will insert those menus under 'Write', 'Manage' and 'Options' respectively."
+msgstr ""
+
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-options.php:147
 msgid "Use <code>mod_rewrite</code> enhanced library?"
 msgstr ""
@@ -359,6 +381,38 @@ msgstr ""
 msgid "Update Options"
 msgstr ""
 
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:779
+msgid "Yet to read"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:780
+msgid "Currently reading"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:28
+msgid "International"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:29
+msgid "United Kingdom"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:30
+msgid "France"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:31
+msgid "Germany"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:32
+msgid "Japan"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:33
+msgid "Canada"
+msgstr ""
+
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:341
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:523
 msgid "cURL is not installed correctly."
@@ -380,14 +434,6 @@ msgstr ""
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:489
 #, php-format
 msgid "Oops! The template file %s could not be found in either the Now Reading template directory or your theme's Now Reading directory."
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:779
-msgid "Yet to read"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading.php:780
-msgid "Currently reading"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/template-functions.php:57

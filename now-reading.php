@@ -9,7 +9,7 @@ Author URI: http://robm.me.uk/
 */
 
 define('NOW_READING_VERSION', '4.2.2');
-define('NOW_READING_DB', 27);
+define('NOW_READING_DB', 30);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 

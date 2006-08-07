@@ -125,6 +125,8 @@ function nr_install() {
 	
 	// WP's dbDelta function takes care of installing/upgrading our DB table.
 	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+	// Until the nasty bug with duplicate indexes is fixed, we should hide dbDelta output.
+	ob_start();
 	dbDelta("
 	CREATE TABLE {$wpdb->prefix}now_reading (
 	b_id bigint(20) NOT NULL auto_increment,
@@ -169,6 +171,7 @@ function nr_install() {
 	INDEX book (book_id)
 	);
 	");
+	ob_end_clean();
 	
 	$defaultOptions = array(
 		'formatDate'	=> '%D %b %Y',

@@ -71,8 +71,11 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				
 				$post			= intval($_POST['posts'][$i]);
 				
-				$rating			= ( is_numeric($_POST['rating'][$i]) ) ? intval($_POST["rating"][$i]) : 0;
-				$review			= $wpdb->escape($_POST["review"][$i]);
+				if ( !empty($_POST['rating'][$i]) )
+					$rating	= 'b_rating = "' . intval($_POST["rating"][$i]) . '",';
+				
+				if ( !empty($_POST['review'][$i]) )
+					$review	= 'b_review = "' . $wpdb->escape($_POST["review"][$i]) . '",';
 				
 				if ( !empty($_POST['tags'][$i]) ) {
 					// Delete current relationships and add them fresh.
@@ -115,15 +118,15 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				SET
 					$started
 					$finished
+					$rating
+					$review
 					b_author = '$author',
 					b_title = '$title',
 					b_nice_author = '$nice_author',
 					b_nice_title = '$nice_title',
 					b_status = '$status',
 					b_added = '$added',
-					b_post = '$post',
-					b_rating = '$rating',
-					b_review = '$review'
+					b_post = '$post'
 				WHERE
 					b_id = $id
 				");

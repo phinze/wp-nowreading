@@ -167,7 +167,7 @@ function total_books( $status = '', $echo = true ) {
 	$num = $wpdb->get_var("
 	SELECT
 		COUNT(*) AS count
-	FROM 
+	FROM
 		{$wpdb->prefix}now_reading
 	$status
 	");

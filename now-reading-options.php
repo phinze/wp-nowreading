@@ -61,8 +61,8 @@ function nr_options() {
 					</p>
 				</td>
 			</tr>
-			<tr valign="top"> 
-				<th width="33%" scope="row">' . __('Your Amazon Associates ID') . ':</th> 
+			<tr valign="top">
+				<th width="33%" scope="row">' . __('Your Amazon Associates ID') . ':</th>
 				<td>
 					<input type="text" name="associate" value="' . htmlentities($options['associate'], ENT_COMPAT, "UTF-8") . '" />
 					<p>
@@ -71,10 +71,10 @@ function nr_options() {
 					<p>
 					' . sprintf(__("If you don't have an Amazon Associates ID, you can either <a href='%s'>get one</a>, or consider entering mine - <strong>%s</strong> - if you're feeling generous.", NRTD), "http://associates.amazon.com", "roblog-21") . '
 					</p>
-				</td> 
+				</td>
 			</tr>
-			<tr valign="top"> 
-				<th width="33%" scope="row">' . __('Amazon domain to use', NRTD) . ':</th> 
+			<tr valign="top">
+				<th width="33%" scope="row">' . __('Amazon domain to use', NRTD) . ':</th>
 				<td>
 					<select name="domain">
 	';
@@ -97,7 +97,7 @@ function nr_options() {
 					<p>
 					' . __("NB: If you have country-specific books in your catalogue and then change your domain setting, some old links might stop working.", NRTD) . '
 					</p>
-				</td> 
+				</td>
 			</tr>
 			<tr valign="top">
 				<th width="33%" scope="row">' . __('Image size to use', NRTD) . ':</th>

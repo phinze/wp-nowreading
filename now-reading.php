@@ -35,7 +35,7 @@ $nr_domains = array(
 
 class nr_url {
 	var $urls, $multiple, $single;
-    
+
     function nr_url() {
         $this->multiple = array(
             'add'		=> get_settings('siteurl'),
@@ -336,7 +336,7 @@ function get_books( $query ) {
 	}
 	
 	$books = $wpdb->get_results("
-	SELECT 
+	SELECT
 		COUNT(*) AS count,
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status,
 		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
@@ -989,7 +989,7 @@ function is_now_reading_page() {
 	global $wp;
 	$wp->parse_request();
 	
-	return ( 
+	return (
 		!empty($wp->query_vars['now_reading_library'])	||
 		!empty($wp->query_vars['now_reading_search'])	||
 		!empty($wp->query_vars['now_reading_id'])		||

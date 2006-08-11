@@ -220,7 +220,7 @@ function nr_manage() {
 						<p style="display:none;" id="review-size-link">
 								<small>
 								<a accesskey="i" href="#" onclick="reviewBigger(\'' . $i . '\'); return false;">Increase size (Alt + i)</a>
-								 &middot; 
+								 &middot;
 								<a accesskey="d" href="#" onclick="reviewSmaller(\'' . $i . '\'); return false;">Decrease size (Alt + d)</a>
 							</small>
 						</p>

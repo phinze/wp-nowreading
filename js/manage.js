@@ -89,10 +89,10 @@ function getElementsByClassName(oElm, strTagName, strClassName){
     var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
     var oElement;
     for ( var i=0; i<arrElements.length; i++){
-        oElement = arrElements[i];      
+        oElement = arrElements[i];
         if ( oRegExp.test(oElement.className)){
             arrReturnElements.push(oElement);
-        }   
+        }
     }
     return (arrReturnElements)
 }

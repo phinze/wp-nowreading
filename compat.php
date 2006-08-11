@@ -61,7 +61,7 @@ if ( !class_exists('WP_Error') ) {
 }
 
 if ( !function_exists('wp_get_referer') ) {
-	function wp_get_referer() { 
+	function wp_get_referer() {
 		return '';
 	}
 }

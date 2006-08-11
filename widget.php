@@ -34,7 +34,7 @@ function nrWidgetInit() {
 		
 		echo '
 			<p style="text-align:right;">
-				<label for="nowReadingTitle">Title: 
+				<label for="nowReadingTitle">Title:
 					<input style="width: 200px;" id="nowReadingTitle" name="nowReadingTitle" type="text" value="'.$title.'" />
 				</label>
 			</p>

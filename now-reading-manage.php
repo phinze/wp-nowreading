@@ -134,11 +134,11 @@ function nr_manage() {
 							</p>
 							
 							<p>
-								<label for="added[]">Added:</label> <input type="text" id="added-0" name="added[]" value="' . $existing->added . '" />
+								<label for="added[]">Added:</label> <input type="text" id="added-0" name="added[]" value="' . htmlentities($existing->added, ENT_COMPAT, "UTF-8") . '" />
 								
-								<label for="started[]">Started:</label> <input type="text" id="started-0" name="started[]" value="' . $existing->started . '" />
+								<label for="started[]">Started:</label> <input type="text" id="started-0" name="started[]" value="' . htmlentities($existing->started, ENT_COMPAT, "UTF-8") . '" />
 								
-								<label for="finished[]">Finished:</label> <input type="text" id="finished-0" name="finished[]" value="' . $existing->finished . '" />
+								<label for="finished[]">Finished:</label> <input type="text" id="finished-0" name="finished[]" value="' . htmlentities($existing->finished, ENT_COMPAT, "UTF-8") . '" />
 							</p>
 							
 							<p><label class="left" for="image-0">Image:</label> <input type="text" class="main" id="image-0" name="image[]" value="' . htmlentities($existing->image) . '" /></p>
@@ -163,8 +163,8 @@ function nr_manage() {
 				
 				echo '
 					<tr>
-						<td><textarea name="keys-0[]" class="key">' . wp_specialchars($key) . '</textarea></td>
-						<td><textarea name="values-0[]" class="value">' . wp_specialchars($val) . '</textarea></td>
+						<td><textarea name="keys-0[]" class="key">' . htmlspecialchars($key, ENT_COMPAT, "UTF-8") . '</textarea></td>
+						<td><textarea name="values-0[]" class="value">' . htmlspecialchars($val, ENT_COMPAT, "UTF-8") . '</textarea></td>
 						<td><a href="' . $url . '">Delete</a></td>
 					</tr>
 				';
@@ -181,12 +181,12 @@ function nr_manage() {
 							<h4>Tags:</h4>
 							<p>' . __("A comma-separated list of keywords that describe the book.", NRTD) . '</p>
 							
-							<p><input type="text" name="tags[]" value="' . wp_specialchars($tags) . '" /></p>
+							<p><input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_COMPAT, "UTF-8") . '" /></p>
 							
 							<h4>Link to post:</h4>
 							<p>' . __("If you wish, you can link this book to a blog entry by entering that entry's ID here. The entry will be linked to from the book's library page.", NRTD) . '</p>
 							
-							<p><input type="text" name="posts[]" value="' . $existing->post . '" /></p>
+							<p><input type="text" name="posts[]" value="' . intval($existing->post) . '" /></p>
 							
 							<h4>Actions:</h4>
 							<ul>
@@ -217,7 +217,7 @@ function nr_manage() {
 						</select></p>
 						
 						<p><label for="review">' . __("Review", NRTD) . ':</label><br />
-						<textarea name="review[]" id="review-' . $i . '" style="width:500px; height:200px">' . $existing->review . '</textarea></p>
+						<textarea name="review[]" id="review-' . $i . '" style="width:500px; height:200px">' . htmlentities($existing->review, ENT_COMPAT, "UTF-8") . '</textarea></p>
 						
 						<p style="display:none;" id="review-size-link">
 								<small>

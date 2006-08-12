@@ -141,6 +141,8 @@ function nr_manage() {
 								<label for="finished[]">Finished:</label> <input type="text" id="finished-0" name="finished[]" value="' . $existing->finished . '" />
 							</p>
 							
+							<p><label class="left" for="image-0">Image:</label> <input type="text" class="main" id="image-0" name="image[]" value="' . htmlentities($existing->image) . '" /></p>
+							
 							<div id="book-meta-0">
 								<h4>Meta-Data:</h4>
 								<p><a href="#" onclick="addMeta(\'0\'); return false;">' . __("Add another field", NRTD) . ' +</a></p>

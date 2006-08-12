@@ -77,6 +77,9 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				if ( !empty($_POST['review'][$i]) )
 					$review	= 'b_review = "' . $wpdb->escape($_POST["review"][$i]) . '",';
 				
+				if ( !empty($_POST['image'][$i]) )
+					$image = 'b_image = "' . $wpdb->escape($_POST['image'][$i]) . '",';
+				
 				if ( !empty($_POST['tags'][$i]) ) {
 					// Delete current relationships and add them fresh.
 					$wpdb->query("
@@ -120,6 +123,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 					$finished
 					$rating
 					$review
+					$image
 					b_author = '$author',
 					b_title = '$title',
 					b_nice_author = '$nice_author',

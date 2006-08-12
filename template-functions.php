@@ -232,7 +232,7 @@ function book_permalink( $echo = true, $id = 0 ) {
 	
 	if ( !$id && $book->id )
 		$id = $book->id;
-	var_dump($id);
+	
 	$author = sanitize_title($book->author);
 	$title = sanitize_title($book->title);
 	

@@ -221,7 +221,7 @@ function average_books( $time_period = 'week', $echo = true ) {
  * @param int $id The ID of the book to link to. If ommitted, the current book's ID will be used.
  */
 function book_permalink( $echo = true, $id = 0 ) {
-	global $book, $wpdb;;
+	global $book, $wpdb;
 	$options = get_option('nowReadingOptions');
 	
 	if ( !$book && !$id )
@@ -232,7 +232,7 @@ function book_permalink( $echo = true, $id = 0 ) {
 	
 	if ( !$id && $book->id )
 		$id = $book->id;
-	
+	var_dump($id);
 	$author = sanitize_title($book->author);
 	$title = sanitize_title($book->title);
 	

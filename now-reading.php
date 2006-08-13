@@ -814,7 +814,6 @@ function get_books_by_tag( $tag, $query ) {
 	$tid = add_library_tag($tag);
 	
 	parse_str($query);
-	var_dump($query);
 	
 	$order	= ( strtolower($order) == 'desc' ) ? 'DESC' : 'ASC';
 	

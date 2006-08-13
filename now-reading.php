@@ -808,10 +808,42 @@ function tag_book( $id, $tag ) {
 /**
  * Fetches all the books tagged with the given tag.
  */
-function get_books_by_tag( $tag ) {
+function get_books_by_tag( $tag, $query ) {
 	global $wpdb;
 	
 	$tid = add_library_tag($tag);
+	
+	parse_str($query);
+	var_dump($query);
+	
+	$order	= ( strtolower($order) == 'desc' ) ? 'DESC' : 'ASC';
+	
+	switch ( $orderby ) {
+		case 'added':
+			$orderby = 'b_added';
+			break;
+		case 'started':
+			$orderby = 'b_started';
+			break;
+		case 'finished':
+			$orderby = 'b_finished';
+			break;
+		case 'title':
+			$orderby = 'b_title';
+			break;
+		case 'author':
+			$orderby = 'b_author';
+			break;
+		case 'asin':
+			$orderby = 'b_asin';
+			break;
+		case 'status':
+			$orderby = "b_status $order, b_added";
+			break;
+		default:
+			$orderby = 'b_added';
+			break;
+	}
 	
 	$books = $wpdb->get_results("
 	SELECT
@@ -830,6 +862,8 @@ function get_books_by_tag( $tag ) {
 		book_id = b_id
 	GROUP BY
 		b_id
+	ORDER BY
+		$orderby $order
 	");
 	
 	return $books;

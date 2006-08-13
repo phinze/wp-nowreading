@@ -616,7 +616,7 @@ function have_books( $query ) {
 	if ( !$books ) {
 		if ( strstr($query, 'tag=') ) {
 			parse_str($query, $q);
-			$GLOBALS['books'] = get_books_by_tag($q['tag']);
+			$GLOBALS['books'] = get_books_by_tag($q['tag'], $query);
 		} elseif ( is_numeric($query) )
 			$GLOBALS['books'] = get_book($query);
 		else

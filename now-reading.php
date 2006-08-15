@@ -420,7 +420,7 @@ function add_book( $query ) {
 	
 	if ( $wpdb->query($query) ) {
 		do_action('book_added', $wpdb->insert_id);
-		return true;
+		return $wpdb->insert_id;
 	} else
 		return false;
 }

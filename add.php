@@ -29,8 +29,9 @@ if ( !empty($_POST['amazon_data']) ) {
 	
 	$redirect = $nr_url->urls['add'];
 	
-	if ( add_book($query) ) {
-		wp_redirect("$redirect&added=true");
+	$id = add_book($query);
+	if ( $id > 0 ) {
+		wp_redirect("$redirect&added=$id");
 		die;
 	} else {
 		wp_redirect("$redirect&error=true");
@@ -55,8 +56,9 @@ if ( !empty($_POST['amazon_data']) ) {
 		foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status', 'b_nice_title', 'b_nice_author') as $field => $value )
 			$query .= "$field=$value&";
 		
-		if ( add_book($query) ) {
-			wp_redirect($nr_url->urls['add'] . '&added=true');
+		$id = add_book($query);
+		if ( $id > 0 ) {
+			wp_redirect($nr_url->urls['add'] . '&added=' . intval($id));
 			die;
 		} else {
 			wp_redirect($nr_url->urls['add'] . '&error=true');

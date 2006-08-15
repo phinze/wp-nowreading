@@ -31,6 +31,7 @@ if ( !function_exists('now_reading_add') ) {
 				<p><strong>' . __("Book added.", NRTD) . '</strong></p>
 				<ul>
 					<li><a href="' . $nr_url->urls['manage'] . '">' . __("Manage books", NRTD) . ' &raquo;</a></li>
+					<li><a href="' . apply_filters('book_edit_url', $nr_url->urls['manage'] . '&action=editsingle&id=' . intval($_GET['added'])) . '">' . __("Edit this book") . ' &raquo;</a></li>
 					<li><a href="' . library_url(0) . '">' . __("View Library", NRTD) . ' &raquo;</a></li>
 					<li><a href="' . get_settings('home') . '">' . __("View Site") . ' &raquo;</a></li>
 				</ul>

@@ -136,11 +136,11 @@ function nr_options() {
 						' . __("If you have an Apache webserver with <code>mod_rewrite</code>, you can enable this option to have your library use prettier URLs. Compare:") . '
 					</p>
 					<p>
-						<code>/index.php?now_reading_single=true&now_reading_id=24</code>
+						<code>/index.php?now_reading_single=true&now_reading_author=albert-camus&now_reading_title=the-stranger</code>
 					</p>
 					<p>to:</p>
 					<p>
-						<code>/library/24/</code>
+						<code>/library/albert-camus/the-stranger/</code>
 					</p>
 					<p>
 						' . sprintf(__("If you choose this option, be sure you have a custom permalink structure set up at your <a href='%s'>Options &rarr; Permalinks</a> page.", NRTD), 'options-permalink.php') . '

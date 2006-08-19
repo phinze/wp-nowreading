@@ -9,7 +9,7 @@ Author URI: http://robm.me.uk/
 */
 
 define('NOW_READING_VERSION', '4.2.3');
-define('NOW_READING_DB', 31);
+define('NOW_READING_DB', 32);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 
@@ -135,8 +135,8 @@ function nr_install() {
 	b_finished datetime NOT NULL default '0000-00-00 00:00:00',
 	b_title VARCHAR(255) NOT NULL default '',
 	b_nice_title VARCHAR(255) NOT NULL default '',
-	b_author VARCHAR(255) NOT NULL default '',
-	b_nice_author VARCHAR(255) NOT NULL default '',
+	b_author VARCHAR(250) NOT NULL default '',
+	b_nice_author VARCHAR(250) NOT NULL default '',
 	b_image text NOT NULL default '',
 	b_asin varchar(255) NOT NULL default '',
 	b_status enum('read','reading','unread') NOT NULL default 'read',

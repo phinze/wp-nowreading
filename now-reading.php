@@ -1073,6 +1073,21 @@ function nr_header_stats() {
 }
 add_action('wp_head', 'nr_header_stats');
 
+/**
+ * Adds a link in the footer. This is the best method of promotion for Now Reading; whilst you are certainly allowed to remove it, consider supporting NR by leaving it in.
+ */
+function nr_promolink() {
+	echo " 
+	<span class='now-reading-copyright'>
+		Powered by 
+		<a href='http://robm.me.uk/'>Rob Miller</a>'s
+		<a href='http://robm.me.uk/projects/plugins/wordpress/now-reading/'>Now Reading</a>
+		plugin.
+	</span>
+	";
+}
+add_action('nr_footer', 'nr_promolink');
+
 if ( !function_exists('robm_dump') ) {
 	/**
 	 * Dumps a variable in a pretty way.

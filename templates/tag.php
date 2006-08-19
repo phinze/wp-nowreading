@@ -36,7 +36,7 @@
 		
 	<?php endif; ?>
 	
-	<p class="now-reading-copyright">Powered by <a href="http://robm.me.uk/">Rob Miller's</a> <a href="http://robm.me.uk/projects/plugins/wordpress/now-reading/">Now Reading</a></p>
+	<?php do_action('nr_footer'); ?>
 	
 	</div>
 		

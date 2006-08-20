@@ -211,7 +211,7 @@ function average_books( $time_period = 'week', $echo = true ) {
 	}
 	
 	if( $echo )
-		echo "an average of $average book".($average != 1 ? 's' : '')." each $time_period";
+		printf(__("an average of %s book%s each %s"), $average, ($average != 1 ? 's' : ''), $time_period);
 	return $average;
 }
 

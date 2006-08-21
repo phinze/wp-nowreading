@@ -68,7 +68,9 @@ $nr_url->load_scheme($options['menuLayout']);
 /**
  * Load our l18n domain.
  */
-load_plugin_textdomain(NRTD);
+ $locale = get_locale();
+ $path = "wp-content/plugins/now-reading/translations/$locale";
+load_plugin_textdomain(NRTD, $path);
 
 /**
  * Checks if the install needs to be run by checking the `nowReadingVersions` option, which stores the current installed database, options and rewrite versions.

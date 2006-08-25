@@ -33,7 +33,7 @@ if ( !function_exists('now_reading_add') ) {
 					<li><a href="' . $nr_url->urls['manage'] . '">' . __("Manage books", NRTD) . ' &raquo;</a></li>
 					<li><a href="' . apply_filters('book_edit_url', $nr_url->urls['manage'] . '&action=editsingle&id=' . intval($_GET['added'])) . '">' . __("Edit this book") . ' &raquo;</a></li>
 					<li><a href="' . library_url(0) . '">' . __("View Library", NRTD) . ' &raquo;</a></li>
-					<li><a href="' . get_settings('home') . '">' . __("View Site") . ' &raquo;</a></li>
+					<li><a href="' . get_option('home') . '">' . __("View Site") . ' &raquo;</a></li>
 				</ul>
 			</div>
 			';
@@ -103,7 +103,7 @@ if ( !function_exists('now_reading_add') ) {
 						extract($result);
 						$data = serialize($result);
 						echo '
-						<form method="post" action="' . get_settings('siteurl') . '/wp-content/plugins/now-reading/add.php" style="border:1px solid #ccc; padding:5px; margin:5px;">
+						<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/add.php" style="border:1px solid #ccc; padding:5px; margin:5px;">
 						';
 						
 						if ( function_exists('wp_nonce_field') )
@@ -134,7 +134,7 @@ if ( !function_exists('now_reading_add') ) {
 			
 			<h3>' . __("Add a book manually", NRTD) . '</h3>
 			
-			<form method="post" action="' . get_settings('siteurl') . '/wp-content/plugins/now-reading/add.php">
+			<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/add.php">
 			
 			';
 			

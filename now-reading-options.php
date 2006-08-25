@@ -53,7 +53,7 @@ function nr_options() {
 	echo '
 		<table width="100%" cellspacing="2" cellpadding="5">
 			<tr valign="top">
-				<th width="33%" scope="row">' . __('Date format string') . ':</th>
+				<th width="33%" scope="row">' . __('Date format string', NRTD) . ':</th>
 				<td>
 					<input type="text" name="format_date" value="' . htmlentities($options['formatDate'], ENT_COMPAT, "UTF-8") . '" />
 					<p>
@@ -62,7 +62,7 @@ function nr_options() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th width="33%" scope="row">' . __('Your Amazon Associates ID') . ':</th>
+				<th width="33%" scope="row">' . __('Your Amazon Associates ID', NRTD) . ':</th>
 				<td>
 					<input type="text" name="associate" value="' . htmlentities($options['associate'], ENT_COMPAT, "UTF-8") . '" />
 					<p>

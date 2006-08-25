@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: now-reading\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-08-07 04:01-0000\n"
+"PO-Revision-Date: 2006-08-25 01:30-0000\n"
 "Last-Translator: Rob Miller <r@robm.me.uk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,6 +30,10 @@ msgstr ""
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:27
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:206
 msgid "Manage books"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:34
+msgid "Edit this book"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:28
@@ -442,6 +446,11 @@ msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/template-functions.php:73
 msgid "Not yet finished."
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/template-functions.php:214
+#, php-format
+msgid "an average of %s book%s each %s"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/template-functions.php:219

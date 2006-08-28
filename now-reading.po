@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: now-reading\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-08-28 20:37-0000\n"
+"PO-Revision-Date: 2006-08-28 23:47-0000\n"
 "Last-Translator: Rob Miller <r@robm.me.uk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -174,8 +174,40 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-admin.php:10
+msgid "Hide"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:341
+msgid "Edit"
+msgstr ""
+
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:90
 msgid "Edit Book"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:402
+msgid "Book"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:429
+msgid "Status"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:425
+msgid "Added"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:427
+msgid "Started"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:429
+msgid "Finished"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:144
+msgid "Image"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:221
@@ -205,6 +237,10 @@ msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:296
 msgid "If you wish, you can link this book to a blog entry by entering that entry's ID here. The entry will be linked to from the book's library page."
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:432
+msgid "Actions"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:434
@@ -254,34 +290,6 @@ msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:398
 msgid "Book Cover"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:402
-msgid "Book"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:341
-msgid "Edit"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:429
-msgid "Status"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:425
-msgid "Added"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:427
-msgid "Started"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:429
-msgid "Finished"
-msgstr ""
-
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:432
-msgid "Actions"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:435

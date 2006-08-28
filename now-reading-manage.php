@@ -87,7 +87,7 @@ function nr_manage() {
 			
 			echo '
 			<div class="wrap">
-				<h2>Edit Book</h2>
+				<h2>' . __("Edit Book", NRTD) . '</h2>
 				
 				<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/edit.php">
 			';
@@ -149,8 +149,8 @@ function nr_manage() {
 								<table>
 									<thead>
 										<tr>
-											<th scope="col">Key:</th>
-											<th scope="col">Value:</th>
+											<th scope="col">' . __("Key", NRTD) . ':</th>
+											<th scope="col">' . __("Value", NRTD) . ':</th>
 											<th scope="col"></th>
 										</tr>
 									</thead>
@@ -165,7 +165,7 @@ function nr_manage() {
 					<tr>
 						<td><textarea name="keys-0[]" class="key">' . htmlspecialchars($key, ENT_COMPAT, "UTF-8") . '</textarea></td>
 						<td><textarea name="values-0[]" class="value">' . htmlspecialchars($val, ENT_COMPAT, "UTF-8") . '</textarea></td>
-						<td><a href="' . $url . '">Delete</a></td>
+						<td><a href="' . $url . '">' . __("Delete", NRTD) . '</a></td>
 					</tr>
 				';
 			}
@@ -183,7 +183,7 @@ function nr_manage() {
 							
 							<p><input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_COMPAT, "UTF-8") . '" /></p>
 							
-							<h4>Link to post:</h4>
+							<h4>' . __("Link to post", NRTD) . ':</h4>
 							<p>' . __("If you wish, you can link this book to a blog entry by entering that entry's ID here. The entry will be linked to from the book's library page.", NRTD) . '</p>
 							
 							<p><input type="text" name="posts[]" value="' . intval($existing->post) . '" /></p>
@@ -202,7 +202,7 @@ function nr_manage() {
 							</ul>
 						</div>
 						
-						<h4>Review:</h4>
+						<h4>' . __("Review", NRTD) . ':</h4>
 					
 						<p><label for="rating">' . __("Rating", NRTD) . ':</label><br />
 						<select name="rating[]" id="rating-' . $i . '" style="width:100px;">
@@ -221,9 +221,9 @@ function nr_manage() {
 						
 						<p style="display:none;" id="review-size-link">
 								<small>
-								<a accesskey="i" href="#" onclick="reviewBigger(\'' . $i . '\'); return false;">Increase size (Alt + i)</a>
+								<a accesskey="i" href="#" onclick="reviewBigger(\'' . $i . '\'); return false;">' . __("Increase size", NRTD) . ' (Alt + I)</a>
 								 &middot;
-								<a accesskey="d" href="#" onclick="reviewSmaller(\'' . $i . '\'); return false;">Decrease size (Alt + d)</a>
+								<a accesskey="d" href="#" onclick="reviewSmaller(\'' . $i . '\'); return false;">' . __("Decrease size", NRTD) . ' (Alt + D)</a>
 							</small>
 						</p>
 						
@@ -338,7 +338,7 @@ function nr_manage() {
 						</div>
 						
 						<div class="book-details">
-							<h3>' . __('Book', NRTD) . ' ' . $book->id . ': &ldquo;' . $book->title . '&rdquo; by ' . $book->author . ' <a href="#" id="book-edit-link-' . $i . '" onclick="toggleBook(\'' . $i . '\'); return false;">Edit &darr;</a></h3>
+							<h3>' . __('Book', NRTD) . ' ' . $book->id . ': &ldquo;' . $book->title . '&rdquo; by ' . $book->author . ' <a href="#" id="book-edit-link-' . $i . '" onclick="toggleBook(\'' . $i . '\'); return false;">' . __("Edit", NRTD) . ' &darr;</a></h3>
 							
 							<p>(' . $nr_statuses[$book->status] . ')</p>
 							

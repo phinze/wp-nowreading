@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: now-reading\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2006-08-25 01:30-0000\n"
+"PO-Revision-Date: 2006-08-28 20:37-0000\n"
 "Last-Translator: Rob Miller <r@robm.me.uk>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -145,6 +145,14 @@ msgstr ""
 msgid "Or, you can try searching again with some different search terms"
 msgstr ""
 
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:166
+msgid "Search again"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:173
+msgid "Add a new book"
+msgstr ""
+
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-add.php:225
 msgid "Enter some information about the book that you'd like to add, and I'll try to fetch the information directly from Amazon."
 msgstr ""
@@ -166,12 +174,33 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:90
+msgid "Edit Book"
+msgstr ""
+
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:221
 msgid "Add another field"
 msgstr ""
 
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:152
+msgid "Key"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:153
+msgid "Value"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:263
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:457
+msgid "Delete"
+msgstr ""
+
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:249
 msgid "A comma-separated list of keywords that describe the book."
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:186
+msgid "Link to post"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:296
@@ -187,17 +216,20 @@ msgstr ""
 msgid "Are you sure you wish to delete this book permanently?"
 msgstr ""
 
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:263
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:457
-msgid "Delete"
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:280
+msgid "Review"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:269
 msgid "Rating"
 msgstr ""
 
-# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:280
-msgid "Review"
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:224
+msgid "Increase size"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:226
+msgid "Decrease size"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:284
@@ -226,6 +258,10 @@ msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:402
 msgid "Book"
+msgstr ""
+
+# C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:341
+msgid "Edit"
 msgstr ""
 
 # C:\apache\xampp\htdocs\blog\wp-content\plugins\now-reading/now-reading-manage.php:429

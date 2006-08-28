@@ -142,13 +142,13 @@ if ( !function_exists('now_reading_add') ) {
 				wp_nonce_field('now-reading-manual-add');
 			
 			echo '
-				<p><label for="custom_title">' . __("Title") . ':</label><br />
+				<p><label for="custom_title">' . __("Title", NRTD) . ':</label><br />
 				<input type="text" name="custom_title" id="custom_title" size="50" /></p>
 				
-				<p><label for="custom_author">' . __("Author") . ':</label><br />
+				<p><label for="custom_author">' . __("Author", NRTD) . ':</label><br />
 				<input type="text" name="custom_author" id="custom_author" size="50" /></p>
 				
-				<p><label for="custom_image">' . __("Link to image") . ':</label><br />
+				<p><label for="custom_image">' . __("Link to image", NRTD) . ':</label><br />
 				<small>' . __("Remember, leeching images from other people's servers is nasty. Upload your own images or use Amazon's.", NRTD) . '</small><br />
 				<input type="text" name="custom_image" id="custom_image" size="50" /></p>
 				
@@ -163,14 +163,14 @@ if ( !function_exists('now_reading_add') ) {
 			
 			<div class="nr-add-grouping">
 			
-			<h3>Search again</h3>
+			<h3>' . __("Search again", NRTD) . '</h3>
 			';
 		}
 		
 		if ( empty($_POST) )
 			echo '
 			<div class="nr-add-grouping">
-			<h3>Add a new book</h3>';
+			<h3>' . __("Add a new book", NRTD) . '</h3>';
 		
 		if ( !$thispage )
 			$thispage = $nr_urls['add'];

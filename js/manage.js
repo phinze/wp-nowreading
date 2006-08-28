@@ -4,11 +4,11 @@ function toggleBook( i ) {
 	var img = document.getElementById("book-image-" + i);
 	
 	if ( div.style.display == "block" ) {
-		a.innerHTML = "Edit &darr;";
+		a.innerHTML = lEdit + " &darr;";
 		div.style.display = "none";
 		img.className = "small";
 	} else {
-		a.innerHTML = "&uarr; Hide";
+		a.innerHTML = lHide + " &uarr;";
 		div.style.display = "block";
 		img.className = "";
 	}

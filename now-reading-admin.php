@@ -6,6 +6,10 @@
 function nr_add_head() {
 	echo '
 	<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/admin.css" type="text/css" />
+	<script type="text/javascript">
+		var lHide = "' . __("Hide", NRTD) . '";
+		var lEdit = "' . __("Edit", NRTD) . '";
+	</script>
 	<script type="text/javascript" src="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/js/manage.js"></script>
 	';
 }

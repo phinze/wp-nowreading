@@ -18,6 +18,13 @@ define('NRTD', 'now-reading');
 define('NR_MENU_SINGLE', 2);
 define('NR_MENU_MULTIPLE', 4);
 
+/**
+ * Load our l18n domain.
+ */
+$locale = get_locale();
+$path = "wp-content/plugins/now-reading/translations/$locale";
+load_plugin_textdomain(NRTD, $path);
+
 $nr_statuses = array(
 	'unread'	=> __('Yet to read', NRTD),
 	'reading'	=> __('Currently reading', NRTD),
@@ -64,13 +71,6 @@ class nr_url {
 $nr_url		= new nr_url();
 $options	= get_option('nowReadingOptions');
 $nr_url->load_scheme($options['menuLayout']);
-
-/**
- * Load our l18n domain.
- */
- $locale = get_locale();
- $path = "wp-content/plugins/now-reading/translations/$locale";
-load_plugin_textdomain(NRTD, $path);
 
 /**
  * Checks if the install needs to be run by checking the `nowReadingVersions` option, which stores the current installed database, options and rewrite versions.

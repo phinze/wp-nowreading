@@ -110,14 +110,14 @@ function nr_manage() {
 					</div>
 					
 					<div class="book-details">
-						<h3>Book ' . $existing->id . ': &ldquo;' . $existing->title . '&rdquo; by ' . $existing->author . '</h3>
+						<h3>' . __("Book", NRTD) . ' ' . $existing->id . ': &ldquo;' . $existing->title . '&rdquo; by ' . $existing->author . '</h3>
 						
 						<div id="book-details-extra-0">
-							<p><label class="left" for="title-0">Title:</label> <input type="text" class="main" id="title-0" name="title[]" value="' . $existing->title . '" /></p>
+							<p><label class="left" for="title-0">' . __("Title", NRTD) . ':</label> <input type="text" class="main" id="title-0" name="title[]" value="' . $existing->title . '" /></p>
 							
-							<p><label class="left" for="author-0">Author:</label> <input type="text" class="main" id="author-0" name="author[]" value="' . $existing->author . '" /></p>
+							<p><label class="left" for="author-0">' . __("Author", NRTD) . ':</label> <input type="text" class="main" id="author-0" name="author[]" value="' . $existing->author . '" /></p>
 						
-							<p><label class="left" for="status-0">Status:</label>
+							<p><label class="left" for="status-0">' . __("Status", NRTD) . ':</label>
 								<select name="status[]" id="status-0">
 				';
 				foreach ( (array) $nr_statuses as $status => $name ) {
@@ -134,14 +134,14 @@ function nr_manage() {
 							</p>
 							
 							<p>
-								<label for="added[]">Added:</label> <input type="text" id="added-0" name="added[]" value="' . htmlentities($existing->added, ENT_COMPAT, "UTF-8") . '" />
+								<label for="added[]">' . __("Added", NRTD) . ':</label> <input type="text" id="added-0" name="added[]" value="' . htmlentities($existing->added, ENT_COMPAT, "UTF-8") . '" />
 								
-								<label for="started[]">Started:</label> <input type="text" id="started-0" name="started[]" value="' . htmlentities($existing->started, ENT_COMPAT, "UTF-8") . '" />
+								<label for="started[]">' . __("Started", NRTD) . ':</label> <input type="text" id="started-0" name="started[]" value="' . htmlentities($existing->started, ENT_COMPAT, "UTF-8") . '" />
 								
-								<label for="finished[]">Finished:</label> <input type="text" id="finished-0" name="finished[]" value="' . htmlentities($existing->finished, ENT_COMPAT, "UTF-8") . '" />
+								<label for="finished[]">' . __("Finished", NRTD) . ':</label> <input type="text" id="finished-0" name="finished[]" value="' . htmlentities($existing->finished, ENT_COMPAT, "UTF-8") . '" />
 							</p>
 							
-							<p><label class="left" for="image-0">Image:</label> <input type="text" class="main" id="image-0" name="image[]" value="' . htmlentities($existing->image) . '" /></p>
+							<p><label class="left" for="image-0">' . __("Image", NRTD) . ':</label> <input type="text" class="main" id="image-0" name="image[]" value="' . htmlentities($existing->image) . '" /></p>
 							
 							<div id="book-meta-0">
 								<h4>Meta-Data:</h4>
@@ -188,7 +188,7 @@ function nr_manage() {
 							
 							<p><input type="text" name="posts[]" value="' . intval($existing->post) . '" /></p>
 							
-							<h4>Actions:</h4>
+							<h4>' . __("Actions", NRTD) . ':</h4>
 							<ul>
 								<li><a href="' . book_permalink(0, $existing->id) . '">' . __("View library entry", NRTD) . '</a></li>
 			';

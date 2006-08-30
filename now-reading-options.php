@@ -133,12 +133,11 @@ function nr_options() {
 				<td>
 					<input type="checkbox" name="use_mod_rewrite" id="use_mod_rewrite"' . ( ($options['useModRewrite']) ? ' checked="checked"' : '' ) . ' />
 					<p>
-						' . __("If you have an Apache webserver with <code>mod_rewrite</code>, you can enable this option to have your library use prettier URLs. Compare:") . '
+						' . __("If you have an Apache webserver with <code>mod_rewrite</code>, you can enable this option to have your library use prettier URLs. Compare:", NRTD) . '
 					</p>
 					<p>
 						<code>/index.php?now_reading_single=true&now_reading_author=albert-camus&now_reading_title=the-stranger</code>
 					</p>
-					<p>to:</p>
 					<p>
 						<code>/library/albert-camus/the-stranger/</code>
 					</p>

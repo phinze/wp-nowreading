@@ -46,6 +46,9 @@ if ( !empty($_POST['update']) ) {
 		$_POST['http_lib'] == 'snoopy';
 	}
 	
+	global $wp_rewrite;
+	$wp_rewrite->flush_rules();
+	
 	update_option('nowReadingOptions', $options);
 	
 	wp_redirect($nr_url->urls['options'] . "&updated=1$append");

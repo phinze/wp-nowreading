@@ -7,6 +7,11 @@ Description: Allows you to display the books you're reading, have read recently 
 Author: Rob Miller
 Author URI: http://robm.me.uk/
 */
+/**
+ * @author Rob Miller <r@robm.me.uk>
+ * @version 4.3.1
+ * @package now-reading
+*/
 
 define('NOW_READING_VERSION', '4.3.1');
 define('NOW_READING_DB', 33);
@@ -25,12 +30,22 @@ $locale = get_locale();
 $path = "wp-content/plugins/now-reading/translations/$locale";
 load_plugin_textdomain(NRTD, $path);
 
+/**
+ * Array of the statuses that books can be.
+ * @global array $GLOBALS['nr_statuses']
+ * @name $nr_statuses
+ */
 $nr_statuses = array(
 	'unread'	=> __('Yet to read', NRTD),
 	'reading'	=> __('Currently reading', NRTD),
 	'read'		=> __('Finished', NRTD)
 );
 
+/**
+ * Array of the domains we can use for Amazon.
+ * @global array $GLOBALS['nr_domains']
+ * @name $nr_domains
+ */
 $nr_domains = array(
 	'.com'		=> __('International', NRTD),
 	'.co.uk'	=> __('United Kingdom', NRTD),
@@ -40,9 +55,34 @@ $nr_domains = array(
 	'.ca'		=> __('Canada', NRTD)
 );
 
+/**
+ * Handles our URLs, depending on what menu layout we're using
+ * @package now-reading
+ */
 class nr_url {
-	var $urls, $multiple, $single;
-
+	/**
+	 * The current URL scheme.
+	 * @access public
+	 * @var array
+	 */
+	var $urls;
+	
+	/**
+	 * The scheme for a multiple menu layout.
+	 * @access private
+	 * @var array
+	 */
+	var $multiple;
+	/**
+	 * The scheme for a single menu layout.
+	 * @access private
+	 * @var array
+	 */
+	 var $single;
+	
+	/**
+	 * Constructor. Populates {@link $multiple} and {@link $single}.
+	 */
     function nr_url() {
         $this->multiple = array(
             'add'		=> get_option('siteurl'),
@@ -56,6 +96,10 @@ class nr_url {
         );
     }
 	
+	/**
+	 * Loads the given scheme, populating {@link $urls}
+	 * @param integer $scheme The scheme to use, either NR_MENU_SINGLE or NR_MENU_MULTIPLE
+	 */
 	function load_scheme( $option ) {
 		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
 			$this->multiple['add'] .= '/wp-admin/post-new.php?page=now-reading/now-reading-add.php';
@@ -68,6 +112,11 @@ class nr_url {
 			$this->urls = $this->multiple;
 	}
 }
+/**
+ * Global singleton to access our current scheme.
+ * @global nr_url $GLOBALS['nr_url']
+ * @name $nr_url
+ */
 $nr_url		= new nr_url();
 $options	= get_option('nowReadingOptions');
 $nr_url->load_scheme($options['menuLayout']);

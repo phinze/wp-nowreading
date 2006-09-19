@@ -1,4 +1,8 @@
 <?php
+/**
+ * Updates our options
+ * @package now-reading
+ */
 
 if ( !empty($_POST['update']) ) {
 	$base = realpath(dirname(__FILE__) . '/../../../');

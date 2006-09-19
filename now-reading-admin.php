@@ -1,4 +1,8 @@
 <?php
+/**
+ * Adds our admin menus, and some stylesheets and JavaScript to the admin head.
+ * @package now-reading
+ */
 
 /**
  * Adds our stylesheets and JS to admin pages.

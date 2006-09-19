@@ -1,6 +1,7 @@
 <?php
 /**
- * These filters are pretty self-explanatory. Comment them out or remove them with remove_filter() if you don't want them.
+ * The default filters are pretty self-explanatory. Comment them out or remove them with remove_filter() if you don't want them.
+ * @package now-reading
  */
 
 add_filter('book_title', 'wptexturize');

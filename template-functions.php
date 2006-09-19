@@ -1,7 +1,26 @@
 <?php
+/**
+ * Functions for theming and templating.
+ * @package now-reading
+ */
 
+/**
+ * The array index of the current book in the {@link $books} array.
+ * @global integer $GLOBALS['current_book']
+ * @name $current_book
+ */
 $current_book = 0;
+/**
+ * The array of books for the current query.
+ * @global array $GLOBALS['books']
+ * @name $books
+ */
 $books = null;
+/**
+ * The current book in the loop.
+ * @global object $GLOBALS['book']
+ * @name $book
+ */
 $book = null;
 
 /**

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Adds our widget.
+ * @package now-reading
+ */
 
 function nrWidgetInit() {
 	if ( !function_exists('register_sidebar_widget') )

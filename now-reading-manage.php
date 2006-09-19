@@ -1,4 +1,8 @@
 <?php
+/**
+ * The admin interface for managing and editing books.
+ * @package now-reading
+ */
 
 /**
  * Creates the manage admin page, and deals with the creation and editing of reviews.

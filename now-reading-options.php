@@ -1,4 +1,8 @@
 <?php
+/**
+ * Admin interface for managing options.
+ * @package now-reading
+ */
 
 /**
  * Creates the options admin page and manages the updating of options.

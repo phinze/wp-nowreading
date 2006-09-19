@@ -1,4 +1,8 @@
 <?php
+/**
+ * Handles the adding of new books.
+ * @package now-reading
+ */
 
 $base = realpath(dirname(__FILE__) . '/../../../');
 chdir($base . '/wp-admin');

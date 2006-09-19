@@ -1,4 +1,8 @@
 <?php
+/**
+ * Our admin interface for adding books.
+ * @package now-reading
+ */
 
 if ( !function_exists('now_reading_add') ) {
 	/**

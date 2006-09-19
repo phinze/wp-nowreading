@@ -1,4 +1,8 @@
 <?php
+/**
+ * Handles the editing of existing books.
+ * @package now-reading
+ */
 
 if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 	$base = realpath(dirname(__FILE__) . '/../../../');

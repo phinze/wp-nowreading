@@ -1,4 +1,8 @@
 <?php
+/**
+ * Compatibility functions for older version of PHP and/or WordPress.
+ * @package now-reading
+ */
 
 if ( !class_exists('WP_Error') ) {
 	class WP_Error {

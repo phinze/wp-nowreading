@@ -4,7 +4,7 @@
  * @package now-reading
  */
 
-if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
+if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 	$base = realpath(dirname(__FILE__) . '/../../../');
 	chdir($base . '/wp-admin');
 	require_once 'admin.php';
@@ -100,8 +100,8 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 				else
 					$finished = "b_finished = '$finished',";
 				
-				// Likewise, if the book is currently "unread" but is being changed to "reading", we need to add a b_started value.
-				if ( $current_status != 'reading' && $status == 'reading' )
+				// Likewise, if the book is currently "unread" but is being changed to "reading" or "read", we need to add a b_started value.
+				if ( $current_status != 'reading' && ( $status == 'reading' || $status == 'read' ) )
 					$started = 'b_started = "' . date('Y-m-d h:i:s') . '",';
 				else
 					$started = "b_started = '$started',";

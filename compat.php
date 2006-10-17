@@ -70,7 +70,7 @@ if ( !function_exists('wp_get_referer') ) {
 	}
 }
 
-if ( !function_exists('wp_reset_vars') ) {
+if ( version_compare('2.0.99', $GLOBALS['wp_version']) >= 0 ) {
 	function wp_reset_vars($vars) {
 		for ($i=0; $i<count($vars); $i += 1) {
 			$var = $vars[$i];

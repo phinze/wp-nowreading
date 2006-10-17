@@ -580,6 +580,8 @@ function query_amazon( $query ) {
 			$author	= $item->getElementByPath('ItemAttributes/Author');
 			if ( $author )
 				$author	= $author->getValue();
+			if ( empty($author) )
+				$author = apply_filters('default_book_author', 'Unknown');
 			
 			$title	= $item->getElementByPath('ItemAttributes/Title');
 			if ( !$title )

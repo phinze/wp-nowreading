@@ -306,13 +306,13 @@ function book_url( $echo = true, $domain = null ) {
 	global $book;
 	$options = get_option('nowReadingOptions');
 	
-	if ( !$domain )
+	if ( empty($domain) )
 		$domain = $options['domain'];
 	
 	if ( is_custom_book() )
 		book_permalink($echo);
 	else {
-		$url = apply_filters('book_url', "http://www.amazon{$domain}/exec/obidos/ASIN/{$book->asin}/{$options['associate']}?tag={$options['associate']}");
+		$url = apply_filters('book_url', "http://www.amazon{$domain}/exec/obidos/ASIN/{$book->asin}/ref=nosim/{$options['associate']}");
 		if ( $echo )
 			echo $url;
 		return $url;

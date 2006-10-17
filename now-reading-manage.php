@@ -52,21 +52,7 @@ function nr_manage() {
 		';
 	}
 	
-	$wpvarstoreset = array('action');
-	for ( $i = 0; $i < count($wpvarstoreset); $i++ ) {
-		$wpvar = $wpvarstoreset[$i];
-		if (!isset($$wpvar)) {
-			if (empty($_POST["$wpvar"])) {
-				if (empty($_GET["$wpvar"])) {
-					$$wpvar = '';
-				} else {
-					$$wpvar = $_GET["$wpvar"];
-				}
-			} else {
-				$$wpvar = $_POST["$wpvar"];
-			}
-		}
-	}
+	wp_reset_vars(array('action'));
 	
 	switch ( $action ) {
 		case 'editsingle':

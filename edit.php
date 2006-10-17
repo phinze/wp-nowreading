@@ -14,21 +14,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') ) {
 	if ( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );
 	
-	$wpvarstoreset = array('action');
-	for ($i=0; $i<count($wpvarstoreset); $i += 1) {
-		$wpvar = $wpvarstoreset[$i];
-		if (!isset($$wpvar)) {
-			if (empty($_POST["$wpvar"])) {
-				if (empty($_GET["$wpvar"])) {
-					$$wpvar = '';
-				} else {
-					$$wpvar = $_GET["$wpvar"];
-				}
-			} else {
-				$$wpvar = $_POST["$wpvar"];
-			}
-		}
-	}
+	wp_reset_vars(array('action'));
 	
 	switch ( $action ) {
 		case 'delete':

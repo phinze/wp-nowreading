@@ -14,6 +14,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 	if ( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );
 	
+	global $action;
 	wp_reset_vars(array('action'));
 	
 	switch ( $action ) {

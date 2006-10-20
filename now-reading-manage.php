@@ -52,6 +52,7 @@ function nr_manage() {
 		';
 	}
 	
+	global $action;
 	wp_reset_vars(array('action'));
 	
 	switch ( $action ) {

@@ -28,6 +28,7 @@ if ( !empty($_POST['amazon_data']) ) {
 	
 	check_admin_referer('now-reading-add-' . $b_title);
 	
+	$query = '';
 	foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status', 'b_nice_title', 'b_nice_author') as $field => $value )
 		$query .= "$field=$value&";
 	

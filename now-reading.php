@@ -815,6 +815,7 @@ function get_book_tags( $id ) {
 		book_id = '$id'
 		AND book_id = b_id
 		AND tag_id = t_id
+	ORDER BY t_name ASC
 	");
 	
 	$array = array();

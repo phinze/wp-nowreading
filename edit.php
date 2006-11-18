@@ -15,7 +15,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 		die ( __('Cheatin&#8217; uh?') );
 	
 	global $action;
-	wp_reset_vars(array('action'));
+	nr_reset_vars(array('action'));
 	
 	switch ( $action ) {
 		case 'delete':

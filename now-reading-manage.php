@@ -53,7 +53,7 @@ function nr_manage() {
 	}
 	
 	global $action;
-	wp_reset_vars(array('action'));
+	nr_reset_vars(array('action'));
 	
 	switch ( $action ) {
 		case 'editsingle':

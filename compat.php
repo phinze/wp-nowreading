@@ -70,8 +70,8 @@ if ( !function_exists('wp_get_referer') ) {
 	}
 }
 
-if ( !function_exists('wp_reset_vars') ) {
-	function wp_reset_vars($vars) {
+if ( !function_exists('nr_reset_vars') ) {
+	function nr_reset_vars($vars) {
 		for ($i=0; $i<count($vars); $i += 1) {
 			$var = $vars[$i];
 			global $$var;

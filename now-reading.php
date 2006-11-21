@@ -427,10 +427,10 @@ function get_book( $id ) {
 	
 	$id = intval($id);
 	
-	$book = $wpdb->get_row("
+	return apply_filters('get_single_book', $wpdb->get_row("
 	SELECT
 		COUNT(*) AS count,
-		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status,
+		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status, b_nice_title AS nice_title, b_nice_author AS nice_author,
 		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
 		DATE_FORMAT(b_started, '".$wpdb->escape($options['formatDate'])."') AS started,
 		DATE_FORMAT(b_finished, '".$wpdb->escape($options['formatDate'])."') AS finished,
@@ -438,10 +438,7 @@ function get_book( $id ) {
 	FROM {$wpdb->prefix}now_reading
 	WHERE b_id = $id
 	GROUP BY b_id
-	");
-	
-	$book = apply_filters('get_single_book', $book);
-	return $book;
+	"));
 }
 
 /**

@@ -243,17 +243,16 @@ function book_permalink( $echo = true, $id = 0 ) {
 	global $book, $wpdb;
 	$options = get_option('nowReadingOptions');
 	
-	if ( !$book && !$id )
+	if ( !empty($book) )
+		$the_book = $book;
+	else
+		$the_book = get_book(intval($id));
+	
+	if ( $the_book->id < 1 )
 		return;
 	
-	if ( $id && !$book )
-		$book = get_book(intval($id));
-	
-	if ( !$id && $book->id )
-		$id = $book->id;
-	
-	$author = sanitize_title($book->author);
-	$title = sanitize_title($book->title);
+	$author = $the_book->nice_author;
+	$title = $the_book->nice_title;
 	
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . "/library/$author/$title/";

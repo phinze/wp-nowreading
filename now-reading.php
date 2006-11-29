@@ -224,7 +224,7 @@ function nr_install() {
 	ob_end_clean();
 	
 	$defaultOptions = array(
-		'formatDate'	=> '%D %b %Y',
+		'formatDate'	=> 'jS F Y',
 		'associate'		=> 'roblog-21',
 		'domain'		=> '.com',
 		'imageSize'		=> 'Medium',
@@ -390,9 +390,7 @@ function get_books( $query ) {
 	SELECT
 		COUNT(*) AS count,
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status, b_nice_title AS nice_title, b_nice_author AS nice_author,
-		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
-		DATE_FORMAT(b_started, '".$wpdb->escape($options['formatDate'])."') AS started,
-		DATE_FORMAT(b_finished, '".$wpdb->escape($options['formatDate'])."') AS finished,
+		b_added AS added, b_started AS started, b_finished AS finished,
 		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post
 	FROM
 		{$wpdb->prefix}now_reading
@@ -431,9 +429,7 @@ function get_book( $id ) {
 	SELECT
 		COUNT(*) AS count,
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status, b_nice_title AS nice_title, b_nice_author AS nice_author,
-		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
-		DATE_FORMAT(b_started, '".$wpdb->escape($options['formatDate'])."') AS started,
-		DATE_FORMAT(b_finished, '".$wpdb->escape($options['formatDate'])."') AS finished,
+		b_added AS added, b_started AS started, b_finished AS finished,
 		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post
 	FROM {$wpdb->prefix}now_reading
 	WHERE b_id = $id
@@ -898,9 +894,7 @@ function get_books_by_tag( $tag, $query ) {
 	$books = $wpdb->get_results("
 	SELECT
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status,
-		DATE_FORMAT(b_added, '".$wpdb->escape($options['formatDate'])."') AS added,
-		DATE_FORMAT(b_started, '".$wpdb->escape($options['formatDate'])."') AS started,
-		DATE_FORMAT(b_finished, '".$wpdb->escape($options['formatDate'])."') AS finished,
+		b_added AS added, b_started AS started, b_finished AS finished,
 		b_asin AS asin, b_rating AS rating, b_review AS review
 	FROM
 		{$wpdb->prefix}now_reading, {$wpdb->prefix}now_reading_tags, {$wpdb->prefix}now_reading_books2tags

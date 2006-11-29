@@ -61,7 +61,7 @@ function nr_options() {
 				<td>
 					<input type="text" name="format_date" value="' . htmlentities($options['formatDate'], ENT_COMPAT, "UTF-8") . '" />
 					<p>
-					' . sprintf(__("How to format the book's <code>added</code>, <code>started</code> and <code>finished</code> dates. Acceptable variables can be found <a href='%s'>here</a>.", NRTD), "http://dev.mysql.com/doc/mysql/en/date-and-time-functions.html#id3101576") . '
+					' . sprintf(__("How to format the book's <code>added</code>, <code>started</code> and <code>finished</code> dates. Acceptable variables can be found <a href='%s'>here</a>.", NRTD), "http://php.net/date") . '
 					</p>
 				</td>
 			</tr>

@@ -24,6 +24,27 @@ $books = null;
 $book = null;
 
 /**
+ * Formats a date according to the date format option.
+ * @param string The date to format, in any string recogniseable by strtotime.
+ */
+function nr_format_date( $date ) {
+	$options = get_option('nowReadingOptions');
+	if ( !is_numeric($date) )
+		$date = strtotime($date);
+	if ( empty($date) )
+		return '';
+	return apply_filters('nr_format_date', date($options['formatDate'], $date));
+}
+
+/**
+ * Returns true if the date is a valid one; false if it hasn't.
+ * @param string The date to check.
+ */
+function nr_empty_date( $date ) {
+	return ( empty($date) || $date == "0000-00-00 00:00:00" );
+}
+
+/**
  * Prints the book's title.
  * @param bool $echo Whether or not to echo the results.
  */
@@ -77,7 +98,7 @@ function book_added( $echo = true ) {
  */
 function book_started( $echo = true ) {
 	global $book;
-	if ( empty($book->started) )
+	if ( nr_empty_date($book->started) )
 		$started = __('Not yet started.', NRTD);
 	else
 		$started = $book->started;
@@ -94,7 +115,7 @@ function book_started( $echo = true ) {
  */
 function book_finished( $echo = true ) {
 	global $book;
-	if ( empty($book->finished) )
+	if ( nr_empty_date($book->finished) )
 		$finished = __('Not yet finished.', NRTD);
 	else
 		$finished = $book->finished;

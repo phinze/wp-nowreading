@@ -19,4 +19,8 @@ add_filter('book_meta_val', 'wpautop');
 
 add_filter('the_book_author', 'ucwords');
 
+add_filter('book_added', 'nr_format_date');
+add_filter('book_started', 'nr_format_date');
+add_filter('book_finished', 'nr_format_date');
+
 ?>

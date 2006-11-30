@@ -95,17 +95,17 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 				WHERE b_id = $id
 				");
 				
-				// If the book is currently "unread"/"reading" but is being changed to "read", we need to add a b_finished value.
-				if ( $current_status != 'read' && $status == 'read' )
-					$finished = 'b_finished = "' . date('Y-m-d h:i:s') . '",';
-				else
-					$finished = "b_finished = '$finished',";
-				
-				// Likewise, if the book is currently "unread" but is being changed to "reading" or "read", we need to add a b_started value.
-				if ( $current_status != 'reading' && ( $status == 'reading' || $status == 'read' ) )
+				// If the book is currently "unread" but is being changed to "reading", we need to add a b_started value.
+				if ( $current_status == 'unread' && $status == 'reading' )
 					$started = 'b_started = "' . date('Y-m-d h:i:s') . '",';
 				else
 					$started = "b_started = '$started',";
+				
+				// If the book is currently "reading" but is being changed to "read", we need to add a b_finished value.
+				if ( $current_status == 'reading' && $status == 'read' )
+					$finished = 'b_finished = "' . date('Y-m-d h:i:s') . '",';
+				else
+					$finished = "b_finished = '$finished',";
 				
 				$result = $wpdb->query("
 				UPDATE {$wpdb->prefix}now_reading

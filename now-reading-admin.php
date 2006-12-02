@@ -16,6 +16,20 @@ function nr_add_head() {
 	</script>
 	<script type="text/javascript" src="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/js/manage.js"></script>
 	';
+	switch ( $_GET['page'] ) {
+		case 'add_book':
+		case 'manage_books':
+		case 'nr_options':
+			echo '
+			<script type="text/javascript">
+				function hideNRMenu() {
+					document.getElementById("submenu").getElementsByTagName("li")[0].style.display = "none";
+				}
+				addLoadEvent(hideNRMenu);
+			</script>
+			';
+			break;
+	}
 }
 add_action('admin_head', 'nr_add_head');
 
@@ -30,18 +44,18 @@ function nr_add_pages() {
 	$options = get_option('nowReadingOptions');
 	
 	if ( $options['menuLayout'] == NR_MENU_SINGLE ) {
-		add_menu_page('Now Reading', 'Now Reading', 9, dirname(__FILE__) . '/now-reading-add.php', 'now_reading_add');
+		add_menu_page('Now Reading', 'Now Reading', 9, 'admin.php?page=add_book', 'now_reading_add');
 		
-		add_submenu_page(dirname(__FILE__) . '/now-reading-add.php', 'Add a Book', 'Add a Book', 9, dirname(__FILE__) . '/now-reading-add.php', 'now_reading_add');
-		add_submenu_page(dirname(__FILE__) . '/now-reading-add.php', 'Manage Books', 'Manage Books', 9, dirname(__FILE__) . '/now-reading-manage.php', 'nr_manage');
-		add_submenu_page(dirname(__FILE__) . '/now-reading-add.php', 'Options', 'Options', 9, dirname(__FILE__) . '/now-reading-options.php', 'nr_options');
+		add_submenu_page('admin.php?page=add_book', 'Add a Book', 'Add a Book', 9, 'add_book', 'now_reading_add');
+		add_submenu_page('admin.php?page=add_book', 'Manage Books', 'Manage Books', 9, 'manage_books', 'nr_manage');
+		add_submenu_page('admin.php?page=add_book', 'Options', 'Options', 9, 'nr_options', 'nr_options');
 	} else {
-		add_submenu_page('post.php', 'Now Reading', 'Now Reading', 9, 'now-reading-add.php', 'now_reading_add');
-		add_submenu_page('post-new.php', 'Now Reading', 'Now Reading', 9, 'now-reading-add.php', 'now_reading_add');
+		add_submenu_page('post.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
+		add_submenu_page('post-new.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
 		
-		add_management_page('Now Reading', 'Now Reading', 9, 'now-reading-manage.php', 'nr_manage');
+		add_management_page('Now Reading', 'Now Reading', 9, 'manage_books', 'nr_manage');
 		
-		add_options_page('Now Reading', 'Now Reading', 9, 'now-reading-options.php', 'nr_options');
+		add_options_page('Now Reading', 'Now Reading', 9, 'nr_options', 'nr_options');
 	}
 }
 add_action('admin_menu', 'nr_add_pages');

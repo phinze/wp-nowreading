@@ -85,14 +85,14 @@ class nr_url {
 	 */
     function nr_url() {
         $this->multiple = array(
-            'add'		=> get_option('siteurl'),
-            'manage'	=> get_option('siteurl') . '/wp-admin/edit.php?page=now-reading-manage.php',
-            'options'	=> get_option('siteurl') . '/wp-admin/options-general.php?page=now-reading-options.php'
+            'add'		=> get_option('siteurl') . '/wp-admin/post-new.php?page=add_book',
+            'manage'	=> get_option('siteurl') . '/wp-admin/edit.php?page=manage_books',
+            'options'	=> get_option('siteurl') . '/wp-admin/options-general.php?page=nr_options'
         );
         $this->single = array(
-            'add'		=> get_option('siteurl') . '/wp-admin/admin.php?page=now-reading/now-reading-add.php',
-            'manage'	=> get_option('siteurl') . '/wp-admin/admin.php?page=now-reading/now-reading-manage.php',
-            'options'	=> get_option('siteurl') . '/wp-admin/admin.php?page=now-reading/now-reading-options.php'
+            'add'		=> get_option('siteurl') . '/wp-admin/admin.php?page=add_book',
+            'manage'	=> get_option('siteurl') . '/wp-admin/admin.php?page=manage_books',
+            'options'	=> get_option('siteurl') . '/wp-admin/admin.php?page=nr_options'
         );
     }
 	
@@ -102,9 +102,9 @@ class nr_url {
 	 */
 	function load_scheme( $option ) {
 		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
-			$this->multiple['add'] .= '/wp-admin/post-new.php?page=now-reading/now-reading-add.php';
+			$this->multiple['add'] .= '/wp-admin/post-new.php?page=add_book';
 		else
-			$this->multiple['add'] .= '/wp-admin/post.php?page=now-reading/now-reading-add.php';
+			$this->multiple['add'] .= '/wp-admin/post.php?page=add_book';
 		
 		if ( $option == NR_MENU_SINGLE )
 			$this->urls = $this->single;

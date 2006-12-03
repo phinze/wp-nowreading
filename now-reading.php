@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Now Reading
-Version: 4.3.3
+Version: 4.3.4
 Plugin URI: http://robm.me.uk/projects/plugins/wordpress/now-reading/
 Description: Allows you to display the books you're reading, have read recently and plan to read, with cover art fetched automatically from Amazon.
 Author: Rob Miller
@@ -9,12 +9,12 @@ Author URI: http://robm.me.uk/
 */
 /**
  * @author Rob Miller <r@robm.me.uk>
- * @version 4.3.3
+ * @version 4.3.4
  * @package now-reading
 */
 
-define('NOW_READING_VERSION', '4.3.3');
-define('NOW_READING_DB', 33);
+define('NOW_READING_VERSION', '4.3.4');
+define('NOW_READING_DB', 35);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 
@@ -221,7 +221,12 @@ function nr_install() {
 	INDEX book (book_id)
 	);
 	");
+	$log = ob_get_contents();
 	ob_end_clean();
+	
+	$fh = fopen( dirname(__FILE__) . '/install-log-' . date('Y-m-d') . '.txt', 'w' );
+	fwrite($fh, strip_tags($log));
+	fclose($fh);
 	
 	$defaultOptions = array(
 		'formatDate'	=> 'jS F Y',

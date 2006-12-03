@@ -5,9 +5,9 @@
  */
 
 if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
-	$base = realpath(dirname(__FILE__) . '/../../../');
-	chdir($base . '/wp-admin');
-	require_once 'admin.php';
+	$admin = realpath(dirname(__FILE__) . '/../../../') . '/wp-admin';
+	chdir($admin);
+	require_once $admin . '/admin.php';
 	
 	$_POST = stripslashes_deep($_POST);
 	

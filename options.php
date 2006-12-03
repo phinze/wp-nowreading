@@ -5,9 +5,9 @@
  */
 
 if ( !empty($_POST['update']) ) {
-	$base = realpath(dirname(__FILE__) . '/../../../');
-	chdir($base . '/wp-admin');
-	require_once 'admin.php';
+	$admin = realpath(dirname(__FILE__) . '/../../../') . '/wp-admin';
+	chdir($admin);
+	require_once $admin . '/admin.php';
 	
 	if ( !current_user_can('level_9') )
 		die ( __('Cheatin&#8217; uh?') );

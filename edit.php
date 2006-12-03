@@ -56,9 +56,9 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 				
 				$status			= $wpdb->escape($_POST['status'][$i]);
 				
-				$added			= ( empty($_POST['added'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['added'][$i])));
-				$started		= ( empty($_POST['started'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
-				$finished		= ( empty($_POST['finished'][$i]) )	? '0000-00-00 00:00:00' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
+				$added			= ( nr_empty_date($_POST['added'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['added'][$i])));
+				$started		= ( nr_empty_date($_POST['started'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
+				$finished		= ( nr_empty_date($_POST['finished'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
 				
 				$post			= intval($_POST['posts'][$i]);
 				

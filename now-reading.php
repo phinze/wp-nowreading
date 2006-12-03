@@ -411,6 +411,13 @@ function get_books( $query ) {
 	");
 	
 	$books = apply_filters('get_books', $books);
+	
+	foreach ( (array) $books as $book ) {
+		$book->added = ( nr_empty_date($book->added) )	? '' : $book->added;
+		$book->started = ( nr_empty_date($book->started) )	? '' : $book->started;
+		$book->finished = ( nr_empty_date($book->finished) )	? '' : $book->finished;
+	}
+	
 	return $books;
 }
 
@@ -425,7 +432,7 @@ function get_book( $id ) {
 	
 	$id = intval($id);
 	
-	return apply_filters('get_single_book', $wpdb->get_row("
+	$book = apply_filters('get_single_book', $wpdb->get_row("
 	SELECT
 		COUNT(*) AS count,
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status, b_nice_title AS nice_title, b_nice_author AS nice_author,
@@ -435,6 +442,12 @@ function get_book( $id ) {
 	WHERE b_id = $id
 	GROUP BY b_id
 	"));
+	
+	$book->added = ( nr_empty_date($book->added) )	? '' : $book->added;
+	$book->started = ( nr_empty_date($book->started) )	? '' : $book->started;
+	$book->finished = ( nr_empty_date($book->finished) )	? '' : $book->finished;
+	
+	return $book;
 }
 
 /**

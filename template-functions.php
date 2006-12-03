@@ -101,8 +101,7 @@ function book_started( $echo = true ) {
 	if ( nr_empty_date($book->started) )
 		$started = __('Not yet started.', NRTD);
 	else
-		$started = $book->started;
-	$started = apply_filters('book_started', $started);
+		$started = apply_filters('book_started', $book->started);
 	if ( $echo )
 		echo $started;
 	return $started;
@@ -118,8 +117,7 @@ function book_finished( $echo = true ) {
 	if ( nr_empty_date($book->finished) )
 		$finished = __('Not yet finished.', NRTD);
 	else
-		$finished = $book->finished;
-	$finished = apply_filters('book_finished', $finished);
+		$finished = apply_filters('book_finished', $book->finished);
 	if ( $echo )
 		echo $finished;
 	return $finished;

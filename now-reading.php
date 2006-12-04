@@ -179,26 +179,41 @@ function nr_install() {
 	// Until the nasty bug with duplicate indexes is fixed, we should hide dbDelta output.
 	ob_start();
 	dbDelta("
-	CREATE TABLE {$wpdb->prefix}now_reading (
-	b_id bigint(20) NOT NULL auto_increment,
-	b_added datetime NOT NULL default '0000-00-00 00:00:00',
-	b_started datetime NOT NULL default '0000-00-00 00:00:00',
-	b_finished datetime NOT NULL default '0000-00-00 00:00:00',
-	b_title VARCHAR(200) NOT NULL default '',
-	b_nice_title VARCHAR(200) NOT NULL default '',
-	b_author VARCHAR(200) NOT NULL default '',
-	b_nice_author VARCHAR(200) NOT NULL default '',
-	b_image text NOT NULL default '',
-	b_asin varchar(12) NOT NULL default '',
-	b_status enum('read','reading','unread') NOT NULL default 'read',
-	b_rating tinyint(4) NOT NULL default '0',
-	b_review text NOT NULL,
-	b_post bigint(20) NOT NULL default '0',
-	PRIMARY KEY  (b_id),
-	INDEX permalink (b_nice_author, b_nice_title),
-	INDEX title (b_title),
-	INDEX author (b_author)
+	CREATE TABLE `{$wpdb->prefix}now_reading` (
+	`b_id` bigint(20) NOT NULL auto_increment,
+	`b_added` datetime NOT NULL default '0000-00-00 00:00:00',
+	`b_started` datetime NOT NULL default '0000-00-00 00:00:00',
+	`b_finished` datetime NOT NULL default '0000-00-00 00:00:00',
+	`b_title` varchar(200) collate latin1_general_ci NOT NULL default '',
+	`b_nice_title` varchar(200) collate latin1_general_ci NOT NULL default '',
+	`b_author` int(11) NOT NULL,
+	`b_image` text collate latin1_general_ci NOT NULL,
+	`b_asin` varchar(12) collate latin1_general_ci NOT NULL default '',
+	`b_status` enum('read','reading','unread') collate latin1_general_ci NOT NULL default 'read',
+	`b_post` int(11) NOT NULL default '0',
+	PRIMARY KEY  (`b_id`),
+	KEY `b_title` (`b_title`),
+	KEY `b_nice_title` (`b_nice_title`),
+	KEY `b_author` (`b_author`),
+	KEY `b_status` (`b_status`)
 	);
+	
+	CREATE TABLE `{$wpdb->prefix}now_reading_authors` (
+	`a_id` int(11) NOT NULL auto_increment,
+	`a_name` varchar(200) collate latin1_general_ci NOT NULL,
+	`a_nice_name` varchar(200) collate latin1_general_ci NOT NULL,
+	PRIMARY KEY  (`a_id`),
+	KEY `a_name` (`a_name`,`a_nice_name`)
+	);
+	
+	CREATE TABLE `{$wpdb->prefix}now_reading_books2authors` (
+	`rel_id` int(11) NOT NULL auto_increment,
+	`book_id` int(11) NOT NULL,
+	`author_id` int(11) NOT NULL,
+	PRIMARY KEY  (`rel_id`),
+	KEY `book_id` (`book_id`,`author_id`)
+	);
+	
 	CREATE TABLE {$wpdb->prefix}now_reading_meta (
 	m_id BIGINT(20) NOT NULL auto_increment,
 	m_book BIGINT(20) NOT NULL DEFAULT '0',
@@ -207,12 +222,14 @@ function nr_install() {
 	PRIMARY KEY  (m_id),
 	INDEX m_key (m_key)
 	);
+	
 	CREATE TABLE {$wpdb->prefix}now_reading_tags (
 	t_id BIGINT(20) NOT NULL auto_increment,
 	t_name VARCHAR(255) NOT NULL DEFAULT '',
 	PRIMARY KEY  (t_id),
 	INDEX t_name (t_name)
 	);
+	
 	CREATE TABLE {$wpdb->prefix}now_reading_books2tags (
 	rel_id BIGINT(20) NOT NULL auto_increment,
 	book_id BIGINT(20) NOT NULL DEFAULT '0',

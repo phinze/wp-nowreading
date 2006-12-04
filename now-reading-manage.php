@@ -386,9 +386,14 @@ function nr_manage() {
 				</form>
 			';
 			
+		} else {
+			echo '
+			<div class="wrap">
+				<h2>Now Reading</h2>
+				<p>' . sprintf(__("No books to display. To add some books, head over <a href='%s'>here</a>.", NRTD), $nr_url->urls['add']) . '</p>
+			</div>
+			';
 		}
-		else
-			echo '<p>' . sprintf(__("No books to display. To add some books, head over <a href='%s'>here</a>", NRTD), $nr_url->urls['add']) . '</p>';
 			
 		echo '
 		</div>

@@ -224,9 +224,14 @@ function nr_install() {
 	$log = ob_get_contents();
 	ob_end_clean();
 	
-	$fh = fopen( dirname(__FILE__) . '/install-log-' . date('Y-m-d') . '.txt', 'w' );
-	fwrite($fh, strip_tags($log));
-	fclose($fh);
+	$log_file = dirname(__FILE__) . '/install-log-' . date('Y-m-d') . '.txt';
+	if ( is_writable($log_file) ) {
+		$fh = @fopen( $log_file, 'w' );
+		if ( $fh ) {
+			fwrite($fh, strip_tags($log));
+			fclose($fh);
+		}
+	}
 	
 	$defaultOptions = array(
 		'formatDate'	=> 'jS F Y',

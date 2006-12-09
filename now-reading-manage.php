@@ -251,15 +251,32 @@ function nr_manage() {
 			
 			$offset = ($page * $perpage) - $perpage;
 			$num = $perpage;
-			$page = "&num=$num&offset=$offset";
+			$pageq = "&num=$num&offset=$offset";
 			
-			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$page}");
+			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$pageq}");
 			$count = count($books);
 			
 			$numpages = ceil(total_books(0, 0) / $perpage);
+			
 			$pages = '<p>' . __("Pages", NRTD) . ':';
-			for ( $i = 1; $i <= $numpages; $i++)
-				$pages .= " <a href='" . $nr_url->urls['manage'] . "&p=$i'>$i</a>";
+			
+			if ( $page > 1 ) {
+				$previous = $page - 1;
+				$pages .= " <a href='{$nr_url->urls['manage']}&p=$previous'>Previous</a>";
+			}
+			
+			for ( $i = 1; $i <= $numpages; $i++) {
+				if ( $page == $i )
+					$pages .= " $i";
+				else
+					$pages .= " <a href='{$nr_url->urls['manage']}&p=$i'>$i</a>";
+			}
+			
+			if ( $numpages > $page ) {
+				$next = $page + 1;
+				$pages .= " <a href='{$nr_url->urls['manage']}&p=$next'>Next</a>";
+			}
+			
 			$pages .= '</p>';
 			
 			echo '

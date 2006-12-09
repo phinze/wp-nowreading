@@ -262,7 +262,7 @@ function nr_manage() {
 			
 			if ( $page > 1 ) {
 				$previous = $page - 1;
-				$pages .= " <a href='{$nr_url->urls['manage']}&p=$previous'>Previous</a>";
+				$pages .= " <a href='{$nr_url->urls['manage']}&p=$previous'>&ldquo;</a>";
 			}
 			
 			for ( $i = 1; $i <= $numpages; $i++) {
@@ -274,7 +274,7 @@ function nr_manage() {
 			
 			if ( $numpages > $page ) {
 				$next = $page + 1;
-				$pages .= " <a href='{$nr_url->urls['manage']}&p=$next'>Next</a>";
+				$pages .= " <a href='{$nr_url->urls['manage']}&p=$next'>&rdquo;</a>";
 			}
 			
 			$pages .= '</p>';

@@ -918,7 +918,7 @@ function get_books_by_tag( $tag, $query ) {
 	SELECT
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status,
 		b_added AS added, b_started AS started, b_finished AS finished,
-		b_asin AS asin, b_rating AS rating, b_review AS review
+		b_asin AS asin, b_rating AS rating, b_review AS review, b_nice_title AS nice_title, b_nice_author AS nice_author
 	FROM
 		{$wpdb->prefix}now_reading, {$wpdb->prefix}now_reading_tags, {$wpdb->prefix}now_reading_books2tags
 	WHERE

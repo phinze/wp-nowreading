@@ -50,11 +50,12 @@ function nr_add_pages() {
 		add_submenu_page('admin.php?page=add_book', 'Manage Books', 'Manage Books', 9, 'manage_books', 'nr_manage');
 		add_submenu_page('admin.php?page=add_book', 'Options', 'Options', 9, 'nr_options', 'nr_options');
 	} else {
-		add_submenu_page('post.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
-		add_submenu_page('post-new.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
+		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
+			add_submenu_page('post-new.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
+		else
+			add_submenu_page('post.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
 		
 		add_management_page('Now Reading', 'Now Reading', 9, 'manage_books', 'nr_manage');
-		
 		add_options_page('Now Reading', 'Now Reading', 9, 'nr_options', 'nr_options');
 	}
 }

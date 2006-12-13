@@ -186,10 +186,10 @@ function nr_manage() {
 
 			$delete = get_option('siteurl') . '/wp-content/plugins/now-reading/edit.php?action=delete&id=' . $existing->id;
 			if ( function_exists('wp_nonce_url') )
-			    $delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
+				$delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
 
 			echo '
-							    <li><a href="' . $delete . '" onclick="return confirm(\'' . __("Are you sure you wish to delete this book permanently?", NRTD) . '\')">' . __("Delete", NRTD) . '</a></li>
+								<li><a href="' . $delete . '" onclick="return confirm(\'' . __("Are you sure you wish to delete this book permanently?", NRTD) . '\')">' . __("Delete", NRTD) . '</a></li>
 							</ul>
 						</div>
 						
@@ -213,7 +213,7 @@ function nr_manage() {
 						<p style="display:none;" id="review-size-link">
 								<small>
 								<a accesskey="i" href="#" onclick="reviewBigger(\'' . $i . '\'); return false;">' . __("Increase size", NRTD) . ' (Alt + I)</a>
-								 &middot;
+								&middot;
 								<a accesskey="d" href="#" onclick="reviewSmaller(\'' . $i . '\'); return false;">' . __("Decrease size", NRTD) . ' (Alt + D)</a>
 							</small>
 						</p>

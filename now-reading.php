@@ -6,12 +6,12 @@ Plugin URI: http://robm.me.uk/projects/plugins/wordpress/now-reading/
 Description: Allows you to display the books you're reading, have read recently and plan to read, with cover art fetched automatically from Amazon.
 Author: Rob Miller
 Author URI: http://robm.me.uk/
-*/
+ */
 /**
  * @author Rob Miller <r@robm.me.uk>
  * @version 4.3.4
  * @package now-reading
-*/
+ */
 
 define('NOW_READING_VERSION', '4.3.4');
 define('NOW_READING_DB', 35);
@@ -78,23 +78,23 @@ class nr_url {
 	 * @access private
 	 * @var array
 	 */
-	 var $single;
+	var $single;
 	
 	/**
 	 * Constructor. Populates {@link $multiple} and {@link $single}.
 	 */
-    function nr_url() {
-        $this->multiple = array(
-            'add'		=> get_option('siteurl') . '/wp-admin/post-new.php?page=add_book',
-            'manage'	=> get_option('siteurl') . '/wp-admin/edit.php?page=manage_books',
-            'options'	=> get_option('siteurl') . '/wp-admin/options-general.php?page=nr_options'
-        );
-        $this->single = array(
-            'add'		=> get_option('siteurl') . '/wp-admin/admin.php?page=add_book',
-            'manage'	=> get_option('siteurl') . '/wp-admin/admin.php?page=manage_books',
-            'options'	=> get_option('siteurl') . '/wp-admin/admin.php?page=nr_options'
-        );
-    }
+	function nr_url() {
+		$this->multiple = array(
+			'add'		=> get_option('siteurl') . '/wp-admin/post-new.php?page=add_book',
+			'manage'	=> get_option('siteurl') . '/wp-admin/edit.php?page=manage_books',
+			'options'	=> get_option('siteurl') . '/wp-admin/options-general.php?page=nr_options'
+		);
+		$this->single = array(
+			'add'		=> get_option('siteurl') . '/wp-admin/admin.php?page=add_book',
+			'manage'	=> get_option('siteurl') . '/wp-admin/admin.php?page=manage_books',
+			'options'	=> get_option('siteurl') . '/wp-admin/admin.php?page=nr_options'
+		);
+	}
 	
 	/**
 	 * Loads the given scheme, populating {@link $urls}
@@ -310,7 +310,7 @@ require_once dirname(__FILE__) . '/widget.php';
 
 /**
  * Fetches books from the database based on a given query.
- *
+*
  * Example usage:
  * <code>
  * $books = get_books('status=reading&orderby=started&order=asc&num=-1');
@@ -521,8 +521,8 @@ function query_amazon( $query ) {
 	}
 	
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
-			 . '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Small,Images'
-			 . '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
+			. '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Small,Images'
+			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
 	if ( $options['httpLib'] == 'curl' ) {
@@ -558,10 +558,10 @@ function query_amazon( $query ) {
 			<p>' . sprintf(__("For some reason, I couldn't search for your book on amazon%s.", NRTD), $options['domain']) . '</p>
 			<p>' . __("Amazon's Web Services may be down, or there may be a problem with your server configuration.") . '</p>
 								
-					 ';
-					 if ( $options['httpLib'] )
-			 echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
-					 echo '
+					';
+					if ( $options['httpLib'] )
+			echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
+					echo '
 		</div>
 		';
 		return false;
@@ -1145,9 +1145,9 @@ add_action('wp_head', 'nr_header_stats');
  * Adds a link in the footer. This is the best method of promotion for Now Reading; whilst you are certainly allowed to remove it, consider supporting NR by leaving it in.
  */
 function nr_promolink() {
-	echo " 
+	echo "
 	<span class='now-reading-copyright'>
-		Powered by 
+		Powered by
 		<a href='http://robm.me.uk/'>Rob Miller</a>'s
 		<a href='http://robm.me.uk/projects/plugins/wordpress/now-reading/'>Now Reading</a>
 		plugin.

@@ -371,6 +371,9 @@ function get_books( $query ) {
 		case 'status':
 			$orderby = "b_status $order, b_added";
 			break;
+		case 'random':
+			$orderby = 'RAND()';
+			break;
 		default:
 			$orderby = 'b_added';
 			break;

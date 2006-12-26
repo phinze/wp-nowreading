@@ -172,7 +172,16 @@ add_filter('rewrite_rules_array', 'nr_mod_rewrite');
  * Handler for the activation hook. Installs/upgrades the database table and adds/updates the nowReadingOptions option.
  */
 function nr_install() {
-	global $wpdb, $wp_rewrite;
+	global $wpdb, $wp_rewrite, $wp_version;
+	
+	if ( version_compare('2.0', $wp_version) == 1 ) {
+		echo '
+		<p><code>+++ Divide By Cucumber Error. Please Reinstall Universe And Reboot +++</code></p>
+		<p>Melon melon melon</p>
+		<p>(Now Reading only works with WordPress 2.0 and above, sorry!)</p>
+		';
+		return;
+	}
 	
 	// WP's dbDelta function takes care of installing/upgrading our DB table.
 	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');

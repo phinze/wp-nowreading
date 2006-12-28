@@ -630,7 +630,7 @@ function query_amazon( $query ) {
 			else
 				$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 			
-			$results[] = compact('author', 'title', 'image', 'asin');
+			$results[] = apply_filters('raw_amazon_results', compact('author', 'title', 'image', 'asin'));
 		}
 		
 		$results = apply_filters('returned_books', $results);

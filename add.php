@@ -31,6 +31,7 @@ if ( !empty($_POST['amazon_data']) ) {
 	$query = '';
 	foreach ( (array) compact('b_author', 'b_title', 'b_image', 'b_asin', 'b_added', 'b_status', 'b_nice_title', 'b_nice_author') as $field => $value )
 		$query .= "$field=$value&";
+	$query = apply_filters('add_book_query', $query);
 	
 	$redirect = $nr_url->urls['add'];
 	

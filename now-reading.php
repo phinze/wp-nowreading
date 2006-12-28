@@ -478,14 +478,17 @@ function get_book( $id ) {
  * @return boolean True on success, false on failure.
  */
 function add_book( $query ) {
-	global $wpdb;
+	global $wpdb, $query, $fields;
 	
 	parse_str($query, $fields);
 	
 	$fields = apply_filters('add_book_fields', $fields);
 	
+	$valid_fields = array('b_id', 'b_added', 'b_started', 'b_finished', 'b_title', 'b_nice_title',
+	'b_author', 'b_nice_author', 'b_image', 'b_asin', 'b_status', 'b_rating', 'b_review', 'b_post');
+	
 	foreach ( (array) $fields as $field => $value ) {
-		if ( empty($field) || empty($value) )
+		if ( empty($field) || empty($value) || !in_array($field, $valid_fields) )
 			continue;
 		$columns .= ", $field";
 		$values .= ", '$value'";
@@ -510,6 +513,8 @@ function add_book( $query ) {
  * @return array Array containing each book's information.
  */
 function query_amazon( $query ) {
+	global $item, $items;
+	
 	$options = get_option('nowReadingOptions');
 	
 	$using_isbn = false;
@@ -533,7 +538,7 @@ function query_amazon( $query ) {
 	}
 	
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
-			. '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Small,Images'
+			. '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Large,Images'
 			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
@@ -634,7 +639,6 @@ function query_amazon( $query ) {
 		}
 		
 		$results = apply_filters('returned_books', $results);
-		
 	} else {
 		
 		return false;

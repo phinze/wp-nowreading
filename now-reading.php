@@ -85,7 +85,7 @@ class nr_url {
 	 */
 	function nr_url() {
 		$this->multiple = array(
-			'add'		=> get_option('siteurl') . '/wp-admin/post-new.php?page=add_book',
+			'add'		=> '',
 			'manage'	=> get_option('siteurl') . '/wp-admin/edit.php?page=manage_books',
 			'options'	=> get_option('siteurl') . '/wp-admin/options-general.php?page=nr_options'
 		);
@@ -102,9 +102,9 @@ class nr_url {
 	 */
 	function load_scheme( $option ) {
 		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
-			$this->multiple['add'] .= '/wp-admin/post-new.php?page=add_book';
+			$this->multiple['add'] = get_option('siteurl') . '/wp-admin/post-new.php?page=add_book';
 		else
-			$this->multiple['add'] .= '/wp-admin/post.php?page=add_book';
+			$this->multiple['add'] = get_option('siteurl') . '/wp-admin/post.php?page=add_book';
 		
 		if ( $option == NR_MENU_SINGLE )
 			$this->urls = $this->single;

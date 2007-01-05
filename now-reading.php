@@ -14,7 +14,7 @@ Author URI: http://robm.me.uk/
  */
 
 define('NOW_READING_VERSION', '4.3.4');
-define('NOW_READING_DB', 35);
+define('NOW_READING_DB', 36);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 

@@ -997,7 +997,7 @@ function get_book_meta( $id, $key = '' ) {
 	global $wpdb;
 	
 	if ( !$id )
-		return array();
+		return null;
 	
 	$id = intval($id);
 	
@@ -1017,7 +1017,7 @@ function get_book_meta( $id, $key = '' ) {
 	");
 	
 	if ( !count($raws) )
-		return array();
+		return null;
 	
 	$meta = null;
 	if ( empty($key) ) {

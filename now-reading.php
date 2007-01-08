@@ -201,7 +201,7 @@ function nr_install() {
 	b_asin varchar(12) NOT NULL default '',
 	b_status enum('read','reading','unread') NOT NULL default 'read',
 	b_rating tinyint(4) NOT NULL default '0',
-	b_review text NOT NULL,
+	b_review text NOT NULL default '',
 	b_post bigint(20) NOT NULL default '0',
 	PRIMARY KEY  (b_id),
 	INDEX permalink (b_nice_author, b_nice_title),

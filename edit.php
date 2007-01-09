@@ -60,7 +60,8 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 				$started		= ( nr_empty_date($_POST['started'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
 				$finished		= ( nr_empty_date($_POST['finished'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
 				
-				$post			= intval($_POST['posts'][$i]);
+				if ( !empty($_POST['posts']) )
+					$post = 'b_post = "' . intval($_POST['posts'][$i]) . '",';
 				
 				if ( !empty($_POST['rating'][$i]) )
 					$rating	= 'b_rating = "' . intval($_POST["rating"][$i]) . '",';
@@ -115,13 +116,13 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 					$rating
 					$review
 					$image
+					$post
 					b_author = '$author',
 					b_title = '$title',
 					b_nice_author = '$nice_author',
 					b_nice_title = '$nice_title',
 					b_status = '$status',
-					b_added = '$added',
-					b_post = '$post'
+					b_added = '$added'
 				WHERE
 					b_id = $id
 				");

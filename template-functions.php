@@ -262,9 +262,9 @@ function book_permalink( $echo = true, $id = 0 ) {
 	global $book, $wpdb;
 	$options = get_option('nowReadingOptions');
 	
-	if ( !empty($book) )
+	if ( !empty($book) && empty($id) )
 		$the_book = $book;
-	else
+	elseif ( !empty($id) )
 		$the_book = get_book(intval($id));
 	
 	if ( $the_book->id < 1 )

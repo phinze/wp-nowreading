@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Now Reading
-Version: 4.3.4
+Version: 4.3.5
 Plugin URI: http://robm.me.uk/projects/plugins/wordpress/now-reading/
 Description: Allows you to display the books you're reading, have read recently and plan to read, with cover art fetched automatically from Amazon.
 Author: Rob Miller
@@ -9,11 +9,11 @@ Author URI: http://robm.me.uk/
  */
 /**
  * @author Rob Miller <r@robm.me.uk>
- * @version 4.3.4
+ * @version 4.3.5
  * @package now-reading
  */
 
-define('NOW_READING_VERSION', '4.3.4');
+define('NOW_READING_VERSION', '4.3.5');
 define('NOW_READING_DB', 36);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
@@ -262,7 +262,7 @@ function nr_install() {
 	// Update our .htaccess file.
 	$wp_rewrite->flush_rules();
 	
-	// Update our nice titles/authors. This is pretty inefficient but it's due to limitations of mySQL; it only runs on install/upgrade so it's not too bad.
+	// Update our nice titles/authors.
 	$books = $wpdb->get_results("
 	SELECT
 		b_id AS id, b_title AS title, b_author AS author
@@ -272,7 +272,6 @@ function nr_install() {
 		b_nice_title = '' OR b_nice_author = ''
 	");
 	foreach ( (array) $books as $book ) {
-		// Should probably abstract this into a function but ok
 		$nice_title = $wpdb->escape(sanitize_title($book->title));
 		$nice_author = $wpdb->escape(sanitize_title($book->author));
 		$id = intval($book->id);

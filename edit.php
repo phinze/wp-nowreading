@@ -3,6 +3,13 @@
  * Handles the editing of existing books.
  * @package now-reading
  */
+ 
+if( !isset($_SERVER['REQUEST_URI']) ) {
+	$arr = explode("/", $_SERVER['PHP_SELF']);
+	$_SERVER['REQUEST_URI'] = "/" . $arr[count($arr) - 1];
+	if ( !empty($_SERVER['argv'][0]) )
+		$_SERVER['REQUEST_URI'] .= "?$_SERVER['argv'][0]";
+}
 
 if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 	$admin = realpath(dirname(__FILE__) . '/../../../') . '/wp-admin';

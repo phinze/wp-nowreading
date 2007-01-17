@@ -3,6 +3,13 @@
  * Admin interface for managing options.
  * @package now-reading
  */
+ 
+if( !isset($_SERVER['REQUEST_URI']) ) {
+	$arr = explode("/", $_SERVER['PHP_SELF']);
+	$_SERVER['REQUEST_URI'] = "/" . $arr[count($arr) - 1];
+	if ( !empty($_SERVER['argv'][0]) )
+		$_SERVER['REQUEST_URI'] .= "?$_SERVER['argv'][0]";
+}
 
 /**
  * Creates the options admin page and manages the updating of options.

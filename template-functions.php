@@ -276,7 +276,7 @@ function book_permalink( $echo = true, $id = 0 ) {
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . "/library/$author/$title/";
 	else
-		$url = get_bloginfo('url') . "/index.php?now_reading_author=$author&now_reading_title=$title";
+		$url = get_bloginfo('url') . "/index.php?now_reading_author=$author&amp;now_reading_title=$title";
 	
 	$url = apply_filters('book_permalink', $url);
 	if ( $echo )
@@ -414,7 +414,7 @@ function manage_library_url( $echo = true ) {
 function book_edit_url( $echo = true ) {
 	global $book, $nr_url;
 	if ( can_now_reading_admin() )
-		echo apply_filters('book_edit_url', $nr_url->urls['manage'] . '&action=editsingle&id=' . $book->id);
+		echo apply_filters('book_edit_url', $nr_url->urls['manage'] . '&amp;action=editsingle&amp;id=' . $book->id);
 }
 
 /**
@@ -489,7 +489,7 @@ function search_url( $echo = true ) {
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . '/library/search?q=';
 	else
-		$url = get_bloginfo('url') . '/index.php?now_reading_search=true&q=';
+		$url = get_bloginfo('url') . '/index.php?now_reading_search=true&amp;q=';
 	
 	$url = apply_filters('library_search_url', $url);
 	
@@ -615,7 +615,7 @@ function book_tag_url( $tag, $echo = true ) {
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . '/library/tag/' . urlencode($tag);
 	else
-		$url = get_bloginfo('url') . '/index.php?now_reading_tag=true&nr_tag=' . urlencode($tag);
+		$url = get_bloginfo('url') . '/index.php?now_reading_tag=true&amp;nr_tag=' . urlencode($tag);
 	
 	$url = apply_filters('library_tag_url', $url);
 	

@@ -458,9 +458,13 @@ function library_url( $echo = true ) {
 function book_rating( $echo = true ) {
 	global $book;
 	if ( $book->rating )
-		echo apply_filters('book_rating', $book->rating);
+		$rate = apply_filters('book_rating', $book->rating);
 	else
-		echo apply_filters('book_rating', __('Unrated', NRTD));
+		$rate = apply_filters('book_rating', __('Unrated', NRTD));
+	
+	if ( $echo )
+		echo $rate;
+	return $rate;
 }
 
 /**

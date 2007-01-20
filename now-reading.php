@@ -499,9 +499,10 @@ function add_book( $query ) {
 	VALUES(''$values)
 	";
 	
-	if ( $wpdb->query($query) ) {
-		do_action('book_added', $wpdb->insert_id);
-		return $wpdb->insert_id;
+	$id = $wpdb->query($query);
+	if ( $id > 0 ) {
+		do_action('book_added', $id);
+		return $id;
 	} else
 		return false;
 }

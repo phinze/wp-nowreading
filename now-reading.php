@@ -56,13 +56,6 @@ $nr_domains = array(
 );
 
 /**
- * Array of domains that need to use the ForeignBooks index.
- * @global array $GLOBALS['nr_foreign_domains']
- * @name $nr_foreign_domains
- */
-$nr_foreign_domains = array('.ca', '.de', '.fr', '.co.jp');
-
-/**
  * Handles our URLs, depending on what menu layout we're using
  * @package now-reading
  */
@@ -520,7 +513,7 @@ function add_book( $query ) {
  * @return array Array containing each book's information.
  */
 function query_amazon( $query ) {
-	global $item, $items, $nr_foreign_domains;
+	global $item, $items;
 	
 	$options = get_option('nowReadingOptions');
 	
@@ -534,32 +527,19 @@ function query_amazon( $query ) {
 	if ( !empty($isbn) )
 		$using_isbn = true;
 	
-	// Check if we need to search the ForeignBooks index
-	$foreign = in_array($options['domain'], $nr_foreign_domains);
-	
 	// Our query needs different vars depending on whether or not we're searching by ISBN, so build it here.
 	if ( $using_isbn ) {
 		$isbn = preg_replace('#([^0-9x]+)#i', '', $isbn);
-		
-		$query = "&ItemSearch.1.SearchIndex=Books&ItemSearch.1.Power=asin%3A+$isbn";
-		
-		if ( $foreign )
-			$query .= "&ItemSearch.2.SearchIndex=ForeignBooks&ItemSearch.2.Power=asin%3A+$isbn";
+		$query = "&Power=asin%3A+$isbn";
 	} else {
-		$query = '&ItemSearch.1.SearchIndex=Books&ItemSearch.1.Title=' . urlencode($title);
+		$query = '&Title=' . urlencode($title);
 		if ( !empty($author) )
 			$query .= '&Author=' . urlencode($author);
-		
-		if ( $foreign ) {
-			$query .= '&ItemSearch.2.SearchIndex=ForeignBooks&ItemSearch.2.Title=' . urlencode($title);
-			if ( !empty($author) )
-				$query .= '&ItemSearch.2.Author=' . urlencode($author);
-		}
 	}
 	
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
 			. '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Large,Images'
-			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']) . $query;
+			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
 	if ( $options['httpLib'] == 'curl' ) {
@@ -619,8 +599,8 @@ function query_amazon( $query ) {
 		robm_dump("doc xml:", htmlentities($doc->toString()));
 	}
 	
-	$items_response = $doc->getElementByPath('ItemSearchResponse');
-	$items_response = $items->getAllChildren('Items');
+	$items = $doc->getElementByPath('ItemSearchResponse/Items');
+	$items = $items->getAllChildren('Item');
 	
 	if ( count($items) > 0 ) {
 		
@@ -629,42 +609,40 @@ function query_amazon( $query ) {
 		if ( $options['debugMode'] )
 			robm_dump("items:", $items);
 		
-		foreach ( (array) $items_response as $response ) {
-			$items = $response->getAllChildren('Item');
+		foreach ( (array) $items as $item ) {
+			$author	= $item->getElementByPath('ItemAttributes/Author');
+			if ( $author )
+				$author	= $author->getValue();
+			if ( empty($author) )
+				$author = apply_filters('default_book_author', 'Unknown');
 			
-			foreach ( (array) $items as $item ) {
-				$author	= $item->getElementByPath('ItemAttributes/Author');
-				if ( $author )
-					$author	= $author->getValue();
-				if ( empty($author) )
-					$author = apply_filters('default_book_author', 'Unknown');
-				
-				$title	= $item->getElementByPath('ItemAttributes/Title');
-				if ( !$title )
-					break;
-				$title	= $title->getValue();
-				
-				$asin = $item->getElement('ASIN');
-				if ( !$asin )
-					break;
-				$asin = $asin->getValue();
-				
-				if ( $options['debugMode'] )
-					robm_dump("book:", $author, $title, $asin);
-				
-				$image	= $item->getElementByPath("{$options['imageSize']}Image/URL");
-				if ( $image )
-					$image	= $image->getValue();
-				else
-					$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
-				
-				$results[] = apply_filters('raw_amazon_results', compact('author', 'title', 'image', 'asin'));
-			}
+			$title	= $item->getElementByPath('ItemAttributes/Title');
+			if ( !$title )
+				break;
+			$title	= $title->getValue();
+			
+			$asin = $item->getElement('ASIN');
+			if ( !$asin )
+				break;
+			$asin = $asin->getValue();
+			
+			if ( $options['debugMode'] )
+				robm_dump("book:", $author, $title, $asin);
+			
+			$image	= $item->getElementByPath("{$options['imageSize']}Image/URL");
+			if ( $image )
+				$image	= $image->getValue();
+			else
+				$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
+			
+			$results[] = apply_filters('raw_amazon_results', compact('author', 'title', 'image', 'asin'));
 		}
 		
 		$results = apply_filters('returned_books', $results);
 	} else {
+		
 		return false;
+		
 	}
 	
 	return $results;

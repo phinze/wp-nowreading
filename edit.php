@@ -67,7 +67,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 				$started		= ( nr_empty_date($_POST['started'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
 				$finished		= ( nr_empty_date($_POST['finished'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
 				
-				if ( !empty($_POST['posts']) )
+				if ( !empty($_POST['posts'][$i]) )
 					$post = 'b_post = "' . intval($_POST['posts'][$i]) . '",';
 				
 				if ( !empty($_POST['rating'][$i]) )

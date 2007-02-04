@@ -327,6 +327,7 @@ function nr_manage() {
 			foreach ( (array) $books as $book ) {
 				
 				$meta = get_book_meta($book->id);
+				$tags = join(get_book_tags($book->id), ',');
 				
 				$alt = ( $i % 2 == 0 ) ? ' alternate' : '';
 				
@@ -375,6 +376,8 @@ function nr_manage() {
 									
 									<label for="finished[]">' . __('Finished', NRTD) . ':</label> <input type="text" id="finished-' . $i . '" name="finished[]" value="' . $book->finished . '" />
 								</p>
+								
+								<p>Tags: <input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_COMPAT, "UTF-8") . '" /></p>
 								
 								<h4>' . __('Actions', NRTD) . ':</h4>
 								<ul>

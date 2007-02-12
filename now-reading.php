@@ -193,10 +193,10 @@ function nr_install() {
 	b_added datetime NOT NULL default '0000-00-00 00:00:00',
 	b_started datetime NOT NULL default '0000-00-00 00:00:00',
 	b_finished datetime NOT NULL default '0000-00-00 00:00:00',
-	b_title VARCHAR(200) NOT NULL default '',
-	b_nice_title VARCHAR(200) NOT NULL default '',
-	b_author VARCHAR(200) NOT NULL default '',
-	b_nice_author VARCHAR(200) NOT NULL default '',
+	b_title VARCHAR(100) NOT NULL default '',
+	b_nice_title VARCHAR(100) NOT NULL default '',
+	b_author VARCHAR(100) NOT NULL default '',
+	b_nice_author VARCHAR(100) NOT NULL default '',
 	b_image text NOT NULL default '',
 	b_asin varchar(12) NOT NULL default '',
 	b_status enum('read','reading','unread') NOT NULL default 'read',
@@ -211,14 +211,14 @@ function nr_install() {
 	CREATE TABLE {$wpdb->prefix}now_reading_meta (
 	m_id BIGINT(20) NOT NULL auto_increment,
 	m_book BIGINT(20) NOT NULL DEFAULT '0',
-	m_key VARCHAR(255) NOT NULL default '',
+	m_key VARCHAR(100) NOT NULL default '',
 	m_value TEXT NOT NULL default '',
 	PRIMARY KEY  (m_id),
 	INDEX m_key (m_key)
 	);
 	CREATE TABLE {$wpdb->prefix}now_reading_tags (
 	t_id BIGINT(20) NOT NULL auto_increment,
-	t_name VARCHAR(255) NOT NULL DEFAULT '',
+	t_name VARCHAR(100) NOT NULL DEFAULT '',
 	PRIMARY KEY  (t_id),
 	INDEX t_name (t_name)
 	);

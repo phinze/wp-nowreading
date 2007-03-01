@@ -14,7 +14,7 @@ Author URI: http://robm.me.uk/
  */
 
 define('NOW_READING_VERSION', '4.3.5');
-define('NOW_READING_DB', 37);
+define('NOW_READING_DB', 38);
 define('NOW_READING_OPTIONS', 6);
 define('NOW_READING_REWRITE', 7);
 
@@ -37,6 +37,7 @@ load_plugin_textdomain(NRTD, $path);
  */
 $nr_statuses = array(
 	'unread'	=> __('Yet to read', NRTD),
+	'onhold'	=> __('On Hold', NRTD),
 	'reading'	=> __('Currently reading', NRTD),
 	'read'		=> __('Finished', NRTD)
 );
@@ -199,7 +200,7 @@ function nr_install() {
 	b_nice_author VARCHAR(100) NOT NULL default '',
 	b_image text NOT NULL default '',
 	b_asin varchar(12) NOT NULL default '',
-	b_status enum('read','reading','unread') NOT NULL default 'read',
+	b_status VARCHAR(8) NOT NULL default 'read',
 	b_rating tinyint(4) NOT NULL default '0',
 	b_review text NOT NULL default '',
 	b_post bigint(20) NOT NULL default '0',
@@ -337,6 +338,7 @@ function get_books( $query ) {
 	// We're fetching a collection of books, not just one.
 	switch ( $status ) {
 		case 'unread':
+		case 'onhold':
 		case 'reading':
 		case 'read':
 			break;

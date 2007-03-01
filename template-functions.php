@@ -127,7 +127,7 @@ function book_finished( $echo = true ) {
  * Prints the current book's status with optional overrides for messages.
  * @param bool $echo Whether or not to echo the results.
  */
-function book_status ( $echo = true, $unread = '', $reading = '', $read = '' ) {
+function book_status ( $echo = true, $unread = '', $reading = '', $read = '', $onhold = '' ) {
 	global $book, $nr_statuses;
 	
 	if ( empty($unread) )
@@ -136,10 +136,15 @@ function book_status ( $echo = true, $unread = '', $reading = '', $read = '' ) {
 		$reading = $nr_statuses['reading'];
 	if ( empty($read) )
 		$read = $nr_statuses['read'];
+	if ( empty($onhold) )
+		$onhold = $nr_statuses['onhold'];
 	
 	switch ( $book->status ) {
 		case 'unread':
 			$text = $unread;
+			break;
+		case 'onhold':
+			$text = $onhold;
 			break;
 		case 'reading':
 			$text = $reading;

@@ -193,7 +193,7 @@ if ( !function_exists('now_reading_add') ) {
 		
 		echo '
 			<p><label for="isbn"><acronym title="International Standard Book Number">ISBN</acronym>:</label><br />
-			<input type="text" name="u_isbn" id="isbn" size="13" value="' . $results[0]['asin'] . '" /></p>
+			<input type="text" name="u_isbn" id="isbn" size="25" value="' . $results[0]['asin'] . '" /></p>
 			
 			<p><strong>' . __("or", NRTD) . '</strong></p>
 

@@ -501,10 +501,10 @@ function add_book( $query ) {
 	VALUES(''$values)
 	";
 	
-	$id = $wpdb->query($query);
-	if ( $id > 0 ) {
-		do_action('book_added', $id);
-		return $id;
+	$wpdb->query($query);
+	if ( $wpdb->insert_id > 0 ) {
+		do_action('book_added', $wpdb->insert_id);
+		return $wpdb->insert_id;
 	} else
 		return false;
 }

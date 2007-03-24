@@ -495,16 +495,21 @@ function add_book( $query ) {
 		$values .= ", '$value'";
 	}
 	
+	$columns = preg_replace('#^, #', '', $columns);
+	$values = preg_replace('#^, #', '', $values);
+	
 	$query = "
 	INSERT INTO {$wpdb->prefix}now_reading
-	(b_id$columns)
-	VALUES(''$values)
+	($columns)
+	VALUES($values)
 	";
 	
 	$wpdb->query($query);
-	if ( $wpdb->insert_id > 0 ) {
-		do_action('book_added', $wpdb->insert_id);
-		return $wpdb->insert_id;
+	// Ugh, insert_id doesn't want to work here. Ah well.
+	$id = $wpdb->get_var("SELECT MAX(b_id) FROM {$wpdb->prefix}now_reading");
+	if ( $id > 0 ) {
+		do_action('book_added', $id);
+		return $id;
 	} else
 		return false;
 }

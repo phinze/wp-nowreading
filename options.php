@@ -24,6 +24,8 @@ if ( !empty($_POST['update']) ) {
 	$options['debugMode']		= $_POST['debug_mode'];
 	$options['useModRewrite']	= $_POST['use_mod_rewrite'];
 	$options['menuLayout']		= ( $_POST['menu_layout'] == 'single' ) ? NR_MENU_SINGLE : NR_MENU_MULTIPLE;
+	$options['proxyHost']		= $_POST['proxy_host'];
+	$options['proxyPort']		= $_POST['proxy_port'];
 	
 	$nr_url->load_scheme($options['menuLayout']);
 	

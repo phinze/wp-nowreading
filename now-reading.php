@@ -560,6 +560,16 @@ function query_amazon( $query ) {
 			curl_setopt($ch, CURLOPT_USERAGENT, 'Now Reading ' . NOW_READING_VERSION);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
 			
+			if ( !empty($options['proxyHost']) ) {
+				$proxy = $options['proxyHost'];
+				
+				if ( !empty($options['proxyPort']) ) {
+					$proxy .= ":{$options['proxyPort']}";
+				}
+				
+				curl_setopt($ch, CURLOPT_PROXY, $proxy);
+			}
+			
 			$xmlString = curl_exec($ch);
 			
 			curl_close($ch);
@@ -569,6 +579,12 @@ function query_amazon( $query ) {
 		
 		$snoopy = new snoopy;
 		$snoopy->agent = 'Now Reading ' . NOW_READING_VERSION;
+		
+		if ( !empty($options['proxyHost']) )
+			$snoopy->proxy_host = $options['proxyHost'];
+		if ( !empty($options['proxyHost']) && !empty($options['proxyPort']) )
+			$snoopy->proxy_port = $options['proxyPort'];
+		
 		$snoopy->fetch($url);
 		
 		$xmlString = $snoopy->results;
@@ -607,7 +623,11 @@ function query_amazon( $query ) {
 	}
 	
 	$items = $doc->getElementByPath('ItemSearchResponse/Items');
-	$items = $items->getAllChildren('Item');
+	if ( $items )
+		$items = $items->getAllChildren('Item');
+	
+	if ( $options['debugMode'] )
+		robm_dump("items:", $items);
 	
 	if ( count($items) > 0 ) {
 		
@@ -814,7 +834,7 @@ function nr_check_for_updates() {
 	} else {
 		require_once ABSPATH . WPINC . '/class-snoopy.php';
 			
-		$snoopy	= new snoopy;
+		$snoopy	= new snoopy;		
 		$snoopy->fetch($check_url);
 		$latest	= $snoopy->results;
 	}

@@ -165,7 +165,16 @@ function nr_options() {
 						<option' . ( ($options['httpLib'] == 'curl') ? ' selected="selected"' : '' ) . ' value="curl">cURL</option>
 					</select>
 					<p>
-					' . sprintf(__("Don't worry if you don't understand this; unless you're having problems searching for books, the default setting of %s will be fine.", NRTD), "'Snoopy'") . '
+					' . __("Don't worry if you don't understand this; unless you're having problems searching for books, the default setting will be fine.", NRTD) . '
+					</p>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th width="33%" scope="row">' . __("Proxy hostname and port", NRTD) . ':</th>
+				<td>
+					<input type="text" name="proxy_host" id="proxy_host" value="' . $options['proxyHost'] . '" />:<input type="text" name="proxy_port" id="proxy_port" style="width:4em;" value="' . $options['proxyPort'] . '" />
+					<p>
+					' . __("Don't worry if you don't understand this; unless you're having problems searching for books, the default setting will be fine.", NRTD) . '
 					</p>
 				</td>
 			</tr>

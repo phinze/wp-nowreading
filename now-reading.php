@@ -175,7 +175,7 @@ add_filter('rewrite_rules_array', 'nr_mod_rewrite');
 function nr_install() {
 	global $wpdb, $wp_rewrite, $wp_version;
 	
-	if ( version_compare('2.0', $wp_version) == 1 ) {
+	if ( version_compare('2.0', $wp_version) == 1 && strpos($wp_version, 'wordpress-mu') === false ) {
 		echo '
 		<p><code>+++ Divide By Cucumber Error. Please Reinstall Universe And Reboot +++</code></p>
 		<p>Melon melon melon</p>

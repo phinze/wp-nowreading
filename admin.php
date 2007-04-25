@@ -9,7 +9,7 @@
  */
 function nr_add_head() {
 	echo '
-	<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/admin.css" type="text/css" />
+	<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/now-reading/admin/admin.css" type="text/css" />
 	<script type="text/javascript">
 		var lHide = "' . __("Hide", NRTD) . '";
 		var lEdit = "' . __("Edit", NRTD) . '";
@@ -33,9 +33,9 @@ function nr_add_head() {
 }
 add_action('admin_head', 'nr_add_head');
 
-require_once dirname(__FILE__) . '/now-reading-add.php';
-require_once dirname(__FILE__) . '/now-reading-manage.php';
-require_once dirname(__FILE__) . '/now-reading-options.php';
+require_once dirname(__FILE__) . '/admin/admin-add.php';
+require_once dirname(__FILE__) . '/admin/admin-manage.php';
+require_once dirname(__FILE__) . '/admin/admin-options.php';
 
 /**
  * Manages the various admin pages Now Reading uses.

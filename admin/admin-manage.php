@@ -80,7 +80,7 @@ function nr_manage() {
 			<div class="wrap">
 				<h2>' . __("Edit Book", NRTD) . '</h2>
 				
-				<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/edit.php">
+				<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/admin/edit.php">
 			';
 			
 			if ( function_exists('wp_nonce_field') )
@@ -148,7 +148,7 @@ function nr_manage() {
 									<tbody id="book-meta-table-0" class="book-meta-table">
 			';
 			foreach ( (array) $meta as $key => $val ) {
-				$url = get_option('siteurl') . "/wp-content/plugins/now-reading/edit.php?action=deletemeta&id={$existing->id}&key=" . urlencode($key);
+				$url = get_option('siteurl') . "/wp-content/plugins/now-reading/admin/edit.php?action=deletemeta&id={$existing->id}&key=" . urlencode($key);
 				if ( function_exists('wp_nonce_url') )
 					$url = wp_nonce_url($url, 'now-reading-delete-meta_' . $existing->id . $key);
 				
@@ -184,7 +184,7 @@ function nr_manage() {
 								<li><a href="' . book_permalink(0, $existing->id) . '">' . __("View library entry", NRTD) . '</a></li>
 			';
 
-			$delete = get_option('siteurl') . '/wp-content/plugins/now-reading/edit.php?action=delete&id=' . $existing->id;
+			$delete = get_option('siteurl') . '/wp-content/plugins/now-reading/admin/edit.php?action=delete&id=' . $existing->id;
 			if ( function_exists('wp_nonce_url') )
 				$delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
 
@@ -309,7 +309,7 @@ function nr_manage() {
 				
 				<br style="clear:both;" />
 				
-				<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/edit.php">
+				<form method="post" action="' . get_option('siteurl') . '/wp-content/plugins/now-reading/admin/edit.php">
 			';
 				
 			if ( function_exists('wp_nonce_field') )
@@ -331,7 +331,7 @@ function nr_manage() {
 				
 				$alt = ( $i % 2 == 0 ) ? ' alternate' : '';
 				
-				$delete = get_option('siteurl') . '/wp-content/plugins/now-reading/edit.php?action=delete&id=' . $book->id;
+				$delete = get_option('siteurl') . '/wp-content/plugins/now-reading/admin/edit.php?action=delete&id=' . $book->id;
 				if ( function_exists('wp_nonce_url') )
 					$delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
 				

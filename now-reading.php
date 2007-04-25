@@ -312,7 +312,7 @@ register_activation_hook('now-reading/now-reading.php', 'nr_install');
 
 // Include other functionality
 require_once dirname(__FILE__) . '/compat.php';
-require_once dirname(__FILE__) . '/now-reading-admin.php';
+require_once dirname(__FILE__) . '/admin.php';
 require_once dirname(__FILE__) . '/default-filters.php';
 require_once dirname(__FILE__) . '/template-functions.php';
 require_once dirname(__FILE__) . '/widget.php';

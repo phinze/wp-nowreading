@@ -35,12 +35,12 @@ load_plugin_textdomain(NRTD, $path);
  * @global array $GLOBALS['nr_statuses']
  * @name $nr_statuses
  */
-$nr_statuses = array(
+$nr_statuses = apply_filters('nr_statuses', array(
 	'unread'	=> __('Yet to read', NRTD),
 	'onhold'	=> __('On Hold', NRTD),
 	'reading'	=> __('Currently reading', NRTD),
 	'read'		=> __('Finished', NRTD)
-);
+));
 
 /**
  * Array of the domains we can use for Amazon.

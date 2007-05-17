@@ -21,7 +21,7 @@ if ( !empty($_POST['amazon_data']) ) {
 	$b_title = $wpdb->escape($data['title']);
 	$b_image = $wpdb->escape($data['image']);
 	$b_asin = $wpdb->escape($data['asin']);
-	$b_added = date('Y-m-d h:i:s');
+	$b_added = date('Y-m-d H:i:s');
 	$b_status = 'unread';
 	$b_nice_title = $wpdb->escape(sanitize_title($data['title']));
 	$b_nice_author = $wpdb->escape(sanitize_title($data['author']));
@@ -54,7 +54,7 @@ if ( !empty($_POST['amazon_data']) ) {
 		else
 			$b_image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 		$b_asin = '';
-		$b_added = date('Y-m-d h:i:s');
+		$b_added = date('Y-m-d H:i:s');
 		$b_status = 'unread';
 		$b_nice_title = $wpdb->escape(sanitize_title($_POST['custom_title']));
 		$b_nice_author = $wpdb->escape(sanitize_title($_POST['custom_author']));

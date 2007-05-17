@@ -63,9 +63,9 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 				
 				$status			= $wpdb->escape($_POST['status'][$i]);
 				
-				$added			= ( nr_empty_date($_POST['added'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['added'][$i])));
-				$started		= ( nr_empty_date($_POST['started'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['started'][$i])));
-				$finished		= ( nr_empty_date($_POST['finished'][$i]) )	? '' : $wpdb->escape(date('Y-m-d h:i:s', strtotime($_POST['finished'][$i])));
+				$added			= ( nr_empty_date($_POST['added'][$i]) )	? '' : $wpdb->escape(date('Y-m-d H:i:s', strtotime($_POST['added'][$i])));
+				$started		= ( nr_empty_date($_POST['started'][$i]) )	? '' : $wpdb->escape(date('Y-m-d H:i:s', strtotime($_POST['started'][$i])));
+				$finished		= ( nr_empty_date($_POST['finished'][$i]) )	? '' : $wpdb->escape(date('Y-m-d H:i:s', strtotime($_POST['finished'][$i])));
 				
 				if ( !empty($_POST['posts'][$i]) )
 					$post = 'b_post = "' . intval($_POST['posts'][$i]) . '",';
@@ -105,13 +105,13 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 				
 				// If the book is currently "unread" but is being changed to "reading", we need to add a b_started value.
 				if ( $current_status == 'unread' && $status == 'reading' )
-					$started = 'b_started = "' . date('Y-m-d h:i:s') . '",';
+					$started = 'b_started = "' . date('Y-m-d H:i:s') . '",';
 				else
 					$started = "b_started = '$started',";
 				
 				// If the book is currently "reading" but is being changed to "read", we need to add a b_finished value.
 				if ( $current_status == 'reading' && $status == 'read' )
-					$finished = 'b_finished = "' . date('Y-m-d h:i:s') . '",';
+					$finished = 'b_finished = "' . date('Y-m-d H:i:s') . '",';
 				else
 					$finished = "b_finished = '$finished',";
 				

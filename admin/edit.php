@@ -80,21 +80,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 					$image = 'b_image = "' . $wpdb->escape($_POST['image'][$i]) . '",';
 				
 				if ( !empty($_POST['tags'][$i]) ) {
-					// Delete current relationships and add them fresh.
-					$wpdb->query("
-					DELETE FROM
-						{$wpdb->prefix}now_reading_books2tags
-					WHERE
-						book_id = '$id'
-					");
-					
-					$tags = stripslashes($_POST['tags'][$i]);
-					$tags = explode(',', $tags);
-					
-					foreach ( (array) $tags as $tag ) {
-						$tag = trim($tag);
-						tag_book($id, $tag);
-					}
+					set_book_tags($id, $_POST['tags'][$i]);
 				}
 				
 				$current_status = $wpdb->get_var("

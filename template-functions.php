@@ -623,7 +623,7 @@ function book_tag_url( $tag, $echo = true ) {
 	if ( $options['useModRewrite'] )
 		$url = get_bloginfo('url') . '/library/tag/' . urlencode($tag);
 	else
-		$url = get_bloginfo('url') . '/index.php?now_reading_tag=true&amp;nr_tag=' . urlencode($tag);
+		$url = get_bloginfo('url') . '/index.php?now_reading_tag=' . urlencode($tag);
 	
 	$url = apply_filters('library_tag_url', $url);
 	

@@ -49,7 +49,7 @@ if ( !empty($_POST['update']) ) {
 			$options['httpLib'] = 'curl';
 		}
 	} else {
-		$_POST['http_lib'] == 'snoopy';
+		$options['httpLib'] = 'snoopy';
 	}
 	
 	global $wp_rewrite;

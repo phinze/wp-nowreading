@@ -17,14 +17,14 @@ if ( !empty($_POST['amazon_data']) ) {
 	
 	$data = unserialize(stripslashes($_POST['amazon_data']));
 	
-	$b_author = $wpdb->escape($data['author']);
-	$b_title = $wpdb->escape($data['title']);
-	$b_image = $wpdb->escape($data['image']);
-	$b_asin = $wpdb->escape($data['asin']);
+	$b_author = $data['author'];
+	$b_title = $data['title'];
+	$b_image = $data['image'];
+	$b_asin = $data['asin'];
 	$b_added = date('Y-m-d H:i:s');
 	$b_status = 'unread';
-	$b_nice_title = $wpdb->escape(sanitize_title($data['title']));
-	$b_nice_author = $wpdb->escape(sanitize_title($data['author']));
+	$b_nice_title = sanitize_title($data['title']);
+	$b_nice_author = sanitize_title($data['author']);
 	
 	check_admin_referer('now-reading-add');
 	

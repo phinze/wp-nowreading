@@ -111,7 +111,7 @@ if ( !function_exists('now_reading_add') ) {
 						';
 						
 						if ( function_exists('wp_nonce_field') )
-							wp_nonce_field('now-reading-add-' . $title);
+							wp_nonce_field('now-reading-add');
 						
 						echo '
 							<input type="hidden" name="amazon_data" value="' . htmlentities($data, ENT_QUOTES, "UTF-8") . '" />

@@ -186,7 +186,7 @@ function nr_manage() {
 
 			$delete = get_option('siteurl') . '/wp-content/plugins/now-reading/admin/edit.php?action=delete&id=' . $existing->id;
 			if ( function_exists('wp_nonce_url') )
-				$delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $book->id);
+				$delete = wp_nonce_url($delete, 'now-reading-delete-book_' . $existing->id);
 
 			echo '
 								<li><a href="' . $delete . '" onclick="return confirm(\'' . __("Are you sure you wish to delete this book permanently?", NRTD) . '\')">' . __("Delete", NRTD) . '</a></li>

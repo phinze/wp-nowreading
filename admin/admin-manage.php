@@ -125,11 +125,11 @@ function nr_manage() {
 							</p>
 							
 							<p>
-								<label for="added[]">' . __("Added", NRTD) . ':</label> <input type="text" id="added-0" name="added[]" value="' . htmlentities($existing->added, ENT_COMPAT, "UTF-8") . '" />
+								<label for="added[]">' . __("Added", NRTD) . ':</label> <input type="text" id="added-0" name="added[]" value="' . htmlentities($existing->added, ENT_QUOTES, "UTF-8") . '" />
 								
-								<label for="started[]">' . __("Started", NRTD) . ':</label> <input type="text" id="started-0" name="started[]" value="' . htmlentities($existing->started, ENT_COMPAT, "UTF-8") . '" />
+								<label for="started[]">' . __("Started", NRTD) . ':</label> <input type="text" id="started-0" name="started[]" value="' . htmlentities($existing->started, ENT_QUOTES, "UTF-8") . '" />
 								
-								<label for="finished[]">' . __("Finished", NRTD) . ':</label> <input type="text" id="finished-0" name="finished[]" value="' . htmlentities($existing->finished, ENT_COMPAT, "UTF-8") . '" />
+								<label for="finished[]">' . __("Finished", NRTD) . ':</label> <input type="text" id="finished-0" name="finished[]" value="' . htmlentities($existing->finished, ENT_QUOTES, "UTF-8") . '" />
 							</p>
 							
 							<p><label class="left" for="image-0">' . __("Image", NRTD) . ':</label> <input type="text" class="main" id="image-0" name="image[]" value="' . htmlentities($existing->image) . '" /></p>
@@ -154,8 +154,8 @@ function nr_manage() {
 				
 				echo '
 					<tr>
-						<td><textarea name="keys-0[]" class="key">' . htmlspecialchars($key, ENT_COMPAT, "UTF-8") . '</textarea></td>
-						<td><textarea name="values-0[]" class="value">' . htmlspecialchars($val, ENT_COMPAT, "UTF-8") . '</textarea></td>
+						<td><textarea name="keys-0[]" class="key">' . htmlspecialchars($key, ENT_QUOTES, "UTF-8") . '</textarea></td>
+						<td><textarea name="values-0[]" class="value">' . htmlspecialchars($val, ENT_QUOTES, "UTF-8") . '</textarea></td>
 						<td><a href="' . $url . '">' . __("Delete", NRTD) . '</a></td>
 					</tr>
 				';
@@ -172,7 +172,7 @@ function nr_manage() {
 							<h4>Tags:</h4>
 							<p>' . __("A comma-separated list of keywords that describe the book.", NRTD) . '</p>
 							
-							<p><input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_COMPAT, "UTF-8") . '" /></p>
+							<p><input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_QUOTES, "UTF-8") . '" /></p>
 							
 							<h4>' . __("Link to post", NRTD) . ':</h4>
 							<p>' . __("If you wish, you can link this book to a blog entry by entering that entry's ID here. The entry will be linked to from the book's library page.", NRTD) . '</p>
@@ -208,7 +208,7 @@ function nr_manage() {
 						</select></p>
 						
 						<p><label for="review">' . __("Review", NRTD) . ':</label><br />
-						<textarea name="review[]" id="review-' . $i . '" style="width:500px; height:200px">' . htmlentities($existing->review, ENT_COMPAT, "UTF-8") . '</textarea></p>
+						<textarea name="review[]" id="review-' . $i . '" style="width:500px; height:200px">' . htmlentities($existing->review, ENT_QUOTES, "UTF-8") . '</textarea></p>
 						
 						<p style="display:none;" id="review-size-link">
 								<small>
@@ -377,7 +377,7 @@ function nr_manage() {
 									<label for="finished[]">' . __('Finished', NRTD) . ':</label> <input type="text" id="finished-' . $i . '" name="finished[]" value="' . $book->finished . '" />
 								</p>
 								
-								<p>Tags: <input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_COMPAT, "UTF-8") . '" /></p>
+								<p>Tags: <input type="text" name="tags[]" value="' . htmlspecialchars($tags, ENT_QUOTES, "UTF-8") . '" /></p>
 								
 								<h4>' . __('Actions', NRTD) . ':</h4>
 								<ul>

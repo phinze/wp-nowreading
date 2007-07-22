@@ -114,12 +114,12 @@ if ( !function_exists('now_reading_add') ) {
 							wp_nonce_field('now-reading-add-' . $title);
 						
 						echo '
-							<input type="hidden" name="amazon_data" value="' . htmlentities($data, ENT_COMPAT, "UTF-8") . '" />
+							<input type="hidden" name="amazon_data" value="' . htmlentities($data, ENT_QUOTES, "UTF-8") . '" />
 							
-							<img src="' . htmlentities($image, ENT_COMPAT, "UTF-8") . '" alt="" style="float:left; margin:8px; padding:2px; width:46px; height:70px; border:1px solid #ccc;" />
+							<img src="' . htmlentities($image, ENT_QUOTES, "UTF-8") . '" alt="" style="float:left; margin:8px; padding:2px; width:46px; height:70px; border:1px solid #ccc;" />
 							
-							<h3>' . htmlentities($title, ENT_COMPAT, "UTF-8") . '</h3>
-							' . (($author) ? '<p>by <strong>' . htmlentities($author, ENT_COMPAT, "UTF-8") . '</strong></p>' : '<p>(' . __("No author", NRTD) . ')</p>') . '
+							<h3>' . htmlentities($title, ENT_QUOTES, "UTF-8") . '</h3>
+							' . (($author) ? '<p>by <strong>' . htmlentities($author, ENT_QUOTES, "UTF-8") . '</strong></p>' : '<p>(' . __("No author", NRTD) . ')</p>') . '
 							
 							<p style="clear:left;"><input type="submit" value="' . __("Use This Result", NRTD) . '" /></p>
 							

@@ -279,9 +279,9 @@ function book_permalink( $echo = true, $id = 0 ) {
 	$title = $the_book->nice_title;
 	
 	if ( $options['useModRewrite'] )
-		$url = get_bloginfo('url') . "/library/$author/$title/";
+		$url = get_optiom('home') . "/library/$author/$title/";
 	else
-		$url = get_bloginfo('url') . "/index.php?now_reading_author=$author&amp;now_reading_title=$title";
+		$url = get_optiom('home') . "/index.php?now_reading_author=$author&amp;now_reading_title=$title";
 	
 	$url = apply_filters('book_permalink', $url);
 	if ( $echo )
@@ -308,9 +308,9 @@ function book_author_permalink( $echo = true, $author = null ) {
 	$nice_author = sanitize_title($author);
 	
 	if ( $options['useModRewrite'] )
-		$url = get_bloginfo('url') . "/library/$nice_author/";
+		$url = get_optiom('home') . "/library/$nice_author/";
 	else
-		$url = get_bloginfo('url') . "/index.php?now_reading_author=$nice_author";
+		$url = get_optiom('home') . "/index.php?now_reading_author=$nice_author";
 	
 	$url = apply_filters('book_author_permalink', $url);
 	if ( $echo )
@@ -445,9 +445,9 @@ function library_url( $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if ( $options['useModRewrite'] )
-		$url = get_bloginfo('url') . '/library/';
+		$url = get_optiom('home') . '/library/';
 	else
-		$url = get_bloginfo('url') . '/index.php?now_reading_library=true';
+		$url = get_optiom('home') . '/index.php?now_reading_library=true';
 	
 	$url = apply_filters('book_library_url', $url);
 	
@@ -628,9 +628,9 @@ function book_tag_url( $tag, $echo = true ) {
 	$options = get_option('nowReadingOptions');
 	
 	if ( $options['useModRewrite'] )
-		$url = get_bloginfo('url') . '/library/tag/' . urlencode($tag);
+		$url = get_optiom('home') . '/library/tag/' . urlencode($tag);
 	else
-		$url = get_bloginfo('url') . '/index.php?now_reading_tag=' . urlencode($tag);
+		$url = get_optiom('home') . '/index.php?now_reading_tag=' . urlencode($tag);
 	
 	$url = apply_filters('library_tag_url', $url);
 	

@@ -247,7 +247,7 @@ function nr_manage() {
 			else
 				$page = intval($_GET['p']);
 			
-			$perpage = 10;
+			$perpage = $options['booksPerPage'];
 			
 			$offset = ($page * $perpage) - $perpage;
 			$num = $perpage;

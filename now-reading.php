@@ -15,7 +15,7 @@ Author URI: http://robm.me.uk/
 
 define('NOW_READING_VERSION', '4.4.1');
 define('NOW_READING_DB', 38);
-define('NOW_READING_OPTIONS', 6);
+define('NOW_READING_OPTIONS', 7);
 define('NOW_READING_REWRITE', 7);
 
 define('NRTD', 'now-reading');
@@ -96,7 +96,8 @@ function nr_install() {
 	}
 	
 	// WP's dbDelta function takes care of installing/upgrading our DB table.
-	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+	$upgrade_file = file_exists(ABSPATH . 'wp-admin/upgrade.php') ? ABSPATH . 'wp-admin/upgrade.php' : ABSPATH . 'wp-admin/upgrade-functions.php';
+	require_once $upgrade_file;
 	// Until the nasty bug with duplicate indexes is fixed, we should hide dbDelta output.
 	ob_start();
 	dbDelta("
@@ -162,7 +163,8 @@ function nr_install() {
 		'httpLib'		=> 'snoopy',
 		'useModRewrite'	=> false,
 		'debugMode'		=> false,
-		'menuLayout'	=> NR_MENU_MULTIPLE
+		'menuLayout'	=> NR_MENU_MULTIPLE,
+		'booksPerPage'  => 15
 	);
 	add_option('nowReadingOptions', $defaultOptions);
 	

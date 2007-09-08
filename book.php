@@ -99,6 +99,11 @@ function get_books( $query ) {
 		$title	= "AND b_title = '$title'";
 	}
 	
+	if ( !empty($tag) ) {
+		$tag = $wpdb->escape($tag);
+		$tag = "AND t_name = '$tag'";
+	}
+	
 	$books = $wpdb->get_results("
 	SELECT
 		COUNT(*) AS count,
@@ -109,6 +114,10 @@ function get_books( $query ) {
 		{$wpdb->prefix}now_reading
 	LEFT JOIN {$wpdb->prefix}now_reading_meta
 		ON m_book = b_id
+	LEFT JOIN {$wpdb->prefix}now_reading_books2tags
+		ON book_id = b_id
+	LEFT JOIN {$wpdb->prefix}now_reading_tags
+		ON tag_id = t_id
 	WHERE
 		1=1
 		$status
@@ -116,6 +125,7 @@ function get_books( $query ) {
 		$search
 		$author
 		$title
+		$tag
 	GROUP BY
 		b_id
 	ORDER BY
@@ -343,64 +353,10 @@ function set_book_tags( $id, $tags, $append = false ) {
 }
 
 /**
- * Fetches all the books tagged with the given tag.
+ * DEPRECATED: Fetches all the books tagged with the given tag.
  */
 function get_books_by_tag( $tag, $query ) {
-	global $wpdb;
-	
-	$tid = add_library_tag($tag);
-	
-	parse_str($query);
-	
-	$order	= ( strtolower($order) == 'desc' ) ? 'DESC' : 'ASC';
-	
-	switch ( $orderby ) {
-		case 'added':
-			$orderby = 'b_added';
-			break;
-		case 'started':
-			$orderby = 'b_started';
-			break;
-		case 'finished':
-			$orderby = 'b_finished';
-			break;
-		case 'title':
-			$orderby = 'b_title';
-			break;
-		case 'author':
-			$orderby = 'b_author';
-			break;
-		case 'asin':
-			$orderby = 'b_asin';
-			break;
-		case 'status':
-			$orderby = "b_status $order, b_added";
-			break;
-		default:
-			$orderby = 'b_added';
-			break;
-	}
-	
-	$books = $wpdb->get_results("
-	SELECT
-		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status,
-		b_added AS added, b_started AS started, b_finished AS finished,
-		b_asin AS asin, b_rating AS rating, b_review AS review, b_nice_title AS nice_title, b_nice_author AS nice_author
-	FROM
-		{$wpdb->prefix}now_reading, {$wpdb->prefix}now_reading_tags, {$wpdb->prefix}now_reading_books2tags
-	WHERE
-		t_id = tag_id
-		AND
-		tag_id = '$tid'
-		AND
-		book_id = b_id
-	GROUP BY
-		b_id
-	ORDER BY
-		$orderby $order
-	");
-	
-	return $books;
+	return get_books("tag=$tag");
 }
 
 /**

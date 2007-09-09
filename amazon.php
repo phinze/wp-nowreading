@@ -27,16 +27,17 @@ function query_amazon( $query ) {
 	// Our query needs different vars depending on whether or not we're searching by ISBN, so build it here.
 	if ( $using_isbn ) {
 		$isbn = preg_replace('#([^0-9x]+)#i', '', $isbn);
-		$query = "&Power=asin%3A+$isbn";
+		$query = "asin:$isbn";
 	} else {
-		$query = '&Title=' . urlencode($title);
+		if ( !empty($title) )
+			$query = 'title:' . urlencode($title);
 		if ( !empty($author) )
-			$query .= '&Author=' . urlencode($author);
+			$query .= 'author:' . urlencode($author);
 	}
 	
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
 			. '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Large,Images'
-			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']).$query;
+			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']) . '&Power=' . $query;
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
 	if ( $options['httpLib'] == 'curl' ) {
@@ -100,56 +101,42 @@ function query_amazon( $query ) {
 	if ( $options['debugMode'] )
 		robm_dump("raw XML:", htmlentities(str_replace(">", ">\n", str_replace("<", "\n<", $xmlString))));
 	
-	if ( !class_exists('MiniXMLDoc') )
-		require_once dirname(__FILE__) . '/xml/minixml.inc.php';
-	
-	$xmlString = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $xmlString);
-	$doc = new MiniXMLDoc();
-	$doc->fromString($xmlString);
+	$xml = simplexml_load_string($xmlString);
 	
 	if ( $options['debugMode'] ) {
-		robm_dump("doc:", $doc);
-		robm_dump("doc xml:", htmlentities($doc->toString()));
+		robm_dump("xml:", $xml);
 	}
-	
-	$items = $doc->getElementByPath('ItemSearchResponse/Items');
-	if ( $items )
-		$items = $items->getAllChildren('Item');
 	
 	if ( $options['debugMode'] )
 		robm_dump("items:", $items);
+	
+	$items = $xml->Items->Item;
 	
 	if ( count($items) > 0 ) {
 		
 		$results = array();
 		
-		if ( $options['debugMode'] )
-			robm_dump("items:", $items);
-		
-		foreach ( (array) $items as $item ) {
-			$author	= $item->getElementByPath('ItemAttributes/Author');
-			if ( $author )
-				$author	= $author->getValue();
+		foreach ( $items as $item ) {
+			$attr = $item->ItemAttributes;
+			
+			$author	= (string) $attr->Author;
 			if ( empty($author) )
 				$author = apply_filters('default_book_author', 'Unknown');
 			
-			$title	= $item->getElementByPath('ItemAttributes/Title');
-			if ( !$title )
+			$title	= (string) $attr->Title;
+			if ( empty($title) )
 				break;
-			$title	= $title->getValue();
 			
-			$asin = $item->getElement('ASIN');
-			if ( !$asin )
+			$asin = (string) $item->ASIN;
+			if ( empty($asin) )
 				break;
-			$asin = $asin->getValue();
 			
 			if ( $options['debugMode'] )
 				robm_dump("book:", $author, $title, $asin);
 			
-			$image	= $item->getElementByPath("{$options['imageSize']}Image/URL");
-			if ( $image )
-				$image	= $image->getValue();
-			else
+			$size = "{$options['imageSize']}Image";
+			$image = (string) $item->$size->URL;
+			if ( empty($image) )
 				$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 			
 			$results[] = apply_filters('raw_amazon_results', compact('author', 'title', 'image', 'asin'));

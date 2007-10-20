@@ -38,6 +38,7 @@ function query_amazon( $query ) {
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
 			. '&AWSAccessKeyId=0BN9NFMF20HGM4ND8RG2&Operation=ItemSearch&SearchIndex=Books&ResponseGroup=Request,Large,Images'
 			. '&Version=2005-03-23&AssociateTag=' . urlencode($options['associate']) . '&Power=' . $query;
+	$url = apply_filters('amazon_search_url', $url);
 	
 	// Fetch the XML using either Snoopy or cURL, depending on our options.
 	if ( $options['httpLib'] == 'curl' ) {

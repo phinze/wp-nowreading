@@ -93,12 +93,13 @@ add_filter('query_vars', 'nr_query_vars');
  */
 function nr_mod_rewrite( $rules ) {
 	global $wp_rewrite;
-	$rules['^library/([0-9]+)/?$']			= 'index.php?now_reading_id=' . $wp_rewrite->preg_index(1);
-	$rules['^library/tag/([^/]+)/?$']		= 'index.php?now_reading_tag=' . $wp_rewrite->preg_index(1);
-	$rules['^library/search/?$']			= 'index.php?now_reading_search=true';
-	$rules['^library/([^/]+)/([^/]+)/?$']	= 'index.php?now_reading_author=' . $wp_rewrite->preg_index(1) . '&now_reading_title=' . $wp_rewrite->preg_index(2);
-	$rules['^library/([^/]+)/?$']			= 'index.php?now_reading_author=' . $wp_rewrite->preg_index(1);
-	$rules['^library/?$']					= 'index.php?now_reading_library=true';
+	$options = get_option('nowReadingOptions');
+	$rules[preg_quote($options['permalinkBase']) . '([0-9]+)/?$']           = 'index.php?now_reading_id=' . $wp_rewrite->preg_index(1);
+	$rules[preg_quote($options['permalinkBase']) . 'tag/([^/]+)/?$']        = 'index.php?now_reading_tag=' . $wp_rewrite->preg_index(1);
+	$rules[preg_quote($options['permalinkBase']) . 'search/?$']             = 'index.php?now_reading_search=true';
+	$rules[preg_quote($options['permalinkBase']) . '([^/]+)/([^/]+)/?$']    = 'index.php?now_reading_author=' . $wp_rewrite->preg_index(1) . '&now_reading_title=' . $wp_rewrite->preg_index(2);
+	$rules[preg_quote($options['permalinkBase']) . '([^/]+)/?$']            = 'index.php?now_reading_author=' . $wp_rewrite->preg_index(1);
+	$rules[preg_quote($options['permalinkBase']) . '?$']                    = 'index.php?now_reading_library=true';
 	return $rules;
 }
 add_filter('rewrite_rules_array', 'nr_mod_rewrite');

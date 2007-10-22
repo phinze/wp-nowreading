@@ -15,7 +15,7 @@ Author URI: http://robm.me.uk/
 
 define('NOW_READING_VERSION', '4.4.1');
 define('NOW_READING_DB', 38);
-define('NOW_READING_OPTIONS', 8);
+define('NOW_READING_OPTIONS', 9);
 define('NOW_READING_REWRITE', 7);
 
 define('NRTD', 'now-reading');
@@ -164,7 +164,8 @@ function nr_install() {
 		'useModRewrite'	=> false,
 		'debugMode'		=> false,
 		'menuLayout'	=> NR_MENU_MULTIPLE,
-		'booksPerPage'  => 15
+		'booksPerPage'  => 15,
+		'permalinkBase' => 'library/'
 	);
 	add_option('nowReadingOptions', $defaultOptions);
 	

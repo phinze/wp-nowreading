@@ -161,6 +161,9 @@ function nr_options() {
 					<p>
 						' . sprintf(__("If you choose this option, be sure you have a custom permalink structure set up at your <a href='%s'>Options &rarr; Permalinks</a> page.", NRTD), 'options-permalink.php') . '
 					</p>
+					<p>
+					' . __("Permalink base:") . ' ' . htmlentities(get_option('home')) . '/
+					<input type="text" name="permalink_base" id="permalink_base" value="' . htmlentities($options['permalinkBase']) . '" /></p>
 				</td>
 			</tr>
 			<tr valign="top">

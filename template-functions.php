@@ -279,7 +279,7 @@ function book_permalink( $echo = true, $id = 0 ) {
 	$title = $the_book->nice_title;
 	
 	if ( $options['useModRewrite'] )
-		$url = get_option('home') . "/library/$author/$title/";
+		$url = get_option('home') . "/{$options['permalinkBase']}$author/$title/";
 	else
 		$url = get_option('home') . "/index.php?now_reading_author=$author&amp;now_reading_title=$title";
 	

@@ -414,18 +414,18 @@ function nr_page_title( $title ) {
 	
 	$title = '';
 	
-	if ( !$wp_query->get('now_reading_library') )
+	if ( $wp_query->get('now_reading_library') )
 		$title = 'Library';
 	
-	if ( !$wp_query->get('now_reading_id') ) {
+	if ( $wp_query->get('now_reading_id') ) {
 		$book = get_book(intval($wp_query->get('now_reading_id')));
 		$title = $book->title . ' by ' . $book->author;
 	}
 	
-	if ( !$wp_query->get('now_reading_tag') )
+	if ( $wp_query->get('now_reading_tag') )
 		$title = 'Books tagged with &ldquo;' . htmlentities($wp_query->get('now_reading_tag')) . '&rdquo;';
 	
-	if ( !$wp_query->get('now_reading_search') )
+	if ( $wp_query->get('now_reading_search') )
 		$title = 'Library Search';
 	
 	if ( !empty($title) ) {

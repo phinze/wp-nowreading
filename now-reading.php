@@ -15,7 +15,7 @@ Author URI: http://robm.me.uk/
 
 define('NOW_READING_VERSION', '4.4.1');
 define('NOW_READING_DB', 38);
-define('NOW_READING_OPTIONS', 9);
+define('NOW_READING_OPTIONS', 10);
 define('NOW_READING_REWRITE', 7);
 
 define('NRTD', 'now-reading');
@@ -228,7 +228,7 @@ register_activation_hook('now-reading/now-reading.php', 'nr_install');
  * Checks to see if the library/book permalink query vars are set and, if so, loads the appropriate templates.
  */
 function library_init() {
-	global $wp, $wpdb, $q, $query;
+	global $wp, $wpdb, $q, $query, $wp_query;
 	
 	$wp->parse_request();
 	
@@ -237,15 +237,15 @@ function library_init() {
 	else
 		return;
 	
-	if ( $wp->query_vars['now_reading_library'] ) {
+	if ( $wp_query->get('now_reading_library') ) {
 		// Library page:
 		nr_load_template('library.php');
 		die;
 	}
 	
-	if ( $wp->query_vars['now_reading_id'] ) {
+	if ( $wp_query->get('now_reading_id') ) {
 		// Book permalink:
-		$GLOBALS['nr_id'] = intval($wp->query_vars['now_reading_id']);
+		$GLOBALS['nr_id'] = intval($wp_query->get('now_reading_id'));
 		
 		$load = nr_load_template('single.php');
 		if ( is_wp_error($load) )
@@ -254,9 +254,9 @@ function library_init() {
 		die;
 	}
 	
-	if ( $wp->query_vars['now_reading_tag'] ) {
+	if ( $wp_query->get('now_reading_tag') ) {
 		// Tag permalink:
-		$GLOBALS['nr_tag'] = $wp->query_vars['now_reading_tag'];
+		$GLOBALS['nr_tag'] = $wp_query->get('now_reading_tag');
 		
 		$load = nr_load_template('tag.php');
 		if ( is_wp_error($load) )
@@ -265,7 +265,7 @@ function library_init() {
 		die;
 	}
 	
-	if ( $wp->query_vars['now_reading_search'] ) {
+	if ( $wp_query->get('now_reading_search') ) {
 		// Search page:
 		$GLOBALS['query'] = $_GET['q'];
 		unset($_GET['q']); // Just in case
@@ -277,10 +277,10 @@ function library_init() {
 		die;
 	}
 	
-	if ( $wp->query_vars['now_reading_author'] && $wp->query_vars['now_reading_title'] ) {
+	if ( $wp_query->get('now_reading_author') && $wp_query->get('now_reading_title') ) {
 		// Book permalink with title and author.
-		$author				= $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
-		$title				= $wpdb->escape(urldecode($wp->query_vars['now_reading_title']));
+		$author				= $wpdb->escape(urldecode($wp_query->get('now_reading_author')));
+		$title				= $wpdb->escape(urldecode($wp_query->get('now_reading_title')));
 		$GLOBALS['nr_id']	= $wpdb->get_var("
 		SELECT
 			b_id
@@ -299,9 +299,9 @@ function library_init() {
 		die;
 	}
 	
-	if ( $wp->query_vars['now_reading_author'] ) {
+	if ( $wp_query->get('now_reading_author') ) {
 		// Author permalink.
-		$author = $wpdb->escape(urldecode($wp->query_vars['now_reading_author']));
+		$author = $wpdb->escape(urldecode($wp_query->get('now_reading_author')));
 		$GLOBALS['nr_author'] = $wpdb->get_var("SELECT b_author FROM {$wpdb->prefix}now_reading WHERE b_nice_author = '$author'");
 		
 		if ( empty($GLOBALS['nr_author']) )
@@ -409,23 +409,23 @@ function nr_check_for_updates() {
  * Adds our details to the title of the page - book title/author, "Library" etc.
  */
 function nr_page_title( $title ) {
-	global $wp;
+	global $wp, $wp_query;
 	$wp->parse_request();
 	
 	$title = '';
 	
-	if ( !empty($wp->query_vars['now_reading_library']) )
+	if ( !$wp_query->get('now_reading_library') )
 		$title = 'Library';
 	
-	if ( !empty($wp->query_vars['now_reading_id']) ) {
-		$book = get_book(intval($wp->query_vars['now_reading_id']));
+	if ( !$wp_query->get('now_reading_id') ) {
+		$book = get_book(intval($wp_query->get('now_reading_id')));
 		$title = $book->title . ' by ' . $book->author;
 	}
 	
-	if ( !empty($wp->query_vars['now_reading_tag']) )
-		$title = 'Books tagged with &ldquo;' . htmlentities($wp->query_vars['now_reading_tag']) . '&rdquo;';
+	if ( !$wp_query->get('now_reading_tag') )
+		$title = 'Books tagged with &ldquo;' . htmlentities($wp_query->get('now_reading_tag')) . '&rdquo;';
 	
-	if ( !empty($wp->query_vars['now_reading_search']) )
+	if ( !$wp_query->get('now_reading_search') )
 		$title = 'Library Search';
 	
 	if ( !empty($title) ) {

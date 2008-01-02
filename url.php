@@ -93,12 +93,12 @@ add_filter('query_vars', 'nr_query_vars');
  */
 function nr_mod_rewrite( $rules ) {
 	$options = get_option('nowReadingOptions');
-	add_rewrite_rule(preg_quote($options['permalinkBase']) . '([0-9]+)/?$', 'index.php?now_reading_id=$matches[1]');
-	add_rewrite_rule(preg_quote($options['permalinkBase']) . 'tag/([^/]+)/?$', 'index.php?now_reading_tag=$matches[1]');
-	add_rewrite_rule(preg_quote($options['permalinkBase']) . 'search/?$', 'index.php?now_reading_search=true');
-	add_rewrite_rule(preg_quote($options['permalinkBase']) . '([^/]+)/([^/]+)/?$', 'index.php?now_reading_author=$matches[1]&now_reading_title=$matches[2]');
-	add_rewrite_rule(preg_quote($options['permalinkBase']) . '([^/]+)/?$', 'index.php?now_reading_author=$matches[1]');
-	add_rewrite_rule(preg_quote($options['permalinkBase']) . '?$', 'index.php?now_reading_library=1');
+	add_rewrite_rule(preg_quote($options['permalinkBase']) . '([0-9]+)/?$', 'index.php?now_reading_id=$matches[1]', 'top');
+	add_rewrite_rule(preg_quote($options['permalinkBase']) . 'tag/([^/]+)/?$', 'index.php?now_reading_tag=$matches[1]', 'top');
+	add_rewrite_rule(preg_quote($options['permalinkBase']) . 'search/?$', 'index.php?now_reading_search=true', 'top');
+	add_rewrite_rule(preg_quote($options['permalinkBase']) . '([^/]+)/([^/]+)/?$', 'index.php?now_reading_author=$matches[1]&now_reading_title=$matches[2]', 'top');
+	add_rewrite_rule(preg_quote($options['permalinkBase']) . '([^/]+)/?$', 'index.php?now_reading_author=$matches[1]', 'top');
+	add_rewrite_rule(preg_quote($options['permalinkBase']) . '?$', 'index.php?now_reading_library=1', 'top');
 }
 add_action('init', 'nr_mod_rewrite');
 

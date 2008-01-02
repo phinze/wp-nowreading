@@ -110,12 +110,12 @@ function is_now_reading_page() {
 	$wp->parse_request();
 	
 	return (
-		!empty(get_query_var('now_reading_library')) ||
-		!empty(get_query_var('now_reading_search'))  ||
-		!empty(get_query_var('now_reading_id'))      ||
-		!empty(get_query_var('now_reading_tag'))     ||
-		!empty(get_query_var('now_reading_title'))   ||
-		!empty(get_query_var('now_reading_author'))
+		get_query_var('now_reading_library') ||
+		get_query_var('now_reading_search')  ||
+		get_query_var('now_reading_id')      ||
+		get_query_var('now_reading_tag')     ||
+		get_query_var('now_reading_title')   ||
+		get_query_var('now_reading_author')
 	);
 }
 

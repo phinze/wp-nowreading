@@ -27,7 +27,7 @@ function query_amazon( $query ) {
 	// Our query needs different vars depending on whether or not we're searching by ISBN, so build it here.
 	if ( $using_isbn ) {
 		$isbn = preg_replace('#([^0-9x]+)#i', '', $isbn);
-		$query = "asin:$isbn";
+		$query = "isbn:$isbn";
 	} else {
 		if ( !empty($title) )
 			$query = 'title:' . urlencode($title);

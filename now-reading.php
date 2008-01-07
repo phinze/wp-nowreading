@@ -16,7 +16,7 @@ Author URI: http://robm.me.uk/
 define('NOW_READING_VERSION', '4.4.1');
 define('NOW_READING_DB', 38);
 define('NOW_READING_OPTIONS', 10);
-define('NOW_READING_REWRITE', 7);
+define('NOW_READING_REWRITE', 9);
 
 define('NRTD', 'now-reading');
 
@@ -96,7 +96,7 @@ function nr_install() {
 	}
 	
 	// WP's dbDelta function takes care of installing/upgrading our DB table.
-	$upgrade_file = file_exists(ABSPATH . 'wp-admin/upgrade.php') ? ABSPATH . 'wp-admin/upgrade.php' : ABSPATH . 'wp-admin/upgrade-functions.php';
+	$upgrade_file = file_exists(ABSPATH . 'wp-admin/includes/upgrade.php') ? ABSPATH . 'wp-admin/includes/upgrade.php' : ABSPATH . 'wp-admin/upgrade-functions.php';
 	require_once $upgrade_file;
 	// Until the nasty bug with duplicate indexes is fixed, we should hide dbDelta output.
 	ob_start();

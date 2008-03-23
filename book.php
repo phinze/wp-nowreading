@@ -104,6 +104,16 @@ function get_books( $query ) {
 		$tag = "AND t_name = '$tag'";
 	}
 	
+	$meta = '';
+	if ( !empty($meta_key) ) {
+		$meta_key = $wpdb->escape($meta_key);
+		$meta = "AND meta_key = '$meta_key'";
+		if ( !empty($meta_value )) {
+			$meta_value = $wpdb->escape($meta_value);
+			$meta .= " AND meta_value = '$meta_value'";
+		}
+	}
+	
 	$books = $wpdb->get_results("
 	SELECT
 		COUNT(*) AS count,
@@ -126,6 +136,7 @@ function get_books( $query ) {
 		$author
 		$title
 		$tag
+		$meta
 	GROUP BY
 		b_id
 	ORDER BY

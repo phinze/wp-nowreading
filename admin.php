@@ -43,19 +43,23 @@ require_once dirname(__FILE__) . '/admin/admin-options.php';
 function nr_add_pages() {
 	$options = get_option('nowReadingOptions');
 	
+	//B. Spyckerelle
+	//changing NR level access in order to let blog authors to add books in multiuser mode
+	$nr_level = $options['multiuserMode'] ? 2 : 9 ;
+	
 	if ( $options['menuLayout'] == NR_MENU_SINGLE ) {
 		add_menu_page('Now Reading', 'Now Reading', 9, 'admin.php?page=add_book', 'now_reading_add');
 		
-		add_submenu_page('admin.php?page=add_book', 'Add a Book', 'Add a Book', 9, 'add_book', 'now_reading_add');
-		add_submenu_page('admin.php?page=add_book', 'Manage Books', 'Manage Books', 9, 'manage_books', 'nr_manage');
+		add_submenu_page('admin.php?page=add_book', 'Add a Book', 'Add a Book',$nr_level , 'add_book', 'now_reading_add');
+		add_submenu_page('admin.php?page=add_book', 'Manage Books', 'Manage Books', $nr_level, 'manage_books', 'nr_manage');
 		add_submenu_page('admin.php?page=add_book', 'Options', 'Options', 9, 'nr_options', 'nr_options');
 	} else {
 		if ( file_exists( ABSPATH . '/wp-admin/post-new.php' ) )
-			add_submenu_page('post-new.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
+			add_submenu_page('post-new.php', 'Now Reading', 'Now Reading', $nr_level, 'add_book', 'now_reading_add');
 		else
-			add_submenu_page('post.php', 'Now Reading', 'Now Reading', 9, 'add_book', 'now_reading_add');
+			add_submenu_page('post.php', 'Now Reading', 'Now Reading', $nr_level, 'add_book', 'now_reading_add');
 		
-		add_management_page('Now Reading', 'Now Reading', 9, 'manage_books', 'nr_manage');
+		add_management_page('Now Reading', 'Now Reading', $nr_level, 'manage_books', 'nr_manage');
 		add_options_page('Now Reading', 'Now Reading', 9, 'nr_options', 'nr_options');
 	}
 }

@@ -18,7 +18,7 @@ if ( strpos($_SERVER['REQUEST_URI'], 'wp-content/plugins') !== false ) {
 	
 	$_POST = stripslashes_deep($_POST);
 	
-	if ( !current_user_can('level_9') )
+	if ( !current_user_can('publish_posts') )
 		die ( __('Cheatin&#8217; uh?') );
 	
 	global $action;

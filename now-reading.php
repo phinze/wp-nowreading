@@ -116,6 +116,7 @@ function nr_install() {
 	b_rating tinyint(4) NOT NULL default '0',
 	b_review text NOT NULL default '',
 	b_post bigint(20) NOT NULL default '0',
+	b_reader tinyint(4) NOT NULL default '1',
 	PRIMARY KEY  (b_id),
 	INDEX permalink (b_nice_author, b_nice_title),
 	INDEX title (b_title),
@@ -238,6 +239,10 @@ function library_init() {
 		return;
 	
 	if ( get_query_var('now_reading_library') ) {
+		//filter by reader ?
+		if (get_query_var('now_reading_reader')){
+			$GLOBALS['nr_reader'] = intval(get_query_var('now_reading_reader'));
+		}
 		// Library page:
 		nr_load_template('library.php');
 		die;
@@ -450,7 +455,8 @@ add_action('wp_head', 'nr_header_stats');
  * Adds a link in the footer. This is the best method of promotion for Now Reading; whilst you are certainly allowed to remove it, consider supporting NR by leaving it in.
  */
 function nr_promolink() {
-	echo "
+	
+echo "
 	<span class='now-reading-copyright'>
 		Powered by
 		<a href='http://robm.me.uk/'>Rob Miller</a>'s
@@ -458,6 +464,7 @@ function nr_promolink() {
 		plugin.
 	</span>
 	";
+
 }
 add_action('nr_footer', 'nr_promolink');
 

@@ -50,11 +50,48 @@ function nr_empty_date( $date ) {
  */
 function book_title( $echo = true ) {
 	global $book;
-	$title = apply_filters('book_title', $book->title);
+	$title = stripslashes(apply_filters('book_title', $book->title));
 	if ( $echo )
 		echo $title;
 	return $title;
 }
+
+/**
+ * Prints the book's reader.
+ * @param bool $echo Wether or not to echo the results.
+ */
+function book_reader( $echo=true ) {
+	global $book;
+
+	$user_info = get_userdata($book->reader);
+	
+	if ( $echo )
+		echo $user_info->user_login;
+	return $user_info->user_login;
+		
+}
+
+/**
+ * Prints the user name
+ * @param int $reader_id Wordpress ID of the reader. If 0, prints the current user name.
+ */
+function print_reader( $echo=true, $reader_id = 0) {
+	global $userdata;
+	
+	$username='';
+	
+	if (!$reader_id) {
+		get_currentuserinfo();
+		$username = $userdata->user_login;
+	} else {
+		$user_info = get_userdata($reader_id);
+		$username = $user_info->user_login;
+	}
+	
+	if ($echo)
+		echo $username;
+	return $username;
+} 
 
 /**
  * Prints the author of the book.
@@ -188,9 +225,12 @@ function books_read_since( $interval, $echo = true ) {
  * Prints the total number of books in the library.
  * @param string $status A comma-separated list of statuses to include in the count. If ommitted, all statuses will be counted.
  * @param bool $echo Whether or not to echo the results.
+ * @param int $userID Counting only userID's books
  */
-function total_books( $status = '', $echo = true ) {
+function total_books( $status = '', $echo = true , $userID = 0) {
 	global $wpdb;
+	
+	get_currentuserinfo();
 	
 	if ( $status ) {
 		if ( strpos($status, ',') === false ) {
@@ -203,10 +243,19 @@ function total_books( $status = '', $echo = true ) {
 				$status .= ' OR b_status = "' . $wpdb->escape(trim($st)) . '" ';
 			}
 		}
+		//counting only current user's books
+		if ($userID) { //there's no user whose ID is 0
+			$status .= ' AND b_reader = '.$userID;
+		}
 	} else {
-		$status = '';
+		if ($userID) {
+			$status = 'WHERE b_reader = '.$userID;
+		} else {
+			$status = '';
+		}
 	}
 	
+		
 	$num = $wpdb->get_var("
 	SELECT
 		COUNT(*) AS count
@@ -314,6 +363,33 @@ function book_author_permalink( $echo = true, $author = null ) {
 	
 	$url = apply_filters('book_author_permalink', $url);
 	if ( $echo )
+		echo $url;
+	return $url;
+}
+
+/**
+ * Prints the URL to an internal page displaying books by a certain reader.
+ * @param bool $echo Wether or not to echo the results.
+ * @param int $reader The reader id. If omitted, links to all books.
+ */
+function book_reader_permalink( $echo = true, $reader = 0) { //added by B. Spyckerelle for multiuser mode
+	global $book, $wpdb;
+	
+	$options = get_option('nowReadingOptions');
+	
+	if ( !$reader )
+		$reader = $book->reader;
+	
+	if ( !$reader )
+		return;
+	
+	if ($options['multiuserMode']) {
+		$url = get_option('home') . "/library/reader/$reader/";
+	} else {
+		$url = get_option('home') . "/index.php?now_reading_library=1&now_reading_reader=$reader";
+	}
+	
+	if ($echo)
 		echo $url;
 	return $url;
 }
@@ -434,7 +510,31 @@ function is_custom_book() {
  * Returns true if the user has the correct permissions to view the Now Reading admin panel.
  */
 function can_now_reading_admin() {
-	return current_user_can('level_9');
+
+	//depends on multiuser mode (B. Spyckerelle)
+	$options = get_option('nowReadingOptions');	
+	$nr_level = $options['multiuserMode'] ? 'level_2' : 'level:9'; 
+
+	return current_user_can($nr_level);
+}
+
+/**
+ * Returns true if the current book is owned by the current user
+ * Used only in multiuser mode
+ */
+function is_my_book() {
+	global $book,$userdata;
+	$options = get_option('nowReadingOptions');
+	if ($options['multiuserMode']) {
+		get_currentuserinfo();
+		if ($book->reader == $userdata->ID) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return true; //always return true if not in multiuser mode
+	}
 }
 
 /**

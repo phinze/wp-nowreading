@@ -196,6 +196,15 @@ function nr_options() {
 					</p>
 				</td>
 			</tr>
+			<tr valign="top">
+				<th width="33%" scope="row">' . __("Multiuser mode", NRTD) . ':</th>
+				<td>
+					<input type="checkbox" name="multiuser_mode" id="multiuser_mode"' . ( ($options['multiuserMode']) ? ' checked="checked"' : '' ) . ' />
+					<p>
+					' . __("With this option set, Now Reading will be able to manage multi users context.", NRTD) . '
+					</p>
+				</td>
+			</tr>
 		</table>
 		
 		<input type="hidden" name="update" value="yes" />

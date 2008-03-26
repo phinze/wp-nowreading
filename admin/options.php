@@ -28,6 +28,7 @@ if ( !empty($_POST['update']) ) {
 	$options['proxyPort']		= $_POST['proxy_port'];
 	$options['booksPerPage']    = $_POST['books_per_page'];
 	$options['permalinkBase']   = $_POST['permalink_base'];
+	$options['multiuserMode']	= $_POST['multiuser_mode'];
 	
 	$nr_url->load_scheme($options['menuLayout']);
 	

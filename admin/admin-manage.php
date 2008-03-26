@@ -9,7 +9,10 @@
  */
 function nr_manage() {
 	
-	global $wpdb, $nr_statuses;
+	global $wpdb, $nr_statuses, $userdata;
+	
+	$options = get_option('nowReadingOptions');
+	get_currentuserinfo();
 	
 	$list = true;
 	
@@ -234,7 +237,13 @@ function nr_manage() {
 	}
 	
 	if ( $list ) {
-		$count = total_books(0, 0);
+		//depends on multiusermode (B. Spyckerelle)
+		if ($options['multiuserMode']) {
+			$count = total_books(0, 0, $userdata->ID); //counting only current users books
+		} else {
+			$count = total_books(0, 0); //counting all books
+		}
+		
 		
 		if ( $count ) {
 			if ( !empty($_GET['q']) )
@@ -253,10 +262,17 @@ function nr_manage() {
 			$num = $perpage;
 			$pageq = "&num=$num&offset=$offset";
 			
-			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$pageq}");
+			//depends on multiuser mode
+			if ($options['multiuserMode']) {
+				$reader = "&reader=".$userdata->ID;
+			} else {
+				$reader = '';
+			}
+			
+			$books = get_books("num=-1&status=all&orderby=status&order=desc{$search}{$pageq}{$reader}"); //get only current reader's books -> &reader=$reader_id
 			$count = count($books);
 			
-			$numpages = ceil(total_books(0, 0) / $perpage);
+			$numpages = ceil(total_books(0, 0, $userdata->ID) / $perpage);
 			
 			$pages = '<p>' . __("Pages", NRTD) . ':';
 			
@@ -347,7 +363,7 @@ function nr_manage() {
 						</div>
 						
 						<div class="book-details">
-							<h3>' . __('Book', NRTD) . ' ' . $book->id . ': &ldquo;' . $book->title . '&rdquo; by ' . $book->author . ' <a href="#" id="book-edit-link-' . $i . '" onclick="toggleBook(\'' . $i . '\'); return false;">' . __("Edit", NRTD) . ' &darr;</a></h3>
+							<h3>' . __('Book', NRTD) . ' ' . $book->id . ': &ldquo;' . stripslashes($book->title) . '&rdquo; by ' . $book->author . ' <a href="#" id="book-edit-link-' . $i . '" onclick="toggleBook(\'' . $i . '\'); return false;">' . __("Edit", NRTD) . ' &darr;</a></h3>
 							
 							<p>(' . $nr_statuses[$book->status] . ')</p>
 							

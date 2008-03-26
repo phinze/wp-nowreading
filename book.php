@@ -9,9 +9,9 @@
 *
  * Example usage:
  * <code>
- * $books = get_books('status=reading&orderby=started&order=asc&num=-1');
+ * $books = get_books('status=reading&orderby=started&order=asc&num=-1&reader=user');
  * </code>
- * @param string $query Query string containing restrictions on what to fetch. Valid variables: $num, $status, $orderby, $order, $search, $author, $title
+ * @param string $query Query string containing restrictions on what to fetch. Valid variables: $num, $status, $orderby, $order, $search, $author, $title, $reader
  * @return array Returns a numerically indexed array in which each element corresponds to a book.
  */
 function get_books( $query ) {
@@ -114,12 +114,16 @@ function get_books( $query ) {
 		}
 	}
 	
+	if ( !empty($reader)){
+		$reader = "AND b_reader = '$reader'";
+	}
+	
 	$books = $wpdb->get_results("
 	SELECT
 		COUNT(*) AS count,
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status, b_nice_title AS nice_title, b_nice_author AS nice_author,
 		b_added AS added, b_started AS started, b_finished AS finished,
-		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post
+		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post, b_reader as reader
 	FROM
 		{$wpdb->prefix}now_reading
 	LEFT JOIN {$wpdb->prefix}now_reading_meta
@@ -137,6 +141,7 @@ function get_books( $query ) {
 		$title
 		$tag
 		$meta
+		$reader
 	GROUP BY
 		b_id
 	ORDER BY
@@ -171,7 +176,7 @@ function get_book( $id ) {
 		COUNT(*) AS count,
 		b_id AS id, b_title AS title, b_author AS author, b_image AS image, b_status AS status, b_nice_title AS nice_title, b_nice_author AS nice_author,
 		b_added AS added, b_started AS started, b_finished AS finished,
-		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post
+		b_asin AS asin, b_rating AS rating, b_review AS review, b_post AS post, b_reader as reader
 	FROM {$wpdb->prefix}now_reading
 	WHERE b_id = $id
 	GROUP BY b_id
@@ -199,7 +204,7 @@ function add_book( $query ) {
  * @return boolean True on success, false on failure.
  */
 function update_book( $query ) {
-	global $wpdb, $query, $fields;
+	global $wpdb, $query, $fields, $userdata;
 	
 	parse_str($query, $fields);
 	
@@ -220,6 +225,10 @@ function update_book( $query ) {
 			$columns .= ", $field";
 			$values .= ", '$value'";
 		}
+				get_currentuserinfo();
+		$reader_id = $userdata->ID;
+		$columns .= ", b_reader";
+		$values .= ", '$reader_id'";
 		
 		$columns = preg_replace('#^, #', '', $columns);
 		$values = preg_replace('#^, #', '', $values);
@@ -231,6 +240,8 @@ function update_book( $query ) {
 		");
 		
 		$id = $wpdb->get_var("SELECT MAX(b_id) FROM {$wpdb->prefix}now_reading");
+		
+		
 		if ( $id > 0 ) {
 			do_action('book_added', $id);
 			return $id;

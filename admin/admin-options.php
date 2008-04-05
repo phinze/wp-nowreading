@@ -201,7 +201,7 @@ function nr_options() {
 				<td>
 					<input type="checkbox" name="multiuser_mode" id="multiuser_mode"' . ( ($options['multiuserMode']) ? ' checked="checked"' : '' ) . ' />
 					<p>
-					' . __("With this option set, Now Reading will be able to manage multi users context.", NRTD) . '
+					' . __("If you have a multi-user blog, setting this option will enable you to specify which user is reading which book.", NRTD) . '
 					</p>
 				</td>
 			</tr>

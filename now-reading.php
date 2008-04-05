@@ -360,12 +360,6 @@ function nr_check_for_updates() {
 	if ( !is_writable($cache) )
 		return;
 	
-	// If the cache file doesn't exist and we can't create it, return.
-	if ( !file_exists($cache) ) {
-		if ( !@touch($cache) )
-			return;
-	}
-	
 	// Only check for updates once a day.
 	if ( ( filemtime($cache) + 86400 ) <= time() )
 		return;

@@ -14,7 +14,7 @@ Author URI: http://robm.me.uk/
  */
 
 define('NOW_READING_VERSION', '4.4.2');
-define('NOW_READING_DB', 39);
+define('NOW_READING_DB', 40);
 define('NOW_READING_OPTIONS', 10);
 define('NOW_READING_REWRITE', 9);
 
@@ -110,11 +110,11 @@ function nr_install() {
 	b_nice_title VARCHAR(100) NOT NULL default '',
 	b_author VARCHAR(100) NOT NULL default '',
 	b_nice_author VARCHAR(100) NOT NULL default '',
-	b_image text NOT NULL default '',
+	b_image text NOT NULL,
 	b_asin varchar(12) NOT NULL default '',
 	b_status VARCHAR(8) NOT NULL default 'read',
 	b_rating tinyint(4) NOT NULL default '0',
-	b_review text NOT NULL default '',
+	b_review text NOT NULL,
 	b_post bigint(20) NOT NULL default '0',
 	b_reader tinyint(4) NOT NULL default '1',
 	PRIMARY KEY  (b_id),
@@ -126,7 +126,7 @@ function nr_install() {
 	m_id BIGINT(20) NOT NULL auto_increment,
 	m_book BIGINT(20) NOT NULL DEFAULT '0',
 	m_key VARCHAR(100) NOT NULL default '',
-	m_value TEXT NOT NULL default '',
+	m_value TEXT NOT NULL,
 	PRIMARY KEY  (m_id),
 	INDEX m_key (m_key)
 	);

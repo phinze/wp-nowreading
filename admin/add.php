@@ -4,9 +4,7 @@
  * @package now-reading
  */
 
-$admin = realpath(dirname(__FILE__) . '/../../../../') . '/wp-admin';
-chdir($admin);
-require_once $admin . '/admin.php';
+require '../../../../wp-config.php';
 
 $_POST = stripslashes_deep($_POST);
 

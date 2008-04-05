@@ -513,7 +513,7 @@ function can_now_reading_admin() {
 
 	//depends on multiuser mode (B. Spyckerelle)
 	$options = get_option('nowReadingOptions');	
-	$nr_level = $options['multiuserMode'] ? 'level_2' : 'level:9'; 
+	$nr_level = $options['multiuserMode'] ? 'level_2' : 'level_9'; 
 
 	return current_user_can($nr_level);
 }

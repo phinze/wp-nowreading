@@ -357,11 +357,11 @@ function nr_check_for_updates() {
 	$check_url	= 'http://robm.me.uk/wp-content/plugins/downloads.php?name=now-reading&action=getlatest';
 	
 	// Some people don't have their plugins directory writable.
-	if ( !is_writable($cache) )
+	if ( !is_writable(dirname($cache)) )
 		return;
 	
 	// Only check for updates once a day.
-	if ( ( filemtime($cache) + 86400 ) <= time() )
+	if ( file_exists($cache) && ( filemtime($cache) + 86400 ) <= time() )
 		return;
 	
 	
@@ -400,7 +400,7 @@ function nr_check_for_updates() {
 	do_action('nr_check_for_updates', compact('current', 'latest'));
 	
 	$newer_version_exists = apply_filters('nr_newer_version_exists', ( $latest > $current ));
-		
+	
 	return $newer_version_exists;
 }
 

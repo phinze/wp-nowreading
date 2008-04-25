@@ -99,19 +99,15 @@ function query_amazon( $query ) {
 		return false;
 	}
 	
+	require_once 'xml/IsterXmlSimpleXMLImpl.php';
+	
+	$impl = new IsterXmlSimpleXMLImpl;
+	$xml = $impl->load_string($xmlString);
+	
 	if ( $options['debugMode'] )
 		robm_dump("raw XML:", htmlentities(str_replace(">", ">\n", str_replace("<", "\n<", $xmlString))));
 	
-	$xml = simplexml_load_string($xmlString);
-	
-	if ( $options['debugMode'] ) {
-		robm_dump("xml:", $xml);
-	}
-	
-	if ( $options['debugMode'] )
-		robm_dump("items:", $items);
-	
-	$items = $xml->Items->Item;
+	$items = $xml->ItemSearchResponse->Items->children();
 	
 	if ( count($items) > 0 ) {
 		
@@ -120,23 +116,26 @@ function query_amazon( $query ) {
 		foreach ( $items as $item ) {
 			$attr = $item->ItemAttributes;
 			
-			$author	= (string) $attr->Author;
+			if ( !$attr )
+				continue;
+			
+			$author	= $attr->Author->CDATA();
 			if ( empty($author) )
 				$author = apply_filters('default_book_author', 'Unknown');
 			
-			$title	= (string) $attr->Title;
+			$title	= $attr->Title->CDATA();
 			if ( empty($title) )
-				break;
+				continue;
 			
-			$asin = (string) $item->ASIN;
+			$asin = $item->ASIN->CDATA();
 			if ( empty($asin) )
-				break;
+				continue;
 			
 			if ( $options['debugMode'] )
 				robm_dump("book:", $author, $title, $asin);
 			
 			$size = "{$options['imageSize']}Image";
-			$image = (string) $item->$size->URL;
+			$image = $item->$size->URL->CDATA();
 			if ( empty($image) )
 				$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 			

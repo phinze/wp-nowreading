@@ -119,7 +119,16 @@ function query_amazon( $query ) {
 			if ( !$attr )
 				continue;
 			
-			$author	= $attr->Author->CDATA();
+			$author = '';
+			if ( is_array($attr->Author) ) {
+				foreach ( $attr->Author as $a ) {
+					$author .= $a->CDATA() . ', ';
+				}
+				$author	= substr($author, 0, -2);
+			} else {
+				$author	= $attr->Author->CDATA();
+			}
+			
 			if ( empty($author) )
 				$author = apply_filters('default_book_author', 'Unknown');
 			

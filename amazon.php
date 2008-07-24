@@ -32,7 +32,7 @@ function query_amazon( $query ) {
 		if ( !empty($title) )
 			$query = 'title:' . urlencode($title);
 		if ( !empty($author) )
-			$query .= 'author:' . urlencode($author);
+			$query .= '%20author:' . urlencode($author);
 	}
 	
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'
@@ -84,79 +84,32 @@ function query_amazon( $query ) {
 	
 	if ( empty($xmlString) ) {
 		do_action('nr_search_error', $query);
-		echo '
-		<div id="message" class="error fade">
-			<p><strong>' . __("Oops!") . '</strong></p>
-			<p>' . sprintf(__("For some reason, I couldn't search for your book on amazon%s.", NRTD), $options['domain']) . '</p>
-			<p>' . __("Amazon's Web Services may be down, or there may be a problem with your server configuration.") . '</p>
-								
-					';
-					if ( $options['httpLib'] )
-			echo '<p>' . __("Try changing your HTTP Library setting to <strong>cURL</strong>.", NRTD) . '</p>';
-					echo '
-		</div>
-		';
 		return false;
 	}
 	
-	require_once 'xml/IsterXmlSimpleXMLImpl.php';
+	$xml = new SimpleXMLElement($xmlString);
 	
-	$impl = new IsterXmlSimpleXMLImpl;
-	$xml = $impl->load_string($xmlString);
-	
-	if ( $options['debugMode'] )
-		robm_dump("raw XML:", htmlentities(str_replace(">", ">\n", str_replace("<", "\n<", $xmlString))));
-	
-	$items = $xml->ItemSearchResponse->Items->children();
-	
-	if ( count($items) > 0 ) {
+	$results = array();
+	foreach ( $xml->Items->Item as $item ) {
+		$book = array();
 		
-		$results = array();
+		$book['asin'] = (string) $item->ASIN;
+		if ( empty($book['asin']) )
+			continue;
 		
-		foreach ( $items as $item ) {
-			$attr = $item->ItemAttributes;
-			
-			if ( !$attr )
-				continue;
-			
-			$author = '';
-			if ( is_array($attr->Author) ) {
-				foreach ( $attr->Author as $a ) {
-					$author .= $a->CDATA() . ', ';
-				}
-				$author	= substr($author, 0, -2);
-			} else {
-				$author	= $attr->Author->CDATA();
-			}
-			
-			if ( empty($author) )
-				$author = apply_filters('default_book_author', 'Unknown');
-			
-			$title	= $attr->Title->CDATA();
-			if ( empty($title) )
-				continue;
-			
-			$asin = $item->ASIN->CDATA();
-			if ( empty($asin) )
-				continue;
-			
-			if ( $options['debugMode'] )
-				robm_dump("book:", $author, $title, $asin);
-			
-			$size = "{$options['imageSize']}Image";
-			$image = $item->$size->URL->CDATA();
-			if ( empty($image) )
-				$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
-			
-			$results[] = apply_filters('raw_amazon_results', compact('author', 'title', 'image', 'asin'));
+		foreach ( $item->ItemAttributes->children() as $attribute ) {
+			$book[$attribute->getName()] = (string) $attribute;
 		}
 		
-		$results = apply_filters('returned_books', $results);
-	} else {
+		$size = "{$options['imageSize']}Image";
+		$book['image'] = (string) $item->$size->URL;
+		if ( empty($book['image']) )
+			$image = get_option('siteurl') . '/wp-content/plugins/now-reading/no-image.png';
 		
-		return false;
-		
+		$results[] = apply_filters('raw_amazon_results', $book);
 	}
+	
+	$results = apply_filters('returned_books', $results);
 	
 	return $results;
 }

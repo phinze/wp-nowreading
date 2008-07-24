@@ -5,101 +5,23 @@
  */
 
 /**
- * The array index of the current book in the {@link $books} array.
- * @global integer $GLOBALS['current_book']
- * @name $current_book
- */
-$current_book = 0;
-/**
- * The array of books for the current query.
- * @global array $GLOBALS['books']
- * @name $books
- */
-$books = null;
-/**
- * The current book in the loop.
- * @global object $GLOBALS['book']
- * @name $book
- */
-$book = null;
-
-/**
- * Formats a date according to the date format option.
- * @param string The date to format, in any string recogniseable by strtotime.
- */
-function nr_format_date( $date ) {
-	$options = get_option('nowReadingOptions');
-	if ( !is_numeric($date) )
-		$date = strtotime($date);
-	if ( empty($date) )
-		return '';
-	return apply_filters('nr_format_date', date($options['formatDate'], $date));
-}
-
-/**
- * Returns true if the date is a valid one; false if it hasn't.
- * @param string The date to check.
- */
-function nr_empty_date( $date ) {
-	return ( empty($date) || $date == "0000-00-00 00:00:00" );
-}
-
-/**
  * Prints the book's title.
  * @param bool $echo Whether or not to echo the results.
  */
 function book_title( $echo = true ) {
-	global $book;
-	$title = stripslashes(apply_filters('book_title', $book->title));
 	if ( $echo )
-		echo $title;
-	return $title;
+		return the_title();
+	return get_the_title();
 }
-
-/**
- * Prints the book's reader.
- * @param bool $echo Wether or not to echo the results.
- */
-function book_reader( $echo=true ) {
-	global $book;
-
-	$user_info = get_userdata($book->reader);
-	
-	if ( $echo )
-		echo $user_info->user_login;
-	return $user_info->user_login;
-		
-}
-
-/**
- * Prints the user name
- * @param int $reader_id Wordpress ID of the reader. If 0, prints the current user name.
- */
-function print_reader( $echo=true, $reader_id = 0) {
-	global $userdata;
-	
-	$username='';
-	
-	if (!$reader_id) {
-		get_currentuserinfo();
-		$username = $userdata->user_login;
-	} else {
-		$user_info = get_userdata($reader_id);
-		$username = $user_info->user_login;
-	}
-	
-	if ($echo)
-		echo $username;
-	return $username;
-} 
 
 /**
  * Prints the author of the book.
  * @param bool $echo Whether or not to echo the results.
  */
 function book_author( $echo = true ) {
-	global $book;
-	$author = apply_filters('book_author', $book->author);
+	global $post;
+	$author = get_post_meta($post->ID, 'book_author', true);
+	$author = apply_filters('book_author', $author);
 	if ( $echo )
 		echo $author;
 	return $author;

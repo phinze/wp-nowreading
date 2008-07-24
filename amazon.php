@@ -98,7 +98,7 @@ function query_amazon( $query ) {
 			continue;
 		
 		foreach ( $item->ItemAttributes->children() as $attribute ) {
-			$book[$attribute->getName()] = (string) $attribute;
+			$book[strtolower($attribute->getName())] = (string) $attribute;
 		}
 		
 		$size = "{$options['imageSize']}Image";

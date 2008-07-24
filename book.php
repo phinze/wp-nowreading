@@ -47,13 +47,16 @@ function get_book( $id ) {
  */
 function add_book( $query ) {
 	$defaults = array(
+		'asin' => '',
 		'title' => '',
 		'author' => '',
 		'image' => '',
-		'published' => '',
-		'pages' => '',
-		'publisher' => '',
-		'link' => ''
+		'binding' => '',
+		'edition' => '',
+		'isbn' => '',
+		'publicationdate' => '',
+		'numberofpages' => '',
+		'publisher' => ''
 	);
 	
 	$r = wp_parse_args($query, $defaults);

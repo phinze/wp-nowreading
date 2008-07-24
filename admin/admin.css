@@ -1,0 +1,11 @@
+.nr_add label { font-weight:bold; }
+.nr_add #title, .nr_add #isbn { width:100%; font-size:1.1em; }
+.nr_add #author { width:75%; font-size:0.9em; }
+
+.nr_add form { position:relative; overflow:hidden; }
+.by_isbn, .by_title { float:left; width:40%;}
+.by_title { margin-left:25px; padding-left:20px; border-left:1px solid #ccc; }
+
+.amazon_results { position:relative; overflow:hidden; }
+.amazon_result { width:275px; height:200px; float:left; }
+.amazon_result img { max-width:75px; max-height:200px; float:left; margin:0 5px 5px 0; }

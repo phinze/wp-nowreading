@@ -98,6 +98,10 @@ function query_amazon( $query ) {
 			continue;
 		
 		foreach ( $item->ItemAttributes->children() as $attribute ) {
+			if ( $attribute->getName() == 'Author' && !empty($book['author']) ) {
+				$book['author'] .= ' and ' . (string) $attribute;
+				continue;
+			}
 			$book[strtolower($attribute->getName())] = (string) $attribute;
 		}
 		

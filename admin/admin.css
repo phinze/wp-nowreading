@@ -9,3 +9,8 @@
 .amazon_results { position:relative; overflow:hidden; }
 .amazon_result { width:275px; height:200px; float:left; }
 .amazon_result img { max-width:75px; max-height:200px; float:left; margin:0 5px 5px 0; }
+
+.nr_manage td img { max-width:75px; max-height:75px; }
+
+.nr_edit img { max-width:250px; max-height:250px; float:left; margin:0 25px 25px 0; }
+.nr_edit #author, .nr_edit #title { width:400px }

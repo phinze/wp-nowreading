@@ -4,17 +4,11 @@ if ( !function_exists('nr_add') ) {
 	
 	function nr_add() {
 		
-		$stage = intval($_REQUEST['stage']);
-		
-		?>
-		
-		<div class="wrap nr_add">
-			<h2>Add a Book</h2>
-			
-			<?php if ( empty($stage) || $stage == 1 ) : ?>
-			<p>Enter the details of the book you'd like to find, and Now Reading will search Amazon to try and find it.</p>
-			
+		function add_book_form() {
+			?>
 			<form method="post" action="">
+				
+				<?php wp_nonce_field('nr_add_book') ?>
 				
 				<input type="hidden" name="stage" value="2" />
 				
@@ -41,9 +35,26 @@ if ( !function_exists('nr_add') ) {
 				
 			</form>
 			<?php
+		}
+		
+		$stage = intval($_REQUEST['stage']);
+		
+		?>
+		
+		<div class="wrap nr_add">
+			<h2>Add a Book</h2>
+			
+			<?php if ( empty($stage) || $stage == 1 ) : ?>
+			<p>Enter the details of the book you'd like to find, and Now Reading will search Amazon to try and find it.</p>
+			
+			<?php add_book_form() ?>
+			
+			<?php
 			
 				elseif ( $stage == 2 ) :
-				
+					
+					check_admin_referer('nr_add_book');
+					
 					$isbn = $_POST['isbn'];
 					$title = $_POST['title'];
 					$author = $_POST['author'];
@@ -61,6 +72,8 @@ if ( !function_exists('nr_add') ) {
 							
 							<div class="amazon_result">
 								<form method="post" action="">
+									<?php wp_nonce_field('nr_add_book_' . md5(serialize($book))) ?>
+									
 									<input type="hidden" name="stage" value="3" />
 									<input type="hidden" name="book" value="<?php echo htmlentities(serialize($book)) ?>" />
 									
@@ -89,6 +102,8 @@ if ( !function_exists('nr_add') ) {
 				
 				<?php
 				
+				check_admin_referer('nr_add_book_' . md5(stripslashes($_POST['book'])));
+				
 				$book = unserialize(stripslashes($_POST['book']));
 				
 				$id = add_book($book);
@@ -96,10 +111,12 @@ if ( !function_exists('nr_add') ) {
 				if ( $id > 0 ) :
 				
 				?>
-				
-					<p>Success! Your book was added.</p>
+					<br />
+					<div class="updated"><p><strong>Success! Your book was added.</strong></p></div>
 					
-					<p><a href="?page=add_book">Add another?</a></p>
+					<p>Add another?</p>
+					
+					<?php add_book_form() ?>
 					
 				<?php else: ?>
 					

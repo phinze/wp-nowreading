@@ -27,7 +27,7 @@ function get_books( $query = '' ) {
 	
 	$r = wp_parse_args($query, $defaults);
 	
-	$books = get_posts($r);
+	$books = query_posts($r);
 	
 	foreach ( (array) $books as $book ) {
 		$meta = get_post_custom($book->ID);

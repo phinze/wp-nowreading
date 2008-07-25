@@ -14,12 +14,30 @@
  * @param string $query Query string containing restrictions on what to fetch. Valid variables: $num, $status, $orderby, $order, $search, $author, $title, $reader
  * @return array Returns a numerically indexed array in which each element corresponds to a book.
  */
-function get_books( $query ) {
-	parse_str($query, $q);
+function get_books( $query = '' ) {
+	global $books;
 	
-	$q['post_type'] = 'book';
+	$options = get_option('nowReadingOptions');
 	
-	$books = get_posts($q);
+	$defaults = array(
+		'post_type' => 'book',
+		'numberposts' => $options['booksPerPage'],
+		'offset' => 0
+	);
+	
+	$r = wp_parse_args($query, $defaults);
+	
+	$books = get_posts($r);
+	
+	foreach ( (array) $books as $book ) {
+		$meta = get_post_custom($book->ID);
+		foreach ( (array) $meta as $key => $value ) {
+			if ( strpos($key, 'book_') !== false ) {
+				$key = str_replace('book_', '', $key);
+				$book->$key = join(', ', $value);
+			}
+		}
+	}
 	
 	return $books;
 }
@@ -29,8 +47,6 @@ function get_books( $query ) {
  * @param int $id The ID of the book you want to fetch.
  */
 function get_book( $id ) {
-	global $wpdb;
-	
 	$options = get_option('nowReadingOptions');
 	
 	$id = intval($id);
@@ -121,9 +137,10 @@ function set_book_tags( $id, $tags, $append = false ) {
 
 /**
  * Fetches meta-data for the given book.
- * @see print_book_meta()
  */
-function get_book_meta( $id, $key, $single = false ) {
+function get_book_meta( $id, $key, $single = true ) {
+	if ( strpos($key, 'book_') === false )
+		$key = "book_$key";
 	return get_post_meta($id, $key, $single);
 }
 
@@ -139,6 +156,21 @@ function update_book_meta( $id, $key, $value, $prev_value = '' ) {
  */
 function delete_book_meta( $id, $key, $value = '' ) {
 	return delete_post_meta($id, $key, $value);
+}
+
+function current_book_status( $id ) {
+	$meta = get_post_custom($id);
+	
+	$started = count($meta['started']);
+	$finished = count($meta['finished']);
+	
+	if ( $started == 0 )
+		return 'unread';
+	if ( $started < $finished )
+		return 'reading';
+	else
+		return 'read';
+	
 }
 
 ?>

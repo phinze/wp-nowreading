@@ -14,3 +14,5 @@
 
 .nr_edit img { max-width:250px; max-height:250px; float:left; margin:0 25px 25px 0; }
 .nr_edit #author, .nr_edit #title { width:400px }
+
+.greyed { color:#999; }

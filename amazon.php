@@ -25,14 +25,15 @@ function query_amazon( $query ) {
 		$using_isbn = true;
 	
 	// Our query needs different vars depending on whether or not we're searching by ISBN, so build it here.
+	$query = '';
 	if ( $using_isbn ) {
 		$isbn = preg_replace('#([^0-9x]+)#i', '', $isbn);
 		$query = "isbn:$isbn";
 	} else {
 		if ( !empty($title) )
-			$query = 'title:' . urlencode($title);
+			$query = 'title:' . urlencode("$title ");
 		if ( !empty($author) )
-			$query .= '%20author:' . urlencode($author);
+			$query .= 'author:' . urlencode("$author ");
 	}
 	
 	$url =	'http://webservices.amazon' . $options['domain'] . '/onca/xml?Service=AWSECommerceService'

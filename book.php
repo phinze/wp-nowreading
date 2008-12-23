@@ -6,12 +6,7 @@
  
  /**
  * Fetches books from the database based on a given query.
-*
- * Example usage:
- * <code>
- * $books = get_books('status=reading&orderby=started&order=asc&num=-1&reader=user');
- * </code>
- * @param string $query Query string containing restrictions on what to fetch. Valid variables: $num, $status, $orderby, $order, $search, $author, $title, $reader
+ * @param string $query Query string containing restrictions on what to fetch.
  * @return array Returns a numerically indexed array in which each element corresponds to a book.
  */
 function get_books( $query = '' ) {
@@ -22,7 +17,8 @@ function get_books( $query = '' ) {
 	$defaults = array(
 		'post_type' => 'book',
 		'numberposts' => $options['booksPerPage'],
-		'offset' => 0
+		'offset' => 0,
+		'status' => 'all'
 	);
 	
 	$r = wp_parse_args($query, $defaults);

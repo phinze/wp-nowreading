@@ -145,46 +145,13 @@ function books_read_since( $interval, $echo = true ) {
 
 /**
  * Prints the total number of books in the library.
- * @param string $status A comma-separated list of statuses to include in the count. If ommitted, all statuses will be counted.
  * @param bool $echo Whether or not to echo the results.
  * @param int $userID Counting only userID's books
  */
-function total_books( $status = '', $echo = true , $userID = 0) {
+function total_books( $echo = true) {
 	global $wpdb;
 	
-	get_currentuserinfo();
-	
-	if ( $status ) {
-		if ( strpos($status, ',') === false ) {
-			$status = 'WHERE b_status = "' . $wpdb->escape($status) . '"';
-		} else {
-			$statuses = explode(',', $status);
-			
-			$status = 'WHERE 1=0';
-			foreach ( (array) $statuses as $st ) {
-				$status .= ' OR b_status = "' . $wpdb->escape(trim($st)) . '" ';
-			}
-		}
-		//counting only current user's books
-		if ($userID) { //there's no user whose ID is 0
-			$status .= ' AND b_reader = '.$userID;
-		}
-	} else {
-		if ($userID) {
-			$status = 'WHERE b_reader = '.$userID;
-		} else {
-			$status = '';
-		}
-	}
-	
-		
-	$num = $wpdb->get_var("
-	SELECT
-		COUNT(*) AS count
-	FROM
-		{$wpdb->prefix}now_reading
-	$status
-	");
+	$num = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = 'book'");
 	
 	if ( $echo )
 		echo "$num book".($num != 1 ? 's' : '');

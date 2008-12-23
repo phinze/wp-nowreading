@@ -13,7 +13,7 @@ Author URI: http://robm.me.uk/
  * @package now-reading
  */
 
-define('NOW_READING_VERSION', '4.4.4-beta');
+define('NOW_READING_VERSION', '5.0-beta');
 define('NOW_READING_DB', 40);
 define('NOW_READING_OPTIONS', 10);
 define('NOW_READING_REWRITE', 9);
@@ -22,6 +22,9 @@ define('NRTD', 'now-reading');
 
 define('NR_MENU_SINGLE', 2);
 define('NR_MENU_MULTIPLE', 4);
+
+define('NR_BASENAME', plugin_basename(__FILE__));
+define('NR_PATH', dirname(NR_BASENAME));
 
 /**
  * Load our l18n domain.

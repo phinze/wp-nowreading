@@ -7,9 +7,10 @@ if ( !function_exists('nr_manage') ) {
 		
 		$options = get_option('nowReadingOptions');
 		
-		$page = intval($_GET['page']);
+		$page = intval($_GET['paged']);
 		$page = $page > 0 ? $page : 1;
-		$offset = ( $page - 1 ) * $options['booksPerPage'];
+		$perpage = $options['booksPerPage'];
+		$offset = ( $page - 1 ) * $perpage;
 		
 		$query = "offset=$offset";
 		
@@ -17,6 +18,25 @@ if ( !function_exists('nr_manage') ) {
 			$query .= "&tag=" . $_GET['tag'];
 		
 		$books = get_books($query);
+		
+		$total = total_books(0);
+		$pages = ceil($total / $perpage);
+		
+		$pagination = '';
+		if ( $page > 1 ) {
+			$prev = $page - 1;
+			$pagination .= '<a class="previous page-numbers" href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=manage_books&paged=' . $prev . '">&laquo;</a>';
+		}
+		
+		for ( $i = 1; $i <= $pages; $i++ ) {
+			$pagination .= "<a class='page-numbers' href='" . get_bloginfo('wpurl') . "/wp-admin/admin.php?page=manage_books&paged=$i'>$i</a>";
+		}
+		
+		if ( $page < $pages ) {
+			$next = $page + 1;
+			$pagination .= '<a class="next page-numbers" href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=manage_books&paged=' . $next . '">&raquo;</a>';
+		}
+		
 		?>
 		
 		<div class="wrap nr_manage">
@@ -32,8 +52,24 @@ if ( !function_exists('nr_manage') ) {
 			<h2>Manage Books</h2>
 			
 			<?php if ( count($books) ) : ?>
+			
+			<div class="tablenav">
+
+				<div class="alignleft actions">
+					<input type="text" name="search" id="search" value="Search:" class="greyed" />
+				</div>
 				
-				<table class="widefat">
+					<div class="tablenav-pages">
+					<span class="displaying-num">Displaying <?php echo $offset + 1 ?>&#8211;<?php echo $offset + count($books) ?> of <?php echo $total ?></span>
+					
+						<?php echo $pagination; ?>
+					</div>
+					
+				<div class="clear"></div>
+			
+			</div>
+				
+				<table class="widefat post" cellspacing="0">
 					<thead>
 						<tr>
 							<th scope="col"></th>
@@ -73,6 +109,22 @@ if ( !function_exists('nr_manage') ) {
 				<?php endforeach; ?>
 				
 				</table>
+				
+				<div class="tablenav">
+
+					<div class="alignleft actions">
+						<input type="text" name="search" id="search" value="Search:" class="greyed" />
+					</div>
+					
+						<div class="tablenav-pages">
+						<span class="displaying-num">Displaying <?php echo $offset + 1 ?>&#8211;<?php echo $offset + count($books) ?> of <?php echo $total ?></span>
+						
+							<?php echo $pagination; ?>
+						</div>
+						
+					<div class="clear"></div>
+
+				</div>
 				
 			<?php else: ?>
 				<p>You don't have any books in your library! Head over <a href="?page=add_book">here</a> to add some.</p>

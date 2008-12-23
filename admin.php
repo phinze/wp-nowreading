@@ -15,6 +15,7 @@ function nr_add_head() {
 		case 'add_book':
 		case 'manage_books':
 		case 'nr_options':
+		case 'edit_book':
 			echo '
 			<script type="text/javascript">
 				jQuery(function() {
